@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #7c6af5;
+  --color-primary-light: #9d8cff;
+  --color-dark: #0a0a0f;
+  --color-card: #141420;
+  --color-card-light: #1e1e30;
+  --color-text: #e0e0e0;
+  --color-text-dim: #888;
+  --color-success: #4ade80;
+  --color-error: #f87171;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--color-dark);
+  color: var(--color-text);
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-dark); }
+::-webkit-scrollbar-thumb { background: var(--color-card-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a50; }
+
+.card { @apply bg-card rounded-xl p-5 border border-white/5; }
+.btn-primary { @apply bg-primary hover:bg-primary-light text-white font-medium py-2 px-4 rounded-lg transition-all duration-200; }
+.btn-secondary { @apply bg-card hover:bg-card-light text-text border border-white/10 font-medium py-2 px-4 rounded-lg transition-all duration-200; }
+.btn:disabled { @apply opacity-50 cursor-not-allowed; }
