@@ -1,0 +1,1 @@
+import{_ as s,o as t,e as o,b as c}from"./index-D0JagxJj.js";const r={},a={class:"p-8"};function n(_,e){return t(),o("div",a,[...e[0]||(e[0]=[c("h1",{class:"text-2xl font-bold text-primary"},"DocsView",-1)])])}const l=s(r,[["render",n]]);export{l as default};

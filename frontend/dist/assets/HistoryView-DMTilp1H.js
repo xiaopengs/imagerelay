@@ -1,0 +1,1 @@
+import{_ as t,o as s,e as o,b as r}from"./index-D0JagxJj.js";const a={},c={class:"p-8"};function n(i,e){return s(),o("div",c,[...e[0]||(e[0]=[r("h1",{class:"text-2xl font-bold text-primary"},"HistoryView",-1)])])}const l=t(a,[["render",n]]);export{l as default};
