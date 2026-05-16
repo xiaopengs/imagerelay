@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ImageRelay — AI 生图平台 · 部署指南</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *{font-family:'Inter',system-ui,sans-serif}.font-mono{font-family:'JetBrains Mono',monospace}
+    :root{--p:#7c6af5;--a:#4ade80;--bg:#050508;--c:#0d0d18;--cl:#13132a;--t:#d4d4e8;--d:#6b6b8a}
+    html{scroll-behavior:smooth}body{background:var(--bg);color:var(--t)}
+    .gt{background:linear-gradient(135deg,#7c6af5,#9d8cff,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .gc{background:rgba(13,13,24,.8);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.07);border-radius:16px}
+    .cmd{background:#0a0a14;border:1px solid rgba(124,106,245,.2);border-radius:10px}.cmd code{color:#9d8cff;font-size:13px;line-height:1.8}
+    .bd{background:rgba(124,106,245,.1);border:1px solid rgba(124,106,245,.3);color:#9d8cff;border-radius:100px;padding:4px 14px;font-size:12px;font-weight:500}
+    .tag{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ade80;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600}
+    .st{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--d);margin-bottom:24px}
+    @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    @keyframes pg{0%,100%{opacity:.3}50%{opacity:.8}}
+    .fl{animation:fl 6s ease-in-out infinite}.pg{animation:pg 4s ease-in-out infinite}
+    pre{white-space:pre-wrap;word-break:break-all}
+  </style>
+</head>
+<body>
+<nav class="fixed top-0 left-0 right-0 z-50 gc border-b border-white/5" style="border-top:none;border-left:none;border-right:none">
+  <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">🐾</div><span class="font-bold text-white">ImageRelay</span></div>
+    <div class="hidden md:flex items-center gap-6 text-sm text-d">
+      <a href="#start" class="hover:text-white transition-colors">快速开始</a>
+      <a href="#arch" class="hover:text-white transition-colors">架构</a>
+      <a href="#deploy" class="hover:text-white transition-colors">部署</a>
+      <a href="#api" class="hover:text-white transition-colors">API</a>
+      <a href="#ops" class="hover:text-white transition-colors">运维</a>
+      <a href="#sec" class="hover:text-white transition-colors">安全</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="bd">v1.0</span>
+      <a href="https://github.com/xiaopengs/imagerelay" target="_blank" class="text-d hover:text-white text-sm">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
+
+<section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/3 left-1/4 w-72 h-72 rounded-full bg-primary/5 blur-3xl fl"></div>
+    <div class="absolute bottom-1/4 right-1/3 w-96 h-96 rounded-full bg-emerald-500/5 blur-3xl fl" style="animation-delay:-3s"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] bg-gradient-radial from-primary/10 to-transparent rounded-full pg"></div>
+  </div>
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+    <div class="flex justify-center gap-2 flex-wrap mb-6">
+      <span class="bd">One API</span><span class="bd">GPT Image 2</span><span class="bd">Gemini Imagen</span><span class="tag">MIT</span>
+    </div>
+    <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">AI 生图平台<br/><span class="gt">大师级部署指南</span></h1>
+    <p class="text-xl text-d max-w-2xl mx-auto mb-10 leading-relaxed">从零到上线的完整手册。服务器准备 · Docker 部署 · SSL 配置 · One API 初始化 · 安全加固 · 监控备份 · 故障排查。</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#start" class="px-8 py-3.5 rounded-xl font-semibold text-white transition-all" style="background:#7c6af5;box-shadow:0 0 40px rgba(124,106,245,.2)">开始部署 →</a>
+      <a href="https://github.com/xiaopengs/imagerelay" target="_blank" class="px-8 py-3.5 rounded-xl font-semibold text-t border border-white/10 hover:border-white/20 transition-all">查看源码</a>
+    </div>
+    <div class="mt-16 gc p-8 max-w-3xl mx-auto">
+      <p class="text-xs text-d mb-5 tracking-widest uppercase">系统架构</p>
+      <div class="flex flex-wrap items-center justify-center gap-3 text-sm">
+        <div class="gc px-5 py-3 text-center border border-primary/20"><div class="text-xl mb-1">🌐</div><div class="font-semibold text-white">用户</div><div class="text-d text-xs">全球访问</div></div>
+        <div class="text-primary text-xl font-light">→</div>
+        <div class="gc px-5 py-3 text-center"><div class="text-xl mb-1">🔒</div><div class="font-semibold text-white">Nginx</div><div class="text-d text-xs">SSL / 反代</div></div>
+        <div class="text-primary text-xl font-light">→</div>
+        <div class="gc px-5 py-3 text-center"><div class="text-xl mb-1">⚙️</div><div class="font-semibold text-white">One API</div><div class="text-d text-xs">网关 · 额度</div></div>
+        <div class="text-primary text-xl font-light">→</div>
+        <div class="gc px-5 py-3 text-center"><div class="text-xl mb-1">🤖</div><div class="font-semibold text-white">上游 API</div><div class="text-d text-xs">GPT2 / Gemini</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ① 环境要求 -->
+<section id="start" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <p class="st">① 环境要求</p>
+    <h2 class="text-4xl font-bold text-white mb-12">服务器准备清单</h2>
+    <div class="grid md:grid-cols-3 gap-5 mb-12">
+      <div class="gc p-6"><div class="text-3xl mb-4">🖥️</div><h3 class="font-bold text-white mb-3">推荐配置</h3><ul class="space-y-2 text-sm text-d"><li>CPU：2 核 +</li><li>内存：2 GB +</li><li>硬盘：40 GB +</li><li>系统：Ubuntu 22.04</li></ul></div>
+      <div class="gc p-6"><div class="text-3xl mb-4">🌏</div><h3 class="font-bold text-white mb-3">推荐节点</h3><ul class="space-y-2 text-sm text-d"><li>🇸🇬 新加坡（低延迟）</li><li>🇯🇵 日本东京（高性价比）</li><li>🇺🇸 美西（欧美用户）</li></ul></div>
+      <div class="gc p-6"><div class="text-3xl mb-4">🔧</div><h3 class="font-bold text-white mb-3">必装软件</h3><ul class="space-y-2 text-sm text-d"><li>Docker ≥ 20.10</li><li>Docker Compose ≥ 2.0</li><li>Certbot（SSL）</li><li>Git</li></ul></div>
+    </div>
+    <div class="gc p-6">
+      <p class="st mb-4">服务器初始化脚本</p>
+      <div class="cmd p-5 overflow-x-auto"><pre><code># === 一键初始化（Ubuntu 22.04）===
+sudo apt update && sudo apt upgrade -y
+
+# 安装 Docker
+curl -fsSL https://get.docker.com | sudo sh
+sudo usermod -aG docker $USER
+
+# 安装 Docker Compose
+COMPOSE=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+sudo curl -L "https://github.com/docker/compose/releases/download/${COMPOSE}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# 开放端口
+sudo ufw allow 22/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443/tcp && sudo ufw --force enable
+
+# 验证
+docker --version           # ≥ 20.10
+docker-compose --version   # ≥ 2.0</code></pre></div>
+    </div>
+  </div>
+</section>
+
+<!-- ② 架构 -->
+<section id="arch" class="py-24 px-6 relative">
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent pointer-events-none"></div>
+  <div class="max-w-5xl mx-auto relative">
+    <p class="st">② 技术架构</p>
+    <h2 class="text-4xl font-bold text-white mb-12">技术栈全览</h2>
+    <div class="grid md:grid-cols-2 gap-8 mb-10">
+      <div class="gc p-7"><h3 class="font-bold text-white mb-5">前端</h3><div class="space-y-3"><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">Vue.js 3</span><span class="bd">核心</span></div><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">Vite + TypeScript</span><span class="bd">构建</span></div><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">TailwindCSS</span><span class="bd">样式</span></div><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">Pinia</span><span class="bd">状态</span></div><div class="flex items-center justify-between py-2"><span class="text-sm">Axios</span><span class="bd">HTTP</span></div></div></div>
+      <div class="gc p-7"><h3 class="font-bold text-white mb-5">后端</h3><div class="space-y-3"><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">One API（MIT）</span><span class="tag">开源</span></div><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">Nginx</span><span class="bd">反代</span></div><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">SQLite / MySQL</span><span class="bd">存储</span></div><div class="flex items-center justify-between py-2 border-b border-white/5"><span class="text-sm">Docker</span><span class="bd">容器</span></div><div class="flex items-center justify-between py-2"><span class="text-sm">Let's Encrypt</span><span class="bd">SSL</span></div></div></div>
+    </div>
+    <div class="gc p-7">
+      <p class="st mb-5">配色系统</p>
+      <div class="grid grid-cols-5 gap-4">
+        <div class="text-center"><div class="w-full h-14 rounded-xl mb-2" style="background:#7c6af5"></div><p class="text-xs text-d">Primary</p><code class="text-xs">#7C6AF5</code></div>
+        <div class="text-center"><div class="w-full h-14 rounded-xl mb-2" style="background:#9d8cff"></div><p class="text-xs text-d">Accent</p><code class="text-xs">#9D8CFF</code></div>
+        <div class="text-center"><div class="w-full h-14 rounded-xl mb-2" style="background:#050508"></div><p class="text-xs text-d">Background</p><code class="text-xs">#050508</code></div>
+        <div class="text-center"><div class="w-full h-14 rounded-xl mb-2" style="background:#0d0d18"></div><p class="text-xs text-d">Card</p><code class="text-xs">#0D0D18</code></div>
+        <div class="text-center"><div class="w-full h-14 rounded-xl mb-2" style="background:#4ade80"></div><p class="text-xs text-d">Success</p><code class="text-xs">#4ADE80</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 部署步骤 -->
+<section id="deploy" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <p class="st">③ 部署步骤</p>
+    <h2 class="text-4xl font-bold text-white mb-12">7 步完成生产部署</h2>
+    <div class="space-y-5">
+      <div class="gc p-6 flex gap-6 items-start"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold">1</div><div><h3 class="font-bold text-white mb-2">克隆项目</h3><div class="cmd p-4 mt-2"><pre><code>git clone https://github.com/xiaopengs/imagerelay.git && cd imagerelay</code></pre></div></div></div>
+      <div class="gc p-6 flex gap-6 items-start"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold">2</div><div><h3 class="font-bold text-white mb-2">构建前端</h3><div class="cmd p-4 mt-2"><pre><code>cd frontend && npm install && npm run build && cd ..
+mkdir -p infra/frontend-dist && cp -r frontend/dist/* infra/frontend-dist/</code></pre></div></div></div>
+      <div class="gc p-6 flex gap-6 items-start"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold">3</div><div><h3 class="font-bold text-white mb-2">申请 SSL 证书</h3><div class="cmd p-4 mt-2"><pre><code>sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d your-domain.com
+mkdir -p infra/ssl
+sudo cp /etc/letsencrypt/live/your-domain.com/fullchain.pem infra/ssl/cert.pem
+sudo cp /etc/letsencrypt/live/your-domain.com/privkey.pem infra/ssl/key.pem
+sudo chmod 644 infra/ssl/*.pem</code></pre></div><p class="text-xs text-d mt-3">⚠️ 域名需提前解析到服务器 IP，建议 DNS 生效后再继续</p></div></div>
+      <div class="gc p-6 flex gap-6 items-start"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold">4</div><div><h3 class="font-bold text-white mb-2">修改 Nginx 配置</h3><p class="text-sm text-d mb-3">编辑 <code class="text-primary">infra/nginx.conf</code>，将 <code class="text-primary">your-domain.com</code> 替换为真实域名</p><div class="cmd p-4"><pre><code>server_name your-domain.com;   # ← 替换为你的域名</code></pre></div></div></div>
+      <div class="gc p-6 flex gap-6 items-start"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold">5</div><div><h3 class="font-bold text-white mb-2">启动服务</h3><div class="cmd p-4 mt-2"><pre><code>cd infra && docker-compose up -d && docker-compose ps</code></pre></div></div></div>
+      <div class="gc p-6 flex gap-6 items-start"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold">6</div><div><h3 class="font-bold text-white mb-2">One API 管理后台配置</h3><div class="grid md:grid-cols-2 gap-4 mt-3"><div class="space-y-2 text-sm text-d"><p>① 访问 <code class="text-primary">http://your-ip:3000</code></p><p>② 登录：<code class="text-primary">root</code> / <code class="text-primary">123456</code></p><p>③ <strong class="text-white">立即修改默认密码！</strong></p></div><div class="space-y-2 text-sm text-d"><p>④ 渠道管理 → 添加 OpenAI：Key + 模型 <code class="text-primary">gpt-image-2, dall-e-3</code></p><p>⑤（可选）添加 Google Gemini 渠道</p><p>⑥ 设置自定义首页、定价页</p></div></div></div></div>
+      <div class="gc p-6 flex gap-6 items-start" style="border-color:rgba(74,222,128,.3)"><div class="flex-shrink-0 w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center text-accent font-bold">✓</div><div><h3 class="font-bold text-accent text-lg mb-3">部署完成！</h3><div class="grid md:grid-cols-2 gap-4"><div class="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-4"><p class="text-xs text-d mb-1">前端（用户访问）</p><code class="text-sm text-accent">https://your-domain.com</code></div><div class="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-4"><p class="text-xs text-d mb-1">One API 管理后台</p><code class="text-sm text-accent">https://your-domain.com/api/</code></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ API -->
+<section id="api" class="py-24 px-6 relative">
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/3 to-transparent"></div>
+  <div class="max-w-5xl mx-auto relative">
+    <p class="st">④ API 文档</p>
+    <h2 class="text-4xl font-bold text-white mb-12">OpenAI 兼容格式</h2>
+    <div class="gc p-7 mb-8"><p class="st mb-3">认证</p><div class="cmd p-4 mb-4"><pre><code>Authorization: Bearer &lt;your-api-token&gt;</code></pre></div><p class="text-sm text-d">Token 在 One API 管理后台 → 令牌管理 → 创建令牌获取</p></div>
+    <div class="space-y-3 mb-8">
+      <div class="gc p-5 flex items-center gap-4"><div class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-bold">POST</div><div><code class="text-sm text-white">/v1/images/generations</code><p class="text-xs text-d mt-1">生成图片（文生图/图生图）</p></div></div>
+      <div class="gc p-5 flex items-center gap-4"><div class="px-3 py-1 rounded-lg bg-blue-500/20 text-blue-400 text-xs font-bold">GET</div><div><code class="text-sm text-white">/v1/models</code><p class="text-xs text-d mt-1">获取可用模型列表</p></div></div>
+      <div class="gc p-5 flex items-center gap-4"><div class="px-3 py-1 rounded-lg bg-blue-500/20 text-blue-400 text-xs font-bold">GET</div><div><code class="text-sm text-white">/api/v1/users/me</code><p class="text-xs text-d mt-1">获取用户信息（含余额）</p></div></div>
+      <div class="gc p-5 flex items-center gap-4"><div class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-bold">POST</div><div><code class="text-sm text-white">/api/v1/users/top_up</code><p class="text-xs text-d mt-1">充值码充值</p></div></div>
+    </div>
+    <div class="gc p-7">
+      <p class="st mb-5">代码示例</p>
+      <div class="flex gap-2 mb-5">
+        <button onclick="showTab('curl')" id="tab-curl" class="px-5 py-2 rounded-lg text-sm font-medium transition-all" style="background:#7c6af5;color:white">cURL</button>
+        <button onclick="showTab('js')" id="tab-js" class="px-5 py-2 rounded-lg text-sm bg-card-light text-d hover:text-white">JavaScript</button>
+        <button onclick="showTab('py')" id="tab-py" class="px-5 py-2 rounded-lg text-sm bg-card-light text-d hover:text-white">Python</button>
+      </div>
+      <div id="code-curl" class="cmd p-5"><pre><code>curl https://your-domain.com/v1/images/generations \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"dall-e-3","prompt":"a futuristic city at night","n":1,"size":"1024x1024"}'</code></pre></div>
+      <div id="code-js" class="cmd p-5 hidden"><pre><code>const res = await fetch('/v1/images/generations', {
+  method: 'POST',
+  headers: {'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'},
+  body: JSON.stringify({ model: 'dall-e-3', prompt: 'a futuristic city', n: 1, size: '1024x1024' })
+})
+const data = await res.json()
+console.log(data.data[0].url)</code></pre></div>
+      <div id="code-py" class="cmd p-5 hidden"><pre><code>import requests
+resp = requests.post(
+    'https://your-domain.com/v1/images/generations',
+    headers={'Authorization': f'Bearer {token}'},
+    json={'model': 'dall-e-3', 'prompt': 'a futuristic city', 'n': 1, 'size': '1024x1024'}
+)
+print(resp.json()['data'][0]['url'])</code></pre></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 运维 -->
+<section id="ops" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <p class="st">⑤ 运维命令</p>
+    <h2 class="text-4xl font-bold text-white mb-12">常用运维操作</h2>
+    <div class="grid md:grid-cols-2 gap-5 mb-8">
+      <div class="gc p-6"><h3 class="font-bold text-white mb-4 flex items-center gap-2"><span>🔄</span> 重启服务</h3><div class="cmd p-4"><pre><code>docker-compose restart && docker-compose ps</code></pre></div></div>
+      <div class="gc p-6"><h3 class="font-bold text-white mb-4 flex items-center gap-2"><span>📊</span> 查看日志</h3><div class="cmd p-4"><pre><code>docker-compose logs -f
+docker-compose logs -f one-api
+docker-compose logs -f nginx</code></pre></div></div>
+      <div class="gc p-6"><h3 class="font-bold text-white mb-4 flex items-center gap-2"><span>⬆️</span> 更新版本</h3><div class="cmd p-4"><pre><code>git pull origin master && cd frontend && npm run build && cd .. && cp -r frontend/dist infra/frontend-dist/ && cd infra && docker-compose pull && docker-compose up -d</code></pre></div></div>
+      <div class="gc p-6"><h3 class="font-bold text-white mb-4 flex items-center gap-2"><span>💾</span> 数据备份</h3><div class="cmd p-4"><pre><code>cp infra/one-api-data/one-api.db backup-$(date +%Y%m%d).db
+tar --exclude=frontend/node_modules --exclude=frontend/dist -czf backup.tar.gz .</code></pre></div></div>
+    </div>
+    <div class="gc p-7">
+      <p class="st mb-6">🐛 故障排查</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-4 p-4 rounded-xl bg-red-500/5 border border-red-500/10"><div class="text-red-400 font-bold min-w-[70px]">502</div><div class="text-sm text-d"><strong class="text-t">原因：</strong>One API 未启动<br/><strong class="text-t">解决：</strong><code>docker-compose ps</code> → <code>docker-compose restart</code></div></div>
+        <div class="flex items-start gap-4 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/10"><div class="text-yellow-400 font-bold min-w-[70px]">生成失败</div><div class="text-sm text-d"><strong class="text-t">原因：</strong>API Key 无效或渠道禁用<br/><strong class="text-t">解决：</strong>管理后台 → 渠道管理 → 检查 Key 和余额</div></div>
+        <div class="flex items-start gap-4 p-4 rounded-xl bg-blue-500/5 border border-blue-500/10"><div class="text-blue-400 font-bold min-w-[70px]">上传报错</div><div class="text-sm text-d"><strong class="text-t">原因：</strong>Nginx 文件大小限制过小<br/><strong class="text-t">解决：</strong>nginx.conf 中 <code>client_max_body_size 20M;</code></div></div>
+        <div class="flex items-start gap-4 p-4 rounded-xl bg-purple-500/5 border border-purple-500/10"><div class="text-purple-400 font-bold min-w-[70px]">CORS 错误</div><div class="text-sm text-d"><strong class="text-t">原因：</strong>One API 未配置允许来源<br/><strong class="text-t">解决：</strong>管理后台 → 系统设置 → 允许来源填写你的域名</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 安全 -->
+<section id="sec" class="py-24 px-6 relative">
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-500/3 to-transparent"></div>
+  <div class="max-w-5xl mx-auto relative">
+    <p class="st">⑥ 安全加固</p>
+    <h2 class="text-4xl font-bold text-white mb-12">必做安全清单</h2>
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="gc p-7"><h3 class="font-bold text-white mb-5">⚠️ 立即执行</h3><div class="space-y-4 text-sm"><div class="flex items-start gap-3"><span class="text-red-400 font-bold mt-0.5">①</span><div><strong class="text-white">修改默认密码</strong><p class="text-d text-xs mt-1">首次登录后立即在 One API 管理后台修改 root 账户密码</p></div></div><div class="flex items-start gap-3"><span class="text-red-400 font-bold mt-0.5">②</span><div><strong class="text-white">HTTPS 强制</strong><p class="text-d text-xs mt-1">nginx.conf 已配置 HTTP→HTTPS 重定向，确保 SSL 证书有效</p></div></div><div class="flex items-start gap-3"><span class="text-red-400 font-bold mt-0.5">③</span><div><strong class="text-white">限制 3000 端口</strong><p class="text-d text-xs mt-1">docker-compose.yml 已配置 Nginx 只能本地访问 One API</p></div></div></div></div>
+      <div class="gc p-7"><h3 class="font-bold text-white mb-5">🛡️ 推荐加固</h3><div class="space-y-4 text-sm"><div class="flex items-start gap-3"><span class="text-emerald-400 font-bold mt-0.5">○</span><div><strong class="text-white">CORS 白名单</strong><p class="text-d text-xs mt-1">管理后台 → 系统设置 → 允许来源 = 你的域名</p></div></div><div class="flex items-start gap-3"><span class="text-emerald-400 font-bold mt-0.5">○</span><div><strong class="text-white">Rate Limiting</strong><p class="text-d text-xs mt-1">Nginx 配置中已内置请求限流，防止滥用</p></div></div><div class="flex items-start gap-3"><span class="text-emerald-400 font-bold mt-0.5">○</span><div><strong class="text-white">IP 白名单</strong><p class="text-d text-xs mt-1">高价值用户可在 One API → 令牌管理设置 IP 白名单</p></div></div></div></div>
+    </div>
+    <div class="gc p-7 text-center">
+      <p class="text-d text-sm mb-3">有问题？</p>
+      <a href="https://github.com/xiaopengs/imagerelay/issues" target="_blank" class="inline-flex items-center gap-2 text-sm text-primary hover:underline">提交 Issue →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="py-10 px-6 text-center text-sm text-d border-t border-white/5">
+  <p>ImageRelay · MIT License · © 2026 · 由 <strong class="text-white">🐾 黑爪爪</strong> 设计开发</p>
+</footer>
+
+<script>
+function showTab(tab) {
+  document.querySelectorAll('[id^="code-"]').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('[id^="tab-"]').forEach(el => { el.style.background=''; el.style.color=''; el.classList.add('bg-card-light'); el.classList.remove('text-white'); });
+  document.getElementById('code-' + tab).classList.remove('hidden');
+  document.getElementById('tab-' + tab).style.background = '#7c6af5';
+  document.getElementById('tab-' + tab).style.color = 'white';
+}
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; } });
+}, { threshold: 0.1 });
+document.querySelectorAll('section > div').forEach(el => { el.style.opacity='0'; el.style.transform='translateY(24px)'; el.style.transition='all 0.6s ease-out'; observer.observe(el); });
+</script>
+</body>
+</html>
