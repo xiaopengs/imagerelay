@@ -291,6 +291,10 @@ function handleDrop(e: DragEvent) {
 }
 
 function readImage(file: File) {
+  if (!file.type.startsWith('image/')) {
+    error.value = '请上传图片文件（PNG/JPG/WEBP）'
+    return
+  }
   if (file.size > 10 * 1024 * 1024) {
     error.value = '图片大小不能超过 10MB'
     return
@@ -299,6 +303,9 @@ function readImage(file: File) {
   reader.onload = (e) => {
     referencePreview.value = e.target?.result as string
     referenceImage.value = (e.target?.result as string).split(',')[1]
+  }
+  reader.onerror = () => {
+    error.value = '图片读取失败，请重试'
   }
   reader.readAsDataURL(file)
 }
@@ -313,6 +320,10 @@ function clearReference() {
 async function handleGenerate() {
   if (!prompt.value.trim()) {
     error.value = '请输入提示词'
+    return
+  }
+  if (!auth.apiKey) {
+    error.value = 'API Key 未就绪，请退出重新登录'
     return
   }
   if (balanceNum.value < selectedCount.value) {
@@ -366,12 +377,26 @@ async function handleGenerate() {
 }
 
 // --- Variation ---
-function handleVariation(img: { url: string }) {
+async function handleVariation(img: { url: string }) {
   prompt.value = `类似这张图片的风格，${prompt.value || '请生成变体'}`
   mode.value = 'image2image'
-  // Set the image as reference
   referencePreview.value = img.url
-  // If it's a data URL or http URL, we can't easily get base64, so just use as preview
+  // Convert the image to base64 for input_image
+  if (img.url.startsWith('data:')) {
+    referenceImage.value = img.url.split(',')[1]
+  } else {
+    try {
+      const res = await fetch(img.url)
+      const blob = await res.blob()
+      const reader = new FileReader()
+      reader.onload = () => {
+        referenceImage.value = (reader.result as string).split(',')[1]
+      }
+      reader.readAsDataURL(blob)
+    } catch {
+      referenceImage.value = ''
+    }
+  }
 }
 </script>
 

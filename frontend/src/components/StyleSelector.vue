@@ -9,7 +9,7 @@
           :key="s"
           @click="$emit('update:style', s)"
           class="chip"
-          :class="{ 'chip-active': modelValue === s }"
+          :class="{ 'chip-active': style === s }"
         >
           {{ s }}
         </button>
@@ -51,8 +51,8 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ modelValue: string; size: string; count: number }>()
-defineEmits(['update:modelValue', 'update:style', 'update:size', 'update:count'])
+defineProps<{ style: string; size: string; count: number }>()
+defineEmits(['update:style', 'update:size', 'update:count'])
 const styles = ['写实', '动漫', '插画', '油画', '水彩', '极简', '摄影']
 const sizes = [
   { label: '1:1 (1024x1024)', value: '1024x1024' },

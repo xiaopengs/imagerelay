@@ -110,8 +110,8 @@
               <p class="text-xs text-gray-400">{{ formatTime(log.created_at) }}</p>
             </div>
           </div>
-          <span class="text-sm font-medium" :class="log.quota > 0 ? 'text-red-500' : 'text-green-500'">
-            {{ log.quota > 0 ? '-' : '+' }}{{ formatBalance(Math.abs(log.quota)) }}
+          <span class="text-sm font-medium" :class="log.quota < 0 ? 'text-red-500' : 'text-green-500'">
+            {{ log.quota < 0 ? '-' : '+' }}{{ formatBalance(Math.abs(log.quota)) }}
           </span>
         </div>
       </div>
@@ -158,7 +158,7 @@ function formatTime(iso: string) {
 async function loadLogs() {
   logsLoading.value = true
   try {
-    const res = await userApi.getLogs(1, 2) // type 2 = consume logs
+    const res = await userApi.getLogs(1) // all log types
     const data = res.data
     recentLogs.value = (data?.data || data || []).map((item: any) => ({
       id: item.id,
@@ -166,8 +166,8 @@ async function loadLogs() {
       quota: item.quota || 0,
       created_at: item.created_at || '',
     }))
-  } catch {
-    // silently fail - logs are not critical
+  } catch (e) {
+    console.warn('Failed to load usage logs:', e)
   } finally {
     logsLoading.value = false
   }
