@@ -61,7 +61,7 @@
           :key="plan.id"
           class="card-hover p-5 cursor-pointer relative"
           :class="{ 'ring-2 ring-primary-500 shadow-glow': selectedPlan === plan.id }"
-          @click="selectedPlan = selectedPlan === plan.id ? '' : plan.id"
+          @click="selectedPlan = selectedPlan === plan.id ? '' : plan.id; paySuccess = false; payError = ''"
         >
           <div v-if="plan.popular" class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-[10px] px-3 py-0.5 rounded-full font-medium">
             推荐
@@ -94,7 +94,11 @@
           <span v-else>支付宝支付 &yen;{{ selectedPlanData?.price }}</span>
         </button>
         <p v-if="payError" class="text-sm text-red-500 mt-3 text-center">{{ payError }}</p>
-        <p class="text-xs text-gray-400 mt-3 text-center">支付完成后积分将自动到账，刷新页面查看余额</p>
+        <div v-if="paySuccess" class="mt-4 p-3 bg-green-50 rounded-lg text-center">
+          <p class="text-sm text-green-700 mb-2">支付页面已打开，完成支付后点击下方刷新余额</p>
+          <button @click="refreshBalance" class="btn-secondary text-sm">刷新余额</button>
+        </div>
+        <p v-if="!paySuccess" class="text-xs text-gray-400 mt-3 text-center">支付完成后积分将自动到账，刷新页面查看余额</p>
       </div>
 
       <!-- Redemption Code -->
@@ -154,12 +158,12 @@
             <p class="text-xs text-gray-400">共 {{ ordersTotal }} 条记录</p>
             <div class="flex gap-1">
               <button
-                @click="ordersPage > 1 && (ordersPage--, fetchOrders())"
+                @click="prevOrdersPage"
                 class="px-3 py-1 text-xs rounded border border-gray-200 hover:bg-gray-50 disabled:opacity-50"
                 :disabled="ordersPage <= 1"
               >上一页</button>
               <button
-                @click="ordersPage * ordersPageSize < ordersTotal && (ordersPage++, fetchOrders())"
+                @click="nextOrdersPage"
                 class="px-3 py-1 text-xs rounded border border-gray-200 hover:bg-gray-50 disabled:opacity-50"
                 :disabled="ordersPage * ordersPageSize >= ordersTotal"
               >下一页</button>
@@ -222,8 +226,15 @@ const plans = [
 const selectedPlan = ref('')
 const paying = ref(false)
 const payError = ref('')
+const paySuccess = ref(false)
 
 const selectedPlanData = computed(() => plans.find(p => p.id === selectedPlan.value))
+
+async function refreshBalance() {
+  await auth.fetchUser()
+  paySuccess.value = false
+  selectedPlan.value = ''
+}
 
 async function handlePay() {
   if (!selectedPlanData.value) return
@@ -232,16 +243,23 @@ async function handlePay() {
   try {
     const res = await paymentApi.createPayOrder(Number(selectedPlanData.value.price))
     const data = res.data
-    // new-api 可能返回 pay_url 或 pay_form
     if (data?.pay_url) {
       window.open(data.pay_url, '_blank')
+      paySuccess.value = true
     } else if (data?.pay_form) {
-      // pay_form 是 HTML form 字符串，需要 document.write 提交
       const div = document.createElement('div')
       div.innerHTML = data.pay_form
+      div.style.display = 'none'
       document.body.appendChild(div)
       const form = div.querySelector('form')
-      if (form) form.submit()
+      if (form) {
+        form.submit()
+        paySuccess.value = true
+      } else {
+        payError.value = '支付表单异常，请使用兑换码充值'
+      }
+      // Clean up DOM
+      setTimeout(() => div.remove(), 5000)
     } else {
       payError.value = '支付服务暂未开通，请使用兑换码充值'
     }
@@ -298,12 +316,26 @@ async function fetchOrders() {
     const res = await paymentApi.getTopUpRecords(ordersPage.value, ordersPageSize)
     const data = res.data
     orders.value = data?.data || data || []
-    ordersTotal.value = data?.total || orders.value.length || 0
+    ordersTotal.value = typeof data?.total === 'number' ? data.total : orders.value.length
   } catch (e) {
     console.warn('Failed to fetch orders:', e)
     orders.value = []
   } finally {
     ordersLoading.value = false
+  }
+}
+
+function prevOrdersPage() {
+  if (ordersPage.value > 1) {
+    ordersPage.value--
+    fetchOrders()
+  }
+}
+
+function nextOrdersPage() {
+  if (ordersPage.value * ordersPageSize < ordersTotal.value) {
+    ordersPage.value++
+    fetchOrders()
   }
 }
 
