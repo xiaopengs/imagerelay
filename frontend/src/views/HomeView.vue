@@ -56,17 +56,22 @@
           </RouterLink>
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div v-for="(item, i) in galleryPreview" :key="i" class="card-hover overflow-hidden group cursor-pointer">
-            <div class="aspect-square" :style="`background: linear-gradient(135deg, ${item.from}, ${item.to})`">
-              <div class="w-full h-full flex items-center justify-center text-5xl opacity-70 group-hover:opacity-100 transition-opacity">
-                {{ item.emoji }}
-              </div>
+          <RouterLink
+            v-for="item in featuredPrompts"
+            :key="item.id"
+            :to="{ name: 'create', query: { prompt: item.content } }"
+            class="card-hover overflow-hidden group cursor-pointer"
+          >
+            <div class="aspect-square flex items-center justify-center text-5xl relative overflow-hidden" :style="`background: linear-gradient(135deg, ${getGradient(item.id)})`">
+              <span class="opacity-60 group-hover:opacity-100 transition-opacity">
+                {{ getEmoji(item) }}
+              </span>
             </div>
             <div class="p-4">
               <h4 class="text-sm font-semibold text-gray-700">{{ item.title }}</h4>
-              <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ item.prompt }}</p>
+              <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ item.description }}</p>
             </div>
-          </div>
+          </RouterLink>
         </div>
       </div>
     </section>
@@ -124,8 +129,11 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
+import { h, computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import { galleryApi } from '@/api/gallery'
+
+const featuredPrompts = computed(() => galleryApi.getFeatured().slice(0, 4))
 
 // SVG icon helpers
 function svgIcon(paths: any[]) {
@@ -167,17 +175,33 @@ const features = [
   { title: '极速生成', desc: '平均 10 秒内出图，支持批量生成，高效满足创作需求。', icon: SpeedIcon },
 ]
 
-const galleryPreview = [
-  { title: '电影感人像', prompt: '浅景深电影感人像，自然光影，胶片质感...', emoji: '🎬', from: '#667eea', to: '#764ba2' },
-  { title: '赛博朋克城市', prompt: '霓虹灯闪烁的未来城市，雨夜，反射的光线...', emoji: '🌃', from: '#f093fb', to: '#f5576c' },
-  { title: '水墨山水', prompt: '传统中国水墨画风格，远山近水，留白意境...', emoji: '🏔', from: '#4facfe', to: '#00f2fe' },
-  { title: '产品摄影', prompt: '白色背景专业产品摄影，柔和布光，高质感...', emoji: '📸', from: '#43e97b', to: '#38f9d7' },
-]
-
 const plans = [
   { name: '体验包', price: '19.9', credits: 50, perImage: '0.40', popular: false },
   { name: '标准包', price: '49.9', credits: 150, perImage: '0.33', popular: true },
   { name: '专业包', price: '99.9', credits: 400, perImage: '0.25', popular: false },
   { name: '企业包', price: '299.9', credits: 1500, perImage: '0.20', popular: false },
 ]
+
+const gradients = [
+  '#667eea, #764ba2', '#f093fb, #f5576c', '#4facfe, #00f2fe', '#43e97b, #38f9d7',
+  '#fa709a, #fee140', '#a18cd1, #fbc2eb', '#fccb90, #d57eeb', '#e0c3fc, #8ec5fc',
+]
+
+function getGradient(id: string) {
+  const idx = parseInt(id.replace('p', ''), 10) % gradients.length
+  return gradients[idx]
+}
+
+const emojiMap: Record<string, string> = {
+  'portrait-selfie': '👤', 'landscape': '🏔', 'product': '📦', 'character': '🧑',
+  'animal': '🐾', 'food': '🍜', 'architecture': '🏰', 'street': '🌧', 'scifi': '🚀',
+  'botanical': '🌸', 'logo': '✦', 'banner': '🏷',
+}
+
+function getEmoji(prompt: { categories: { subjects: string[] } }) {
+  for (const subj of prompt.categories.subjects) {
+    if (emojiMap[subj]) return emojiMap[subj]
+  }
+  return '🎨'
+}
 </script>

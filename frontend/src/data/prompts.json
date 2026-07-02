@@ -1,0 +1,380 @@
+[
+  {
+    "id": "p001",
+    "title": "电影感人像",
+    "titleEn": "Cinematic Portrait",
+    "description": "浅景深电影感人像，自然光影，胶片质感",
+    "content": "Create a cinematic portrait of {subject}, shallow depth of field, natural window lighting, film grain texture, muted warm tones, shot on 85mm lens, bokeh background",
+    "arguments": [
+      { "name": "subject", "default": "a young woman looking out a window", "label": "拍摄主体" }
+    ],
+    "categories": { "useCases": ["profile-avatar"], "styles": ["photography"], "subjects": ["portrait-selfie"] },
+    "featured": true,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p002",
+    "title": "赛博朋克城市",
+    "titleEn": "Cyberpunk Cityscape",
+    "description": "霓虹灯闪烁的未来城市，雨夜，全息广告",
+    "content": "A sprawling cyberpunk cityscape at night, neon signs in Japanese and Chinese reflecting on wet streets, holographic advertisements floating between skyscrapers, flying cars in the distance, rain, volumetric fog, cinematic composition",
+    "arguments": [],
+    "categories": { "useCases": ["social-media"], "styles": ["illustration"], "subjects": ["landscape"] },
+    "featured": true,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p003",
+    "title": "水墨山水",
+    "titleEn": "Chinese Ink Landscape",
+    "description": "传统中国水墨画，远山近水，留白意境",
+    "content": "Traditional Chinese ink wash painting of {scene}, misty mountains in the distance, a small boat on calm water, pine trees on a cliff, elegant brushwork, rice paper texture, generous white space, masterful calligraphy in the corner",
+    "arguments": [
+      { "name": "scene", "default": "misty mountains with a waterfall", "label": "场景描述" }
+    ],
+    "categories": { "useCases": ["social-media"], "styles": ["illustration"], "subjects": ["landscape"] },
+    "featured": true,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p004",
+    "title": "产品摄影",
+    "titleEn": "Product Photography",
+    "description": "白色背景专业产品摄影，柔和布光",
+    "content": "Professional product photography of {product} on a clean white background, soft studio lighting, subtle shadows, high-end commercial look, sharp focus, 4K quality",
+    "arguments": [
+      { "name": "product", "default": "a luxury wristwatch", "label": "产品" }
+    ],
+    "categories": { "useCases": ["ecommerce"], "styles": ["photography"], "subjects": ["product"] },
+    "featured": true,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p005",
+    "title": "吉卜力魔法森林",
+    "titleEn": "Ghibli Magic Forest",
+    "description": "吉卜力风格的魔法森林，光斑洒落",
+    "content": "Studio Ghibli style enchanted forest scene, dappled sunlight filtering through ancient trees, tiny glowing spirits floating in the air, a moss-covered stone path, wildflowers blooming, lush green canopy, hand-painted watercolor aesthetic, whimsical and peaceful atmosphere",
+    "arguments": [],
+    "categories": { "useCases": ["social-media"], "styles": ["anime"], "subjects": ["landscape"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p006",
+    "title": "复古街头摄影",
+    "titleEn": "Vintage Street Photography",
+    "description": "复古胶片感的街头摄影，雨天倒影",
+    "content": "Vintage street photography, rainy urban street at dusk, reflections in puddles, warm streetlamp glow, people with umbrellas, shot on 35mm film, Kodak Portra 400 colors, slight grain, nostalgic mood",
+    "arguments": [],
+    "categories": { "useCases": ["social-media"], "styles": ["photography"], "subjects": ["street"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p007",
+    "title": "极简Logo设计",
+    "titleEn": "Minimalist Logo",
+    "description": "简洁现代的Logo设计，矢量风格",
+    "content": "Minimalist modern logo design for {brand}, clean geometric shapes, flat vector style, limited color palette of 2-3 colors, professional and memorable, white background, suitable for both digital and print",
+    "arguments": [
+      { "name": "brand", "default": "a coffee shop called Bean & Brew", "label": "品牌描述" }
+    ],
+    "categories": { "useCases": ["infographic"], "styles": ["minimalist"], "subjects": ["logo"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p008",
+    "title": "动漫少女",
+    "titleEn": "Anime Girl",
+    "description": "日系动漫风格少女角色，精致眼神",
+    "content": "Beautiful anime girl with {feature}, detailed expressive eyes with light reflections, flowing hair, soft cel-shading, vibrant colors, cherry blossoms in the background, high quality anime illustration, studio quality",
+    "arguments": [
+      { "name": "feature", "default": "long silver hair and blue eyes, wearing a school uniform", "label": "角色特征" }
+    ],
+    "categories": { "useCases": ["profile-avatar"], "styles": ["anime"], "subjects": ["character"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p009",
+    "title": "美食摄影",
+    "titleEn": "Food Photography",
+    "description": "精致美食摄影，俯拍角度，暖色调",
+    "content": "Overhead flat-lay food photography of {dish}, rustic wooden table, fresh ingredients scattered around, natural window light, warm color grading, shallow depth of field, Instagram-worthy composition, appetizing presentation",
+    "arguments": [
+      { "name": "dish", "default": "a bowl of ramen with soft-boiled egg, nori, and green onions", "label": "菜品" }
+    ],
+    "categories": { "useCases": ["social-media", "ecommerce"], "styles": ["photography"], "subjects": ["food"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p010",
+    "title": "奇幻城堡",
+    "titleEn": "Fantasy Castle",
+    "description": "中世纪奇幻城堡，龙盘旋，史诗氛围",
+    "content": "Epic fantasy castle perched on a cliff edge, massive stone towers with banners, a dragon circling above, dramatic sunset sky with purple and gold clouds, medieval architecture, cinematic wide angle shot, matte painting style, Lord of the Rings inspired",
+    "arguments": [],
+    "categories": { "useCases": ["social-media", "game"], "styles": ["illustration"], "subjects": ["architecture"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p011",
+    "title": "电商Banner",
+    "titleEn": "E-commerce Banner",
+    "description": "电商促销Banner，现代排版，吸引眼球",
+    "content": "Modern e-commerce promotional banner for {sale}, bold typography, gradient background in vibrant colors, floating product elements, clean professional layout, high conversion design, 1920x600 aspect ratio feel",
+    "arguments": [
+      { "name": "sale", "default": "summer sale with 50% off electronics", "label": "促销信息" }
+    ],
+    "categories": { "useCases": ["ecommerce"], "styles": ["minimalist"], "subjects": ["banner"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p012",
+    "title": "太空探索",
+    "titleEn": "Space Exploration",
+    "description": "宇航员在异星球表面，星云背景",
+    "content": "A lone astronaut standing on an alien planet surface, looking up at a massive ringed planet in the sky, colorful nebula in the background, rocky terrain with glowing crystals, sci-fi concept art, dramatic lighting, 8K ultra detailed",
+    "arguments": [],
+    "categories": { "useCases": ["social-media"], "styles": ["illustration"], "subjects": ["scifi"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p013",
+    "title": "水彩花卉",
+    "titleEn": "Watercolor Florals",
+    "description": "精致水彩花卉插画，柔和渐变",
+    "content": "Delicate watercolor painting of {flowers}, soft color washes and gradients, visible brushstrokes, loose botanical illustration style, white paper edges visible, elegant and feminine, suitable for wedding invitation design",
+    "arguments": [
+      { "name": "flowers", "default": "peonies, roses, and eucalyptus leaves in a bouquet", "label": "花卉种类" }
+    ],
+    "categories": { "useCases": ["social-media"], "styles": ["watercolor"], "subjects": ["botanical"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p014",
+    "title": "像素游戏角色",
+    "titleEn": "Pixel Art Character",
+    "description": "复古像素风格游戏角色，16-bit美学",
+    "content": "16-bit pixel art game character sprite of {character}, retro RPG style, limited color palette, clean pixel work, idle animation pose, transparent background, suitable for a platformer game, nostalgic SNES aesthetic",
+    "arguments": [
+      { "name": "character", "default": "a brave knight with a glowing sword and blue cape", "label": "角色描述" }
+    ],
+    "categories": { "useCases": ["game"], "styles": ["illustration"], "subjects": ["character"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p015",
+    "title": "建筑可视化",
+    "titleEn": "Architectural Visualization",
+    "description": "现代建筑3D渲染，黄昏光线",
+    "content": "Photorealistic architectural visualization of {building}, golden hour lighting, lush landscaping, glass reflections, people walking nearby for scale, dramatic sky, professional 3D rendering quality, V-Ray style",
+    "arguments": [
+      { "name": "building", "default": "a modern minimalist villa with floor-to-ceiling windows and a rooftop garden", "label": "建筑描述" }
+    ],
+    "categories": { "useCases": ["infographic"], "styles": ["realistic"], "subjects": ["architecture"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p016",
+    "title": "可爱卡通动物",
+    "titleEn": "Cute Cartoon Animals",
+    "description": "Q版可爱卡通动物，圆润造型",
+    "content": "Adorable chibi-style cartoon {animal}, big round head with sparkly eyes, tiny body, pastel color palette, soft rounded shapes, kawaii aesthetic, simple clean background, perfect for stickers or emoji design",
+    "arguments": [
+      { "name": "animal", "default": "corgi puppy wearing a tiny wizard hat", "label": "动物" }
+    ],
+    "categories": { "useCases": ["profile-avatar", "social-media"], "styles": ["illustration"], "subjects": ["animal"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p017",
+    "title": "信息图表",
+    "titleEn": "Infographic Design",
+    "description": "数据可视化信息图表，扁平设计",
+    "content": "Clean modern infographic about {topic}, flat design style, data visualization with charts and icons, professional color scheme, organized sections with clear hierarchy, white space, suitable for a business presentation",
+    "arguments": [
+      { "name": "topic", "default": "the growth of AI technology from 2020 to 2026", "label": "主题" }
+    ],
+    "categories": { "useCases": ["infographic"], "styles": ["minimalist"], "subjects": ["data"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p018",
+    "title": "油画肖像",
+    "titleEn": "Oil Painting Portrait",
+    "description": "文艺复兴风格油画肖像，丰富笔触",
+    "content": "Renaissance-style oil painting portrait of {subject}, rich impasto brushstrokes, dramatic chiaroscuro lighting, deep warm tones, ornate gold frame, museum quality, Rembrandt inspired, canvas texture visible",
+    "arguments": [
+      { "name": "subject", "default": "a noble gentleman in a velvet doublet", "label": "人物" }
+    ],
+    "categories": { "useCases": ["profile-avatar"], "styles": ["oil-painting"], "subjects": ["portrait-selfie"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p019",
+    "title": "YouTube缩略图",
+    "titleEn": "YouTube Thumbnail",
+    "description": "吸引点击的YouTube视频缩略图",
+    "content": "Eye-catching YouTube thumbnail for a video about {topic}, bold text overlay with yellow and white colors, expressive face reaction, high contrast, professional YouTuber style, 1280x720 composition, impossible to not click",
+    "arguments": [
+      { "name": "topic", "default": "testing the world's most expensive camera", "label": "视频主题" }
+    ],
+    "categories": { "useCases": ["social-media", "thumbnail"], "styles": ["illustration"], "subjects": ["social"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p020",
+    "title": "漫画分镜",
+    "titleEn": "Comic Panel",
+    "description": "日式漫画分镜，动态线条，速度感",
+    "content": "Dynamic manga panel of {action}, bold ink lines, speed lines and motion blur effects, dramatic angle, screentone shading, black and white with high contrast, Japanese manga art style, professional comic quality",
+    "arguments": [
+      { "name": "action", "default": "a samurai unsheathing their katana in a single swift motion", "label": "动作场景" }
+    ],
+    "categories": { "useCases": ["comic"], "styles": ["anime"], "subjects": ["action"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p021",
+    "title": "微缩场景",
+    "titleEn": "Miniature Diorama",
+    "description": "微缩模型场景，移轴摄影效果",
+    "content": "Tilt-shift photography of a miniature diorama of {scene}, shallow depth of field making everything look tiny, bright even lighting, intricate miniature details, macro photography feel, hyper-realistic small-scale model",
+    "arguments": [
+      { "name": "scene", "default": "a bustling Japanese train station with tiny commuters", "label": "场景" }
+    ],
+    "categories": { "useCases": ["social-media"], "styles": ["photography"], "subjects": ["miniature"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p022",
+    "title": "扁平插画",
+    "titleEn": "Flat Illustration",
+    "description": "现代扁平风格插画，适合UI/网页",
+    "content": "Modern flat design illustration of {scene}, geometric shapes, limited color palette of 5 harmonious colors, no outlines, clean vector aesthetic, suitable for a SaaS landing page hero section, friendly and professional",
+    "arguments": [
+      { "name": "scene", "default": "a diverse team collaborating around a digital whiteboard", "label": "场景" }
+    ],
+    "categories": { "useCases": ["infographic", "social-media"], "styles": ["minimalist"], "subjects": ["people"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p023",
+    "title": "恐怖氛围",
+    "titleEn": "Horror Atmosphere",
+    "description": "恐怖氛围概念图，阴暗色调",
+    "content": "Atmospheric horror concept art of {setting}, dark moody lighting, volumetric fog, eerie silence implied through composition, unsettling details hidden in shadows, cinematic horror movie still, desaturated cold tones, dread and tension",
+    "arguments": [
+      { "name": "setting", "default": "an abandoned hospital corridor with flickering fluorescent lights", "label": "场景" }
+    ],
+    "categories": { "useCases": ["game"], "styles": ["illustration"], "subjects": ["horror"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p024",
+    "title": "宠物肖像",
+    "titleEn": "Pet Portrait",
+    "description": "精致宠物肖像画，毛发细节",
+    "content": "Detailed portrait of {pet}, individual fur strands visible, soft natural lighting, warm background gradient, professional pet photography style, sharp focus on eyes with catch lights, adorable expression, 4K quality",
+    "arguments": [
+      { "name": "pet", "default": "a golden retriever puppy with a red bandana", "label": "宠物描述" }
+    ],
+    "categories": { "useCases": ["profile-avatar"], "styles": ["photography"], "subjects": ["animal"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p025",
+    "title": "抽象艺术",
+    "titleEn": "Abstract Art",
+    "description": "现代抽象艺术，色彩碰撞",
+    "content": "Bold contemporary abstract art, {mood}, dynamic composition with overlapping geometric and organic shapes, rich texture palette, acrylic paint on canvas feel, gallery-worthy, Kandinsky meets Rothko",
+    "arguments": [
+      { "name": "mood", "default": "energetic clash of warm reds and cool blues with gold accents", "label": "情绪氛围" }
+    ],
+    "categories": { "useCases": ["social-media"], "styles": ["oil-painting"], "subjects": ["abstract"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p026",
+    "title": "手机App界面",
+    "titleEn": "Mobile App UI",
+    "description": "现代手机App界面设计，iOS风格",
+    "content": "Modern mobile app UI design for {app}, iOS style with clean rounded corners, subtle shadows, system font, status bar, navigation bar, content cards, floating action button, presented on an iPhone mockup at a slight angle, professional Dribbble quality",
+    "arguments": [
+      { "name": "app", "default": "a meditation and mindfulness app with calming blue and purple gradient theme", "label": "App描述" }
+    ],
+    "categories": { "useCases": ["infographic"], "styles": ["minimalist"], "subjects": ["ui-design"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p027",
+    "title": "蒸汽朋克机械",
+    "titleEn": "Steampunk Machine",
+    "description": "蒸汽朋克风格机械装置，铜质齿轮",
+    "content": "Intricate steampunk mechanical device, {object}, brass and copper gears and pipes, Victorian era aesthetic, glowing pressure gauges, steam vents, leather straps, warm amber lighting, detailed concept art, industrial revolution meets science fiction",
+    "arguments": [
+      { "name": "object", "default": "a time-travel pocket watch with exposed clockwork mechanisms", "label": "物品" }
+    ],
+    "categories": { "useCases": ["game"], "styles": ["illustration"], "subjects": ["scifi"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p028",
+    "title": "星座插画",
+    "titleEn": "Zodiac Illustration",
+    "description": "精美星座插画，星空背景",
+    "content": "Beautiful zodiac constellation illustration for {sign}, ethereal cosmic background with nebulae and distant galaxies, golden star connections forming the constellation pattern, mystical and dreamy atmosphere, celestial art style, deep blues and purples with gold stars",
+    "arguments": [
+      { "name": "sign", "default": "Scorpio", "label": "星座" }
+    ],
+    "categories": { "useCases": ["social-media", "profile-avatar"], "styles": ["illustration"], "subjects": ["astronomy"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p029",
+    "title": "日式庭院",
+    "titleEn": "Japanese Garden",
+    "description": "宁静的日式枯山水庭院",
+    "content": "Serene Japanese zen garden, raked white gravel patterns, carefully placed moss-covered rocks, a wooden bridge over a koi pond, maple trees with red autumn leaves, stone lantern, bamboo water feature, peaceful morning light, photorealistic quality",
+    "arguments": [],
+    "categories": { "useCases": ["social-media"], "styles": ["photography"], "subjects": ["landscape"] },
+    "featured": false,
+    "needReferenceImages": false
+  },
+  {
+    "id": "p030",
+    "title": "儿童绘本",
+    "titleEn": "Children Book",
+    "description": "温馨儿童绘本插画，柔和色调",
+    "content": "Whimsical children's book illustration of {scene}, soft pastel watercolors, rounded friendly shapes, warm and inviting atmosphere, storybook magic, gentle lighting, suitable for ages 3-8, reminiscent of classic picture books like Where the Wild Things Are",
+    "arguments": [
+      { "name": "scene", "default": "a friendly dragon helping a small child cross a rainbow bridge", "label": "场景" }
+    ],
+    "categories": { "useCases": ["social-media"], "styles": ["watercolor"], "subjects": ["children"] },
+    "featured": false,
+    "needReferenceImages": false
+  }
+]
