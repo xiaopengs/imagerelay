@@ -88,10 +88,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
+const route = useRoute()
 
 const form = ref({ email: '', password: '' })
 const showPassword = ref(false)
@@ -103,7 +104,8 @@ async function handleLogin() {
   error.value = ''
   try {
     await auth.login(form.value.email, form.value.password)
-    window.location.href = '/console'
+    const redirect = (route.query.redirect as string) || '/console'
+    window.location.href = redirect
   } catch (e: any) {
     error.value = e?.response?.data?.message || e?.response?.data?.error || '登录失败，请检查邮箱和密码'
   } finally {

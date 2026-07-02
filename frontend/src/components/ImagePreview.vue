@@ -11,7 +11,17 @@
         class="w-full aspect-square object-cover cursor-pointer"
         loading="lazy"
         @click="openLightbox(i)"
+        @error="failedImages.add(i)"
       />
+      <!-- Error fallback -->
+      <div v-if="failedImages.has(i)" class="absolute inset-0 bg-gray-100 flex flex-col items-center justify-center text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+        </svg>
+        <span class="text-xs">加载失败</span>
+      </div>
       <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-end justify-center gap-3 pb-4 opacity-0 group-hover:opacity-100">
         <button @click.stop="download(img.url)" class="w-9 h-9 bg-white/90 rounded-full flex items-center justify-center text-gray-700 hover:bg-white hover:scale-110 transition-all" title="下载">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -60,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
 const props = withDefaults(defineProps<{
   images: Array<{ url: string }>
@@ -77,8 +87,9 @@ defineEmits<{
 
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
+const failedImages = reactive(new Set<number>())
 
-const gridClass = computed(() => props.cols === 1 ? 'grid-cols-1' : 'grid-cols-2')
+const gridClass = computed(() => props.cols === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2')
 
 const loadingSlots = computed(() => {
   if (!props.loading) return 0
