@@ -26,10 +26,10 @@ export const galleryApi = {
   search: (q: string) => {
     const lower = q.toLowerCase()
     return allPrompts.filter(p =>
-      p.title.includes(lower) ||
+      p.title.toLowerCase().includes(lower) ||
       p.titleEn.toLowerCase().includes(lower) ||
       p.content.toLowerCase().includes(lower) ||
-      p.description.includes(lower)
+      p.description.toLowerCase().includes(lower)
     )
   },
 

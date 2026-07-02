@@ -124,6 +124,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { galleryApi, type PromptItem } from '@/api/gallery'
+import { getGradient, getEmoji, replaceArguments } from '@/utils/promptHelpers'
 
 const router = useRouter()
 
@@ -170,37 +171,6 @@ const filteredPrompts = computed(() => {
   return result
 })
 
-const gradients = [
-  '#667eea, #764ba2', '#f093fb, #f5576c', '#4facfe, #00f2fe', '#43e97b, #38f9d7',
-  '#fa709a, #fee140', '#a18cd1, #fbc2eb', '#fccb90, #d57eeb', '#e0c3fc, #8ec5fc',
-  '#f5576c, #ff6a88', '#667eea, #764ba2', '#89f7fe, #66a6ff', '#fddb92, #d1fdff',
-  '#a1c4fd, #c2e9fb', '#d4fc79, #96e6a1', '#84fab0, #8fd3f4', '#fbc2eb, #a6c1ee',
-  '#f6d365, #fda085', '#ffecd2, #fcb69f', '#ff9a9e, #fecfef', '#a8edea, #fed6e3',
-  '#d299c2, #fef9d7', '#e8cbc0, #636fa4', '#7f7fd5, #91eae4', '#654ea3, #eaafc8',
-  '#feada6, #f5efef', '#a6c0fe, #f68084', '#fccb90, #d57eeb', '#30cfd0, #330867',
-  '#c1dfc4, #de9e89', '#0ba360, #3cba92',
-]
-
-function getGradient(id: string) {
-  const idx = parseInt(id.replace('p', ''), 10) % gradients.length
-  return gradients[idx]
-}
-
-const emojiMap: Record<string, string> = {
-  'portrait-selfie': '👤', 'landscape': '🏔', 'product': '📦', 'character': '🧑',
-  'animal': '🐾', 'food': '🍜', 'architecture': '🏰', 'street': '🌧', 'scifi': '🚀',
-  'botanical': '🌸', 'logo': '✦', 'banner': '🏷', 'data': '📊', 'ui-design': '📱',
-  'abstract': '🎨', 'horror': '👻', 'miniature': '🔬', 'astronomy': '✨',
-  'action': '⚔', 'children': '📚', 'people': '👥', 'social': '📹',
-}
-
-function getEmoji(prompt: PromptItem) {
-  for (const subj of prompt.categories.subjects) {
-    if (emojiMap[subj]) return emojiMap[subj]
-  }
-  return '🎨'
-}
-
 function getStyleBadge(prompt: PromptItem) {
   const styleLabels: Record<string, string> = {
     photography: '摄影', anime: '动漫', illustration: '插画',
@@ -222,10 +192,7 @@ function handleCardClick(prompt: PromptItem) {
 
 function goToCreate() {
   if (!dialogPrompt.value) return
-  let finalContent = dialogPrompt.value.content
-  for (const [name, value] of Object.entries(dialogValues.value)) {
-    finalContent = finalContent.replace(`{${name}}`, value || '')
-  }
+  const finalContent = replaceArguments(dialogPrompt.value.content, dialogValues.value)
   dialogPrompt.value = null
   router.push({ name: 'create', query: { prompt: finalContent } })
 }

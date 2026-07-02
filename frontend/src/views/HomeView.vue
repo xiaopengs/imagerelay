@@ -56,11 +56,11 @@
           </RouterLink>
         </div>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <RouterLink
+          <div
             v-for="item in featuredPrompts"
             :key="item.id"
-            :to="{ name: 'create', query: { prompt: item.content } }"
             class="card-hover overflow-hidden group cursor-pointer"
+            @click="handleFeaturedClick(item)"
           >
             <div class="aspect-square flex items-center justify-center text-5xl relative overflow-hidden" :style="`background: linear-gradient(135deg, ${getGradient(item.id)})`">
               <span class="opacity-60 group-hover:opacity-100 transition-opacity">
@@ -71,7 +71,7 @@
               <h4 class="text-sm font-semibold text-gray-700">{{ item.title }}</h4>
               <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ item.description }}</p>
             </div>
-          </RouterLink>
+          </div>
         </div>
       </div>
     </section>
@@ -125,15 +125,68 @@
         </div>
       </div>
     </section>
+
+    <!-- Argument Dialog for Featured Prompts -->
+    <Teleport to="body">
+      <div
+        v-if="dialogPrompt"
+        class="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+        @click.self="dialogPrompt = null"
+      >
+        <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-1">{{ dialogPrompt.title }}</h3>
+          <p class="text-sm text-gray-500 mb-5">{{ dialogPrompt.description }}</p>
+
+          <div class="space-y-4 mb-6">
+            <div v-for="arg in dialogPrompt.arguments" :key="arg.name">
+              <label class="block text-sm font-medium text-gray-700 mb-1">{{ arg.label }}</label>
+              <input
+                v-model="dialogValues[arg.name]"
+                :placeholder="arg.default"
+                class="input-field"
+              />
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button @click="dialogPrompt = null" class="btn-ghost flex-1">取消</button>
+            <button @click="goToCreateFromDialog" class="btn-primary flex-1">去生成</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
-import { h, computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import { galleryApi } from '@/api/gallery'
+import { h, computed, ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import { galleryApi, type PromptItem } from '@/api/gallery'
+import { getGradient, getEmoji, replaceArguments } from '@/utils/promptHelpers'
 
+const router = useRouter()
 const featuredPrompts = computed(() => galleryApi.getFeatured().slice(0, 4))
+
+const dialogPrompt = ref<PromptItem | null>(null)
+const dialogValues = ref<Record<string, string>>({})
+
+function handleFeaturedClick(item: PromptItem) {
+  if (item.arguments.length > 0) {
+    dialogPrompt.value = item
+    const vals: Record<string, string> = {}
+    item.arguments.forEach(a => { vals[a.name] = a.default })
+    dialogValues.value = vals
+  } else {
+    router.push({ name: 'create', query: { prompt: item.content } })
+  }
+}
+
+function goToCreateFromDialog() {
+  if (!dialogPrompt.value) return
+  const finalContent = replaceArguments(dialogPrompt.value.content, dialogValues.value)
+  dialogPrompt.value = null
+  router.push({ name: 'create', query: { prompt: finalContent } })
+}
 
 // SVG icon helpers
 function svgIcon(paths: any[]) {
@@ -181,27 +234,4 @@ const plans = [
   { name: '专业包', price: '99.9', credits: 400, perImage: '0.25', popular: false },
   { name: '企业包', price: '299.9', credits: 1500, perImage: '0.20', popular: false },
 ]
-
-const gradients = [
-  '#667eea, #764ba2', '#f093fb, #f5576c', '#4facfe, #00f2fe', '#43e97b, #38f9d7',
-  '#fa709a, #fee140', '#a18cd1, #fbc2eb', '#fccb90, #d57eeb', '#e0c3fc, #8ec5fc',
-]
-
-function getGradient(id: string) {
-  const idx = parseInt(id.replace('p', ''), 10) % gradients.length
-  return gradients[idx]
-}
-
-const emojiMap: Record<string, string> = {
-  'portrait-selfie': '👤', 'landscape': '🏔', 'product': '📦', 'character': '🧑',
-  'animal': '🐾', 'food': '🍜', 'architecture': '🏰', 'street': '🌧', 'scifi': '🚀',
-  'botanical': '🌸', 'logo': '✦', 'banner': '🏷',
-}
-
-function getEmoji(prompt: { categories: { subjects: string[] } }) {
-  for (const subj of prompt.categories.subjects) {
-    if (emojiMap[subj]) return emojiMap[subj]
-  }
-  return '🎨'
-}
 </script>
