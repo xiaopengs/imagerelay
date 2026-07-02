@@ -1,10 +1,10 @@
 <template>
-  <div class="prompt-input">
+  <div>
     <textarea
       v-model="localPrompt"
-      :placeholder="placeholder || '描述你想要生成的图片...'"
-      class="w-full bg-card-light border border-white/10 rounded-xl px-4 py-3 text-text placeholder:text-text-dim resize-none focus:border-primary focus:outline-none transition-colors"
-      :rows="4"
+      :placeholder="placeholder || '描述你想要生成图片...'"
+      class="input-field min-h-[100px] resize-y !text-sm"
+      rows="4"
       @input="$emit('update:modelValue', localPrompt)"
     />
     <div class="flex flex-wrap gap-2 mt-3">
@@ -12,7 +12,7 @@
         v-for="preset in presets"
         :key="preset"
         @click="localPrompt = preset; $emit('update:modelValue', preset)"
-        class="text-xs px-3 py-1 rounded-full bg-card hover:bg-card-light border border-white/10 text-text-dim hover:text-text transition-all"
+        class="chip"
       >
         {{ preset }}
       </button>

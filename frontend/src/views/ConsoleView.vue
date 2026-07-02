@@ -68,13 +68,21 @@
       </RouterLink>
     </div>
 
-    <!-- Recent Generations Placeholder -->
+    <!-- Recent Usage Logs -->
     <div>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold text-gray-800">最近生成</h2>
-        <RouterLink to="/console/create" class="text-sm text-primary-600 hover:text-primary-700">开始创作 &rarr;</RouterLink>
+        <h2 class="text-lg font-semibold text-gray-800">最近使用记录</h2>
+        <RouterLink to="/console/settings" class="text-sm text-primary-600 hover:text-primary-700">管理设置 &rarr;</RouterLink>
       </div>
-      <div class="card p-12 text-center">
+
+      <!-- Loading -->
+      <div v-if="logsLoading" class="card p-12 text-center">
+        <div class="inline-flex items-center justify-center w-12 h-12 border-[3px] border-primary-200 border-t-primary-500 rounded-full animate-spin mx-auto mb-3"></div>
+        <p class="text-sm text-gray-400">加载中...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="recentLogs.length === 0" class="card p-12 text-center">
         <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -82,20 +90,91 @@
             <polyline points="21 15 16 10 5 21"/>
           </svg>
         </div>
-        <p class="text-gray-500">还没有生成记录</p>
+        <p class="text-gray-500">还没有使用记录</p>
         <RouterLink to="/console/create" class="btn-primary inline-block mt-4 text-sm">开始创作</RouterLink>
+      </div>
+
+      <!-- Log List -->
+      <div v-else class="card divide-y divide-gray-100">
+        <div v-for="log in recentLogs" :key="log.id" class="flex items-center justify-between px-5 py-4">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-8 h-8 bg-primary-50 rounded-lg flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm text-gray-700 truncate">{{ log.content || '图片生成' }}</p>
+              <p class="text-xs text-gray-400">{{ formatTime(log.created_at) }}</p>
+            </div>
+          </div>
+          <span class="text-sm font-medium" :class="log.quota > 0 ? 'text-red-500' : 'text-green-500'">
+            {{ log.quota > 0 ? '-' : '+' }}{{ formatBalance(Math.abs(log.quota)) }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { userApi } from '@/api/user'
 
 const auth = useAuthStore()
+
+const logsLoading = ref(false)
+
+interface LogItem {
+  id: number
+  content: string
+  quota: number
+  created_at: string
+}
+
+const recentLogs = ref<LogItem[]>([])
 
 function formatBalance(q: number) {
   return (q / 500000).toFixed(1) + ' 积分'
 }
+
+function formatTime(iso: string) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  const now = new Date()
+  const diffMs = now.getTime() - d.getTime()
+  const diffMin = Math.floor(diffMs / 60000)
+  if (diffMin < 1) return '刚刚'
+  if (diffMin < 60) return `${diffMin} 分钟前`
+  const diffHr = Math.floor(diffMin / 60)
+  if (diffHr < 24) return `${diffHr} 小时前`
+  return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
+}
+
+async function loadLogs() {
+  logsLoading.value = true
+  try {
+    const res = await userApi.getLogs(1, 2) // type 2 = consume logs
+    const data = res.data
+    recentLogs.value = (data?.data || data || []).map((item: any) => ({
+      id: item.id,
+      content: item.content || item.model_name || '图片生成',
+      quota: item.quota || 0,
+      created_at: item.created_at || '',
+    }))
+  } catch {
+    // silently fail - logs are not critical
+  } finally {
+    logsLoading.value = false
+  }
+}
+
+onMounted(() => {
+  auth.fetchUser()
+  loadLogs()
+})
 </script>

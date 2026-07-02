@@ -10,9 +10,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const sizeClass = computed(() => ({
-  sm: 'w-4 h-4',
-  md: 'w-8 h-8',
-  lg: 'w-12 h-12'
+  sm: 'w-4 h-4 border-2',
+  md: 'w-8 h-8 border-[3px]',
+  lg: 'w-12 h-12 border-4'
 }[props.size]))
 </script>
 
@@ -20,7 +20,7 @@ const sizeClass = computed(() => ({
   <div class="flex items-center justify-center">
     <div
       :class="sizeClass"
-      class="border-[3px] border-[#7c6af5]/20 border-t-[#7c6af5] rounded-full animate-spin"
+      class="border-primary-200 border-t-primary-500 rounded-full animate-spin"
     />
   </div>
 </template>
