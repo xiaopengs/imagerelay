@@ -62,8 +62,16 @@
             class="card-hover overflow-hidden group cursor-pointer"
             @click="handleFeaturedClick(item)"
           >
-            <div class="aspect-square flex items-center justify-center text-5xl relative overflow-hidden" :style="`background: linear-gradient(135deg, ${getGradient(item.id)})`">
-              <span class="opacity-60 group-hover:opacity-100 transition-opacity">
+            <div class="aspect-square flex items-center justify-center text-5xl relative overflow-hidden" :style="!item.exampleImage ? `background: linear-gradient(135deg, ${getGradient(item.id)})` : ''">
+              <img
+                v-if="item.exampleImage"
+                :src="item.exampleImage"
+                :alt="item.title"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+                @error="($event.target as HTMLImageElement).style.display = 'none'"
+              />
+              <span v-else class="opacity-60 group-hover:opacity-100 transition-opacity">
                 {{ getEmoji(item) }}
               </span>
             </div>

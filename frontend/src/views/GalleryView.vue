@@ -52,12 +52,20 @@
         class="card-hover overflow-hidden cursor-pointer group"
         @click="handleCardClick(prompt)"
       >
-        <!-- Gradient Preview Area -->
+        <!-- Preview Area -->
         <div
           class="aspect-[4/3] flex items-center justify-center text-5xl relative overflow-hidden"
-          :style="`background: linear-gradient(135deg, ${getGradient(prompt.id)})`"
+          :style="!prompt.exampleImage ? `background: linear-gradient(135deg, ${getGradient(prompt.id)})` : ''"
         >
-          <span class="opacity-60 group-hover:opacity-90 group-hover:scale-110 transition-all duration-300">
+          <img
+            v-if="prompt.exampleImage"
+            :src="prompt.exampleImage"
+            :alt="prompt.title"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+            @error="($event.target as HTMLImageElement).style.display = 'none'"
+          />
+          <span v-else class="opacity-60 group-hover:opacity-90 group-hover:scale-110 transition-all duration-300">
             {{ getEmoji(prompt) }}
           </span>
           <!-- Style Badge -->
@@ -175,6 +183,9 @@ function getStyleBadge(prompt: PromptItem) {
   const styleLabels: Record<string, string> = {
     photography: '摄影', anime: '动漫', illustration: '插画',
     'oil-painting': '油画', watercolor: '水彩', minimalist: '极简', realistic: '写实',
+    '3d-render': '3D', cinematic: '电影', sketch: '素描', comic: '漫画',
+    'pixel-art': '像素', cyberpunk: '赛博', retro: '复古', chibi: 'Q版',
+    isometric: '等距', 'ink-chinese': '国风',
   }
   return styleLabels[prompt.categories.styles[0]] || prompt.categories.styles[0]
 }

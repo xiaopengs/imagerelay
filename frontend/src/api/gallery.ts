@@ -14,6 +14,7 @@ export interface PromptItem {
   }
   featured: boolean
   needReferenceImages: boolean
+  exampleImage?: string
 }
 
 const allPrompts = promptsData as PromptItem[]

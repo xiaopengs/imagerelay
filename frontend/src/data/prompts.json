@@ -6,9 +6,23 @@
     "description": "浅景深电影感人像，自然光影，胶片质感",
     "content": "Create a cinematic portrait of {subject}, shallow depth of field, natural window lighting, film grain texture, muted warm tones, shot on 85mm lens, bokeh background",
     "arguments": [
-      { "name": "subject", "default": "a young woman looking out a window", "label": "拍摄主体" }
+      {
+        "name": "subject",
+        "default": "a young woman looking out a window",
+        "label": "拍摄主体"
+      }
     ],
-    "categories": { "useCases": ["profile-avatar"], "styles": ["photography"], "subjects": ["portrait-selfie"] },
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "portrait-selfie"
+      ]
+    },
     "featured": true,
     "needReferenceImages": false
   },
@@ -19,7 +33,17 @@
     "description": "霓虹灯闪烁的未来城市，雨夜，全息广告",
     "content": "A sprawling cyberpunk cityscape at night, neon signs in Japanese and Chinese reflecting on wet streets, holographic advertisements floating between skyscrapers, flying cars in the distance, rain, volumetric fog, cinematic composition",
     "arguments": [],
-    "categories": { "useCases": ["social-media"], "styles": ["illustration"], "subjects": ["landscape"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "landscape"
+      ]
+    },
     "featured": true,
     "needReferenceImages": false
   },
@@ -30,9 +54,23 @@
     "description": "传统中国水墨画，远山近水，留白意境",
     "content": "Traditional Chinese ink wash painting of {scene}, misty mountains in the distance, a small boat on calm water, pine trees on a cliff, elegant brushwork, rice paper texture, generous white space, masterful calligraphy in the corner",
     "arguments": [
-      { "name": "scene", "default": "misty mountains with a waterfall", "label": "场景描述" }
+      {
+        "name": "scene",
+        "default": "misty mountains with a waterfall",
+        "label": "场景描述"
+      }
     ],
-    "categories": { "useCases": ["social-media"], "styles": ["illustration"], "subjects": ["landscape"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "landscape"
+      ]
+    },
     "featured": true,
     "needReferenceImages": false
   },
@@ -43,9 +81,23 @@
     "description": "白色背景专业产品摄影，柔和布光",
     "content": "Professional product photography of {product} on a clean white background, soft studio lighting, subtle shadows, high-end commercial look, sharp focus, 4K quality",
     "arguments": [
-      { "name": "product", "default": "a luxury wristwatch", "label": "产品" }
+      {
+        "name": "product",
+        "default": "a luxury wristwatch",
+        "label": "产品"
+      }
     ],
-    "categories": { "useCases": ["ecommerce"], "styles": ["photography"], "subjects": ["product"] },
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "product"
+      ]
+    },
     "featured": true,
     "needReferenceImages": false
   },
@@ -56,7 +108,17 @@
     "description": "吉卜力风格的魔法森林，光斑洒落",
     "content": "Studio Ghibli style enchanted forest scene, dappled sunlight filtering through ancient trees, tiny glowing spirits floating in the air, a moss-covered stone path, wildflowers blooming, lush green canopy, hand-painted watercolor aesthetic, whimsical and peaceful atmosphere",
     "arguments": [],
-    "categories": { "useCases": ["social-media"], "styles": ["anime"], "subjects": ["landscape"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "anime"
+      ],
+      "subjects": [
+        "landscape"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -67,7 +129,17 @@
     "description": "复古胶片感的街头摄影，雨天倒影",
     "content": "Vintage street photography, rainy urban street at dusk, reflections in puddles, warm streetlamp glow, people with umbrellas, shot on 35mm film, Kodak Portra 400 colors, slight grain, nostalgic mood",
     "arguments": [],
-    "categories": { "useCases": ["social-media"], "styles": ["photography"], "subjects": ["street"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "street"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -78,9 +150,23 @@
     "description": "简洁现代的Logo设计，矢量风格",
     "content": "Minimalist modern logo design for {brand}, clean geometric shapes, flat vector style, limited color palette of 2-3 colors, professional and memorable, white background, suitable for both digital and print",
     "arguments": [
-      { "name": "brand", "default": "a coffee shop called Bean & Brew", "label": "品牌描述" }
+      {
+        "name": "brand",
+        "default": "a coffee shop called Bean & Brew",
+        "label": "品牌描述"
+      }
     ],
-    "categories": { "useCases": ["infographic"], "styles": ["minimalist"], "subjects": ["logo"] },
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "minimalist"
+      ],
+      "subjects": [
+        "logo"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -91,9 +177,23 @@
     "description": "日系动漫风格少女角色，精致眼神",
     "content": "Beautiful anime girl with {feature}, detailed expressive eyes with light reflections, flowing hair, soft cel-shading, vibrant colors, cherry blossoms in the background, high quality anime illustration, studio quality",
     "arguments": [
-      { "name": "feature", "default": "long silver hair and blue eyes, wearing a school uniform", "label": "角色特征" }
+      {
+        "name": "feature",
+        "default": "long silver hair and blue eyes, wearing a school uniform",
+        "label": "角色特征"
+      }
     ],
-    "categories": { "useCases": ["profile-avatar"], "styles": ["anime"], "subjects": ["character"] },
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "anime"
+      ],
+      "subjects": [
+        "character"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -104,9 +204,24 @@
     "description": "精致美食摄影，俯拍角度，暖色调",
     "content": "Overhead flat-lay food photography of {dish}, rustic wooden table, fresh ingredients scattered around, natural window light, warm color grading, shallow depth of field, Instagram-worthy composition, appetizing presentation",
     "arguments": [
-      { "name": "dish", "default": "a bowl of ramen with soft-boiled egg, nori, and green onions", "label": "菜品" }
+      {
+        "name": "dish",
+        "default": "a bowl of ramen with soft-boiled egg, nori, and green onions",
+        "label": "菜品"
+      }
     ],
-    "categories": { "useCases": ["social-media", "ecommerce"], "styles": ["photography"], "subjects": ["food"] },
+    "categories": {
+      "useCases": [
+        "social-media",
+        "ecommerce"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "food"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -117,7 +232,18 @@
     "description": "中世纪奇幻城堡，龙盘旋，史诗氛围",
     "content": "Epic fantasy castle perched on a cliff edge, massive stone towers with banners, a dragon circling above, dramatic sunset sky with purple and gold clouds, medieval architecture, cinematic wide angle shot, matte painting style, Lord of the Rings inspired",
     "arguments": [],
-    "categories": { "useCases": ["social-media", "game"], "styles": ["illustration"], "subjects": ["architecture"] },
+    "categories": {
+      "useCases": [
+        "social-media",
+        "game"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "architecture"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -128,9 +254,23 @@
     "description": "电商促销Banner，现代排版，吸引眼球",
     "content": "Modern e-commerce promotional banner for {sale}, bold typography, gradient background in vibrant colors, floating product elements, clean professional layout, high conversion design, 1920x600 aspect ratio feel",
     "arguments": [
-      { "name": "sale", "default": "summer sale with 50% off electronics", "label": "促销信息" }
+      {
+        "name": "sale",
+        "default": "summer sale with 50% off electronics",
+        "label": "促销信息"
+      }
     ],
-    "categories": { "useCases": ["ecommerce"], "styles": ["minimalist"], "subjects": ["banner"] },
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "minimalist"
+      ],
+      "subjects": [
+        "banner"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -141,7 +281,17 @@
     "description": "宇航员在异星球表面，星云背景",
     "content": "A lone astronaut standing on an alien planet surface, looking up at a massive ringed planet in the sky, colorful nebula in the background, rocky terrain with glowing crystals, sci-fi concept art, dramatic lighting, 8K ultra detailed",
     "arguments": [],
-    "categories": { "useCases": ["social-media"], "styles": ["illustration"], "subjects": ["scifi"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "scifi"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -152,9 +302,23 @@
     "description": "精致水彩花卉插画，柔和渐变",
     "content": "Delicate watercolor painting of {flowers}, soft color washes and gradients, visible brushstrokes, loose botanical illustration style, white paper edges visible, elegant and feminine, suitable for wedding invitation design",
     "arguments": [
-      { "name": "flowers", "default": "peonies, roses, and eucalyptus leaves in a bouquet", "label": "花卉种类" }
+      {
+        "name": "flowers",
+        "default": "peonies, roses, and eucalyptus leaves in a bouquet",
+        "label": "花卉种类"
+      }
     ],
-    "categories": { "useCases": ["social-media"], "styles": ["watercolor"], "subjects": ["botanical"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "watercolor"
+      ],
+      "subjects": [
+        "botanical"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -165,9 +329,23 @@
     "description": "复古像素风格游戏角色，16-bit美学",
     "content": "16-bit pixel art game character sprite of {character}, retro RPG style, limited color palette, clean pixel work, idle animation pose, transparent background, suitable for a platformer game, nostalgic SNES aesthetic",
     "arguments": [
-      { "name": "character", "default": "a brave knight with a glowing sword and blue cape", "label": "角色描述" }
+      {
+        "name": "character",
+        "default": "a brave knight with a glowing sword and blue cape",
+        "label": "角色描述"
+      }
     ],
-    "categories": { "useCases": ["game"], "styles": ["illustration"], "subjects": ["character"] },
+    "categories": {
+      "useCases": [
+        "game"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "character"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -178,9 +356,23 @@
     "description": "现代建筑3D渲染，黄昏光线",
     "content": "Photorealistic architectural visualization of {building}, golden hour lighting, lush landscaping, glass reflections, people walking nearby for scale, dramatic sky, professional 3D rendering quality, V-Ray style",
     "arguments": [
-      { "name": "building", "default": "a modern minimalist villa with floor-to-ceiling windows and a rooftop garden", "label": "建筑描述" }
+      {
+        "name": "building",
+        "default": "a modern minimalist villa with floor-to-ceiling windows and a rooftop garden",
+        "label": "建筑描述"
+      }
     ],
-    "categories": { "useCases": ["infographic"], "styles": ["realistic"], "subjects": ["architecture"] },
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "realistic"
+      ],
+      "subjects": [
+        "architecture"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -191,9 +383,24 @@
     "description": "Q版可爱卡通动物，圆润造型",
     "content": "Adorable chibi-style cartoon {animal}, big round head with sparkly eyes, tiny body, pastel color palette, soft rounded shapes, kawaii aesthetic, simple clean background, perfect for stickers or emoji design",
     "arguments": [
-      { "name": "animal", "default": "corgi puppy wearing a tiny wizard hat", "label": "动物" }
+      {
+        "name": "animal",
+        "default": "corgi puppy wearing a tiny wizard hat",
+        "label": "动物"
+      }
     ],
-    "categories": { "useCases": ["profile-avatar", "social-media"], "styles": ["illustration"], "subjects": ["animal"] },
+    "categories": {
+      "useCases": [
+        "profile-avatar",
+        "social-media"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "animal"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -204,9 +411,23 @@
     "description": "数据可视化信息图表，扁平设计",
     "content": "Clean modern infographic about {topic}, flat design style, data visualization with charts and icons, professional color scheme, organized sections with clear hierarchy, white space, suitable for a business presentation",
     "arguments": [
-      { "name": "topic", "default": "the growth of AI technology from 2020 to 2026", "label": "主题" }
+      {
+        "name": "topic",
+        "default": "the growth of AI technology from 2020 to 2026",
+        "label": "主题"
+      }
     ],
-    "categories": { "useCases": ["infographic"], "styles": ["minimalist"], "subjects": ["data"] },
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "minimalist"
+      ],
+      "subjects": [
+        "data"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -217,9 +438,23 @@
     "description": "文艺复兴风格油画肖像，丰富笔触",
     "content": "Renaissance-style oil painting portrait of {subject}, rich impasto brushstrokes, dramatic chiaroscuro lighting, deep warm tones, ornate gold frame, museum quality, Rembrandt inspired, canvas texture visible",
     "arguments": [
-      { "name": "subject", "default": "a noble gentleman in a velvet doublet", "label": "人物" }
+      {
+        "name": "subject",
+        "default": "a noble gentleman in a velvet doublet",
+        "label": "人物"
+      }
     ],
-    "categories": { "useCases": ["profile-avatar"], "styles": ["oil-painting"], "subjects": ["portrait-selfie"] },
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "oil-painting"
+      ],
+      "subjects": [
+        "portrait-selfie"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -230,9 +465,24 @@
     "description": "吸引点击的YouTube视频缩略图",
     "content": "Eye-catching YouTube thumbnail for a video about {topic}, bold text overlay with yellow and white colors, expressive face reaction, high contrast, professional YouTuber style, 1280x720 composition, impossible to not click",
     "arguments": [
-      { "name": "topic", "default": "testing the world's most expensive camera", "label": "视频主题" }
+      {
+        "name": "topic",
+        "default": "testing the world's most expensive camera",
+        "label": "视频主题"
+      }
     ],
-    "categories": { "useCases": ["social-media", "thumbnail"], "styles": ["illustration"], "subjects": ["social"] },
+    "categories": {
+      "useCases": [
+        "social-media",
+        "thumbnail"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "social"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -243,9 +493,23 @@
     "description": "日式漫画分镜，动态线条，速度感",
     "content": "Dynamic manga panel of {action}, bold ink lines, speed lines and motion blur effects, dramatic angle, screentone shading, black and white with high contrast, Japanese manga art style, professional comic quality",
     "arguments": [
-      { "name": "action", "default": "a samurai unsheathing their katana in a single swift motion", "label": "动作场景" }
+      {
+        "name": "action",
+        "default": "a samurai unsheathing their katana in a single swift motion",
+        "label": "动作场景"
+      }
     ],
-    "categories": { "useCases": ["comic"], "styles": ["anime"], "subjects": ["action"] },
+    "categories": {
+      "useCases": [
+        "comic"
+      ],
+      "styles": [
+        "anime"
+      ],
+      "subjects": [
+        "action"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -256,9 +520,23 @@
     "description": "微缩模型场景，移轴摄影效果",
     "content": "Tilt-shift photography of a miniature diorama of {scene}, shallow depth of field making everything look tiny, bright even lighting, intricate miniature details, macro photography feel, hyper-realistic small-scale model",
     "arguments": [
-      { "name": "scene", "default": "a bustling Japanese train station with tiny commuters", "label": "场景" }
+      {
+        "name": "scene",
+        "default": "a bustling Japanese train station with tiny commuters",
+        "label": "场景"
+      }
     ],
-    "categories": { "useCases": ["social-media"], "styles": ["photography"], "subjects": ["miniature"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "miniature"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -269,9 +547,24 @@
     "description": "现代扁平风格插画，适合UI/网页",
     "content": "Modern flat design illustration of {scene}, geometric shapes, limited color palette of 5 harmonious colors, no outlines, clean vector aesthetic, suitable for a SaaS landing page hero section, friendly and professional",
     "arguments": [
-      { "name": "scene", "default": "a diverse team collaborating around a digital whiteboard", "label": "场景" }
+      {
+        "name": "scene",
+        "default": "a diverse team collaborating around a digital whiteboard",
+        "label": "场景"
+      }
     ],
-    "categories": { "useCases": ["infographic", "social-media"], "styles": ["minimalist"], "subjects": ["people"] },
+    "categories": {
+      "useCases": [
+        "infographic",
+        "social-media"
+      ],
+      "styles": [
+        "minimalist"
+      ],
+      "subjects": [
+        "people"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -282,9 +575,23 @@
     "description": "恐怖氛围概念图，阴暗色调",
     "content": "Atmospheric horror concept art of {setting}, dark moody lighting, volumetric fog, eerie silence implied through composition, unsettling details hidden in shadows, cinematic horror movie still, desaturated cold tones, dread and tension",
     "arguments": [
-      { "name": "setting", "default": "an abandoned hospital corridor with flickering fluorescent lights", "label": "场景" }
+      {
+        "name": "setting",
+        "default": "an abandoned hospital corridor with flickering fluorescent lights",
+        "label": "场景"
+      }
     ],
-    "categories": { "useCases": ["game"], "styles": ["illustration"], "subjects": ["horror"] },
+    "categories": {
+      "useCases": [
+        "game"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "horror"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -295,9 +602,23 @@
     "description": "精致宠物肖像画，毛发细节",
     "content": "Detailed portrait of {pet}, individual fur strands visible, soft natural lighting, warm background gradient, professional pet photography style, sharp focus on eyes with catch lights, adorable expression, 4K quality",
     "arguments": [
-      { "name": "pet", "default": "a golden retriever puppy with a red bandana", "label": "宠物描述" }
+      {
+        "name": "pet",
+        "default": "a golden retriever puppy with a red bandana",
+        "label": "宠物描述"
+      }
     ],
-    "categories": { "useCases": ["profile-avatar"], "styles": ["photography"], "subjects": ["animal"] },
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "animal"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -308,9 +629,23 @@
     "description": "现代抽象艺术，色彩碰撞",
     "content": "Bold contemporary abstract art, {mood}, dynamic composition with overlapping geometric and organic shapes, rich texture palette, acrylic paint on canvas feel, gallery-worthy, Kandinsky meets Rothko",
     "arguments": [
-      { "name": "mood", "default": "energetic clash of warm reds and cool blues with gold accents", "label": "情绪氛围" }
+      {
+        "name": "mood",
+        "default": "energetic clash of warm reds and cool blues with gold accents",
+        "label": "情绪氛围"
+      }
     ],
-    "categories": { "useCases": ["social-media"], "styles": ["oil-painting"], "subjects": ["abstract"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "oil-painting"
+      ],
+      "subjects": [
+        "abstract"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -321,9 +656,23 @@
     "description": "现代手机App界面设计，iOS风格",
     "content": "Modern mobile app UI design for {app}, iOS style with clean rounded corners, subtle shadows, system font, status bar, navigation bar, content cards, floating action button, presented on an iPhone mockup at a slight angle, professional Dribbble quality",
     "arguments": [
-      { "name": "app", "default": "a meditation and mindfulness app with calming blue and purple gradient theme", "label": "App描述" }
+      {
+        "name": "app",
+        "default": "a meditation and mindfulness app with calming blue and purple gradient theme",
+        "label": "App描述"
+      }
     ],
-    "categories": { "useCases": ["infographic"], "styles": ["minimalist"], "subjects": ["ui-design"] },
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "minimalist"
+      ],
+      "subjects": [
+        "ui-design"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -334,9 +683,23 @@
     "description": "蒸汽朋克风格机械装置，铜质齿轮",
     "content": "Intricate steampunk mechanical device, {object}, brass and copper gears and pipes, Victorian era aesthetic, glowing pressure gauges, steam vents, leather straps, warm amber lighting, detailed concept art, industrial revolution meets science fiction",
     "arguments": [
-      { "name": "object", "default": "a time-travel pocket watch with exposed clockwork mechanisms", "label": "物品" }
+      {
+        "name": "object",
+        "default": "a time-travel pocket watch with exposed clockwork mechanisms",
+        "label": "物品"
+      }
     ],
-    "categories": { "useCases": ["game"], "styles": ["illustration"], "subjects": ["scifi"] },
+    "categories": {
+      "useCases": [
+        "game"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "scifi"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -347,9 +710,24 @@
     "description": "精美星座插画，星空背景",
     "content": "Beautiful zodiac constellation illustration for {sign}, ethereal cosmic background with nebulae and distant galaxies, golden star connections forming the constellation pattern, mystical and dreamy atmosphere, celestial art style, deep blues and purples with gold stars",
     "arguments": [
-      { "name": "sign", "default": "Scorpio", "label": "星座" }
+      {
+        "name": "sign",
+        "default": "Scorpio",
+        "label": "星座"
+      }
     ],
-    "categories": { "useCases": ["social-media", "profile-avatar"], "styles": ["illustration"], "subjects": ["astronomy"] },
+    "categories": {
+      "useCases": [
+        "social-media",
+        "profile-avatar"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "astronomy"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -360,7 +738,17 @@
     "description": "宁静的日式枯山水庭院",
     "content": "Serene Japanese zen garden, raked white gravel patterns, carefully placed moss-covered rocks, a wooden bridge over a koi pond, maple trees with red autumn leaves, stone lantern, bamboo water feature, peaceful morning light, photorealistic quality",
     "arguments": [],
-    "categories": { "useCases": ["social-media"], "styles": ["photography"], "subjects": ["landscape"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "photography"
+      ],
+      "subjects": [
+        "landscape"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
   },
@@ -371,10 +759,1198 @@
     "description": "温馨儿童绘本插画，柔和色调",
     "content": "Whimsical children's book illustration of {scene}, soft pastel watercolors, rounded friendly shapes, warm and inviting atmosphere, storybook magic, gentle lighting, suitable for ages 3-8, reminiscent of classic picture books like Where the Wild Things Are",
     "arguments": [
-      { "name": "scene", "default": "a friendly dragon helping a small child cross a rainbow bridge", "label": "场景" }
+      {
+        "name": "scene",
+        "default": "a friendly dragon helping a small child cross a rainbow bridge",
+        "label": "场景"
+      }
     ],
-    "categories": { "useCases": ["social-media"], "styles": ["watercolor"], "subjects": ["children"] },
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "watercolor"
+      ],
+      "subjects": [
+        "children"
+      ]
+    },
     "featured": false,
     "needReferenceImages": false
+  },
+  {
+    "id": "p031",
+    "title": "VR Headset Exploded View Poste",
+    "titleEn": "VR Headset Exploded View Poster",
+    "description": "Generates a high-tech exploded view diagram of a VR headset with detailed component callouts and pro",
+    "content": "{\n  \"type\": \"exploded view product diagram poster\",\n  \"subject\": \"VR headset\",\n  \"style\": \"clean high-tech 3D render, studio lighting, glowing accents\",\n  \"background\": \"{argument name=\\\"background color\\\" default=\\\"soft purple and blue gradient\\\"}\",\n  \"header\": {\n    \"logo\": \"∞ {argument name=\\\"product name\\\" default=\\\"Meta Quest 3\\\"}\",\n    \"subtitle\": \"{argument name=\\\"main catchphrase\\\" default=\\\"まったく新しい現実を、まったく新しい構造から。\\\"}\"\n  },\n  \"layout\": {\n    \"centerpiece\": \"vertically stacked exploded view of a VR headset showing 9 distinct layers of internal components: outer shell, camera sensors, motherboard with chip, pancake lenses, internal frame, battery packs, side straps, top strap, and facial interface cushion.\",\n    \"callout_labels\": {\n      \"count\": 8,\n      \"left_side\": [\n        \"Snapdragon® XR2 Gen 2\\n圧倒的な処理性能でリアルタイムな体験を。\",\n        \"調整可能なIPD機構\\n幅広いユーザーに快適なフィット感を。\",\n        \"精密設計されたヘッドストラップ\\n快適さと安定性を追求したエルゴノミクス。\"\n      ],\n      \"right_side\": [\n        \"フェイスプレート\\n洗練されたデザインと最適な重量バランス。\",\n        \"トラッキングカメラ\\n高精度な位置トラッキングと環境認識を実現。\",\n        \"パンケーキレンズ\\n薄型設計で広い視野角と鮮明な映像を提供。\",\n        \"高性能バッテリー\\n長時間駆動を支える最適化された電源設計。\",\n        \"柔らかなフェイスインターフェース\\n長時間でも快適な装着感を実現。\"\n      ]\n    },\n    \"footer\": {\n      \"left_text_block\": {\n        \"headline\": \"{argument name=\\\"bottom headline\\\" default=\\\"体験は、構造から進化する。\\\"}\",\n        \"body\": \"一つひとつのパーツに、没入体験を支える最先端テクノロジーとこだわりの設計。Meta Quest 3は、未来を感じさせる体験を内部から生み出しています。\"\n      },\n      \"right_logo\": \"∞ Meta\"\n    }\n  }\n}",
+    "arguments": [
+      {
+        "name": "background_color",
+        "default": "soft purple and blue gradient",
+        "label": "background color"
+      },
+      {
+        "name": "product_name",
+        "default": "Meta Quest 3",
+        "label": "product name"
+      },
+      {
+        "name": "main_catchphrase",
+        "default": "まったく新しい現実を、まったく新しい構造から。",
+        "label": "main catchphrase"
+      },
+      {
+        "name": "bottom_headline",
+        "default": "体験は、構造から進化する。",
+        "label": "bottom headline"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "photography",
+        "3d-render",
+        "minimalist"
+      ],
+      "subjects": [
+        "product",
+        "text-typography"
+      ]
+    },
+    "featured": true,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1776658772018_lukyfw_HGSUfldbIAEiMWZ.jpg"
+  },
+  {
+    "id": "p032",
+    "title": "Illustrated City Food Map",
+    "titleEn": "Illustrated City Food Map",
+    "description": "Generates a hand-drawn, watercolor-style tourist map featuring numbered local food specialties, land",
+    "content": "{\n  \"type\": \"illustrated map infographic\",\n  \"style\": \"{argument name=\\\"art style\\\" default=\\\"watercolor and ink hand-drawn illustration on vintage parchment\\\"}\",\n  \"title_section\": {\n    \"text\": \"{argument name=\\\"city name\\\" default=\\\"成都\\\"} {argument name=\\\"map title\\\" default=\\\"吃货暴走地图\\\"}\",\n    \"mascot\": \"cartoon red chili pepper wearing sunglasses and giving a thumbs up\"\n  },\n  \"border\": \"{argument name=\\\"border decoration\\\" default=\\\"vine of green leaves and red chili peppers\\\"}\",\n  \"layout\": {\n    \"background\": \"textured beige parchment paper with yellow roads, blue rivers, and green park areas\",\n    \"sections\": [\n      {\n        \"title\": \"landmarks\",\n        \"count\": 6,\n        \"illustrations\": [\"traditional pavilion\", \"traditional monastery\", \"modern skyscraper with climbing panda\", \"tall TV tower\", \"traditional gate\", \"industrial buildings\"],\n        \"labels\": [\"人民公园\", \"文殊院\", \"IFS\", \"339电视塔\", \"宽窄巷子\", \"东郊记忆\"]\n      },\n      {\n        \"title\": \"food_spots\",\n        \"count\": 12,\n        \"illustrations\": [\"mapo tofu\", \"dumplings in chili oil\", \"skewers in pot\", \"sticky rice balls\", \"egg baking cake\", \"nine-grid hotpot\", \"sweet potato noodles\", \"cold skewers\", \"spicy mixed dish\", \"covered tea bowl\", \"ice jelly dessert\", \"spicy rabbit heads\"],\n        \"labels\": [\"1 陈麻婆豆腐\", \"2 钟水饺\", \"3 春熙路\", \"4 宽窄巷子·三大炮\", \"5 建设路·叶婆婆蛋烘糕\", \"6 玉林路·小龙坎火锅\", \"7 香香巷·肥肠粉\", \"8 武侯祠大街·钵钵鸡\", \"9 东郊记忆·冒椒火辣\", \"10 人民公园·鹤鸣茶社\", \"11 锦里古街·冰粉\", \"12 双流老妈兔头\"]\n      },\n      {\n        \"title\": \"图例\",\n        \"position\": \"bottom-right\",\n        \"count\": 5,\n        \"items\": [\"red dot\", \"green house\", \"green tree\", \"blue line\", \"yellow double line\"],\n        \"labels\": [\"美食地点\", \"地标景点\", \"公园绿地\", \"河流湖泊\", \"主要道路\"]\n      }\n    ],\n    \"centerpiece\": \"giant panda sitting and eating bamboo\",\n    \"bottom_right_extras\": [\"vintage compass rose with N, S, E, W\", \"disclaimer text '温馨提示：吃辣需谨慎，肠胃要保护~' with a red chili pepper icon\"]\n  }\n}",
+    "arguments": [
+      {
+        "name": "art_style",
+        "default": "watercolor and ink hand-drawn illustration on vintage parchment",
+        "label": "art style"
+      },
+      {
+        "name": "city_name",
+        "default": "成都",
+        "label": "city name"
+      },
+      {
+        "name": "map_title",
+        "default": "吃货暴走地图",
+        "label": "map title"
+      },
+      {
+        "name": "border_decoration",
+        "default": "vine of green leaves and red chili peppers",
+        "label": "border decoration"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "illustration",
+        "watercolor",
+        "retro"
+      ],
+      "subjects": [
+        "food-drink",
+        "cityscape",
+        "text-typography"
+      ]
+    },
+    "featured": true,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1776662673014_nf0taw_HGRMNDybsAAGG88.jpg"
+  },
+  {
+    "id": "p033",
+    "title": "Momotaro Explainer Slide in Hy",
+    "titleEn": "Momotaro Explainer Slide in Hybrid Style",
+    "description": "A prompt that combines the simple, warm aesthetic of Irasutoya illustrations with the high-informati",
+    "content": "Create an explanatory slide ({argument name=\"format\" default=\"ponchi-e diagram\"}) for {argument name=\"theme\" default=\"Momotaro\"} that fuses the gentle atmosphere of \"Irasutoya\" with the overwhelming information density of \"Kasumigaseki slides\".",
+    "arguments": [
+      {
+        "name": "format",
+        "default": "ponchi-e diagram",
+        "label": "format"
+      },
+      {
+        "name": "theme",
+        "default": "Momotaro",
+        "label": "theme"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "illustration"
+      ],
+      "subjects": [
+        "text-typography"
+      ]
+    },
+    "featured": true,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1776699414289_t6mebs_HGQQxukbUAA_qc0.jpg"
+  },
+  {
+    "id": "p034",
+    "title": "E-commerce Live Stream UI Mock",
+    "titleEn": "E-commerce Live Stream UI Mockup",
+    "description": "Generates a realistic social media live stream interface overlaying a portrait, featuring customizab",
+    "content": "{\n  \"type\": \"live stream UI mockup\",\n  \"subject\": {\n    \"description\": \"portrait of {argument name=\\\"host name\\\" default=\\\"Elon Musk\\\"}, smiling, wearing a black t-shirt with a white technical schematic graphic\",\n    \"background\": \"left side shows a screen with '{argument name=\\\"left background logo\\\" default=\\\"SPACEX\\\"}' text, right side shows a red '{argument name=\\\"right background logo\\\" default=\\\"Tesla T logo\\\"}' and a dark car\"\n  },\n  \"ui_overlay\": {\n    \"top_header\": {\n      \"host_info\": \"avatar, name '{argument name=\\\"host name\\\" default=\\\"Elon Musk\\\"}', subtext '55.6万本场点赞', red '关注' button\",\n      \"rank_badge\": \"gold coin icon with '全站第1名'\",\n      \"viewer_stats\": \"3 top viewer avatars with '12.3w', '8.6w', '5.7w', total '68.7万', 'X' close button\",\n      \"right_links\": \"'更多直播 >', '礼物展馆 0/24' with blue '经典' tag\"\n    },\n    \"mid_left_gifts\": {\n      \"count\": 2,\n      \"items\": [\n        \"avatar '科技爱好者', '送小心心', heart icon x 1314\",\n        \"avatar '星辰大海', '送火箭', rocket icon x 666\"\n      ]\n    },\n    \"bottom_left_chat\": {\n      \"system_message\": \"level 37 badge '宇宙漫游者 加入了直播间'\",\n      \"message_count\": 7,\n      \"messages\": [\n        \"小火箭: 马斯克！未来可期！🚀\",\n        \"future: 特斯拉Model 2什么时候出？\",\n        \"星空梦想家: SpaceX今年能上火星吗？\",\n        \"AI探索者: Neuralink进展如何？\",\n        \"帅气的网友: 马总好！\",\n        \"Mars: 第一次来你的直播，超激动！\",\n        \"用户123: 讲讲AI吧，会取代人类吗？\"\n      ]\n    },\n    \"bottom_right_product_card\": {\n      \"hot_tag\": \"orange '热卖 x 1888'\",\n      \"image\": \"Tesla Cybertruck\",\n      \"title\": \"{argument name=\\\"product name\\\" default=\\\"特斯拉Cybertruck 电动皮卡\\\"}\",\n      \"price\": \"{argument name=\\\"product price\\\" default=\\\"¥ 1,618,000\\\"}\",\n      \"button\": \"red '抢' button\",\n      \"floating_animation\": \"translucent hearts floating up the right edge\"\n    },\n    \"bottom_bar\": {\n      \"input_field\": \"'说点什么...'\",\n      \"icons\": [\"smiley face\", \"three dots\", \"shopping cart\", \"gift box\", \"share\"]\n    }\n  }\n}",
+    "arguments": [
+      {
+        "name": "host_name",
+        "default": "Elon Musk",
+        "label": "host name"
+      },
+      {
+        "name": "left_background_logo",
+        "default": "SPACEX",
+        "label": "left background logo"
+      },
+      {
+        "name": "right_background_logo",
+        "default": "Tesla T logo",
+        "label": "right background logo"
+      },
+      {
+        "name": "product_name",
+        "default": "特斯拉Cybertruck 电动皮卡",
+        "label": "product name"
+      },
+      {
+        "name": "product_price",
+        "default": "¥ 1,618,000",
+        "label": "product price"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "photography",
+        "ink-chinese"
+      ],
+      "subjects": [
+        "character",
+        "product"
+      ]
+    },
+    "featured": true,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1776699445498_ga2ry5_HGO7H0DWkAApdKK.jpg"
+  },
+  {
+    "id": "p035",
+    "title": "Anime Martial Arts Battle Illu",
+    "titleEn": "Anime Martial Arts Battle Illustration",
+    "description": "Generates a dynamic, high-impact anime illustration of two female characters fighting in a tradition",
+    "content": "An anime-style illustration of a {argument name=\"action type\" default=\"high-impact martial arts battle\"} between two young female fighters in a {argument name=\"setting\" default=\"traditional wooden martial arts dojo\"}. In the foreground, a girl with black hair in a high bun wears a {argument name=\"character 1 color theme\" default=\"red and white\"} Chinese-style martial arts outfit with baggy pants. She is in a dynamic, low, forward-thrusting stance, surrounded by swirling red energy and water splashes. In the background to the right, a girl with light purple hair in twin buns wears a {argument name=\"character 2 color theme\" default=\"green and purple\"} Chinese dress with gold embroidery and black tights. She is leaping through the air in a flying kick pose, surrounded by swirling blue energy. The wooden floorboards are splintering from the intense impact, with debris and dust flying through the air. Above them hangs a weathered wooden sign with the text \"{argument name=\"sign text\" default=\"武術会\"}\". The scene features dramatic lighting, a low-angle dynamic perspective, and intense action effects.",
+    "arguments": [
+      {
+        "name": "action_type",
+        "default": "high-impact martial arts battle",
+        "label": "action type"
+      },
+      {
+        "name": "setting",
+        "default": "traditional wooden martial arts dojo",
+        "label": "setting"
+      },
+      {
+        "name": "character_1_color_theme",
+        "default": "red and white",
+        "label": "character 1 color theme"
+      },
+      {
+        "name": "character_2_color_theme",
+        "default": "green and purple",
+        "label": "character 2 color theme"
+      },
+      {
+        "name": "sign_text",
+        "default": "武術会",
+        "label": "sign text"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "comic"
+      ],
+      "styles": [
+        "anime",
+        "illustration",
+        "ink-chinese"
+      ],
+      "subjects": [
+        "text-typography"
+      ]
+    },
+    "featured": true,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1776756799880_c8u8w7_HGUKjjaasAAvVRa.jpg"
+  },
+  {
+    "id": "p036",
+    "title": "3D Stone Staircase Evolution I",
+    "titleEn": "3D Stone Staircase Evolution Infographic",
+    "description": "Transforms a flat evolutionary timeline into a realistic 3D stone staircase infographic with detaile",
+    "content": "{\n  \"type\": \"evolutionary timeline infographic\",\n  \"instruction\": \"Using REFERENCE_0 as a structural base, transform the flat vector design into a highly realistic 3D infographic. Replace the smooth ramps with distinct stone steps and upgrade all organisms to photorealistic 3D models.\",\n  \"style\": {\n    \"background\": \"{argument name=\\\"background style\\\" default=\\\"vintage textured parchment paper\\\"}\",\n    \"staircase\": \"{argument name=\\\"staircase material\\\" default=\\\"realistic textured stone blocks\\\"}\",\n    \"subjects\": \"{argument name=\\\"organism style\\\" default=\\\"highly detailed photorealistic 3D renders\\\"}\"\n  },\n  \"layout\": {\n    \"main_title\": \"{argument name=\\\"main title\\\" default=\\\"人类演化\\\"}\",\n    \"sections\": [\n      {\n        \"position\": \"left sidebar\",\n        \"count\": 8,\n        \"labels\": [\"L0: 单细胞生命\", \"L1: 多细胞生物\", \"L2: 动物界\", \"L3: 脊索动物\", \"L4: 上陆革命\", \"L5: 哺乳纲\", \"L6: 人科演化\", \"L7: 智人纪元\"]\n      },\n      {\n        \"position\": \"top right\",\n        \"title\": \"获得的功能 / 失去的功能\",\n        \"description\": \"Legend with plus and minus icons\"\n      },\n      {\n        \"position\": \"bottom center\",\n        \"title\": \"演化关键里程碑\",\n        \"count\": 6,\n        \"description\": \"Timeline with a silhouette graphic of 6 figures showing ape-to-human evolution\"\n      }\n    ],\n    \"centerpiece\": {\n      \"description\": \"Winding stone staircase with 25 numbered steps featuring specific organisms.\",\n      \"count\": 25,\n      \"notable_elements\": [\n        \"Step 07: Jellyfish\",\n        \"Step 09: Ammonite\",\n        \"Step 10: Trilobite\",\n        \"Step 24: Walking human\",\n        \"Step 25: {argument name=\\\"future evolution concept\\\" default=\\\"glowing cosmic silhouette with a question mark\\\"}\"\n      ]\n    }\n  }\n}",
+    "arguments": [
+      {
+        "name": "background_style",
+        "default": "vintage textured parchment paper",
+        "label": "background style"
+      },
+      {
+        "name": "staircase_material",
+        "default": "realistic textured stone blocks",
+        "label": "staircase material"
+      },
+      {
+        "name": "organism_style",
+        "default": "highly detailed photorealistic 3D renders",
+        "label": "organism style"
+      },
+      {
+        "name": "main_title",
+        "default": "人类演化",
+        "label": "main title"
+      },
+      {
+        "name": "future_evolution_concept",
+        "default": "glowing cosmic silhouette with a question mark",
+        "label": "future evolution concept"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "photography",
+        "3d-render",
+        "retro"
+      ],
+      "subjects": [
+        "text-typography"
+      ]
+    },
+    "featured": true,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1776661968404_8a5flm_HGQc_KOaMAA2vt0.jpg"
+  },
+  {
+    "id": "p037",
+    "title": "Intimate Floral Macro Portrait",
+    "titleEn": "Intimate Floral Macro Portrait",
+    "description": "Generates a moody close-up portrait with warm flower foreground blur, deep shadows, and tiny editori",
+    "content": "Create an intimate cinematic macro portrait of {argument name=\"subject\" default=\"a young East Asian woman\"}, extremely close crop showing only the left half of the face with one brown eye in sharp focus, eyebrow, luminous cheek texture, and a few fine dark hair strands falling vertically across the face. The right half of the frame fades into deep black shadow, while warm golden-orange light grazes the skin from the lower left, emphasizing pores, eyelashes, subtle moles, and quiet emotion in the dark areas. Place large out-of-focus {argument name=\"foreground flower\" default=\"orange flower petals\"} across the bottom and lower left foreground, soft bokeh and partially obscuring the face, creating a private floral veil. Use shallow depth of field, realistic editorial beauty photography, high dynamic range but low-key mood, rich amber highlights, soft film grain, natural skin, no heavy makeup, contemplative gaze looking slightly toward the camera. Square 1:1 composition, eye positioned in the upper-left third, expansive negative black space on the right. Add tiny understated serif text in the mid-right shadow area reading exactly three lines: {argument name=\"small text\" default=\"petal & breath\\nno.07\\nquiet bloom\"}. Avoid extra objects, avoid bright background, avoid glamour retouching, keep the image tactile, close, emotional, and atmospheric.",
+    "arguments": [
+      {
+        "name": "subject",
+        "default": "a young East Asian woman",
+        "label": "subject"
+      },
+      {
+        "name": "foreground_flower",
+        "default": "orange flower petals",
+        "label": "foreground flower"
+      },
+      {
+        "name": "small_text",
+        "default": "petal & breath\\nno.07\\nquiet bloom",
+        "label": "small text"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "photography",
+        "cinematic"
+      ],
+      "subjects": [
+        "portrait-selfie"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984834384_4jzv2f_HMNX5MzaIAATKrE.jpg"
+  },
+  {
+    "id": "p038",
+    "title": "Professional Female Gamer Stud",
+    "titleEn": "Professional Female Gamer Studio Portrait",
+    "description": "A highly detailed prompt for generating an ultra-realistic studio portrait of a female gamer with ci",
+    "content": "Ultra-realistic studio portrait of a {argument name=\"subject\" default=\"beautiful young female gamer\"} wearing a large black over-ear gaming headset with a boom microphone, {argument name=\"hair\" default=\"long straight dark brown hair with a center part\"}, hazel-green eyes, natural makeup, symmetrical face, neutral confident expression, {argument name=\"clothing\" default=\"black oversized gaming hoodie with subtle red accents\"}, cinematic red-orange gradient background, dramatic red rim lighting, soft beauty lighting on the face, highly detailed skin texture, sharp focus, centered composition, professional esports aesthetic, shallow depth of field, 85mm lens, f/1.8, ultra photorealistic, HDR, 8K, high-end DSLR quality, crisp facial details, volumetric lighting, realistic shadows.",
+    "arguments": [
+      {
+        "name": "subject",
+        "default": "beautiful young female gamer",
+        "label": "subject"
+      },
+      {
+        "name": "hair",
+        "default": "long straight dark brown hair with a center part",
+        "label": "hair"
+      },
+      {
+        "name": "clothing",
+        "default": "black oversized gaming hoodie with subtle red accents",
+        "label": "clothing"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "photography",
+        "cinematic"
+      ],
+      "subjects": [
+        "portrait-selfie",
+        "character"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984829027_wybrn6_HMMUADfaAAALanh.jpg"
+  },
+  {
+    "id": "p039",
+    "title": "Rainy Jungle Pudding Frog",
+    "titleEn": "Rainy Jungle Pudding Frog",
+    "description": "A cute anime dessert mascot illustration featuring a caramel pudding frog in a rainy tropical jungle",
+    "content": "Create a whimsical square anime-style illustration of a cute pudding mascot creature sitting calmly on a flat mossy rock in a lush tropical jungle during heavy rain. The main subject is a large golden custard pudding shaped like a squat frog, with a glossy caramel top dripping down its sides, closed relaxed eyes, a tiny puckered mouth, soft rounded front legs, side haunches, and small toe details. On top of the pudding are exactly 2 dessert toppings: one swirl of whipped cream and one bright red cherry with a stem. The scene is soaked with rain: long diagonal rain streaks, splashes on the caramel top, droplets running down the pudding body, wet reflective leaves, and ripples in the shallow orange-brown water around the rock. Background: dense green rainforest foliage with large banana-like leaves, misty depth, dark wet shadows, and a small red tropical plant on the left. Add friendly Japanese greeting text in the upper right reading {argument name=\"greeting text\" default=\"こんにちは\"}, styled as thick rounded hiragana with a warm brown-orange fill and white outline, slightly tilted and floating over the foliage. Use a soft painterly digital art style, high detail, warm golden subject against cool green jungle, adorable character design, cinematic rainy atmosphere, square composition, no watermark, no extra characters, no extra text.",
+    "arguments": [
+      {
+        "name": "greeting_text",
+        "default": "こんにちは",
+        "label": "greeting text"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "profile-avatar"
+      ],
+      "styles": [
+        "cinematic",
+        "anime",
+        "illustration"
+      ],
+      "subjects": [
+        "animal"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984843564_wejvlg_HMMSaCsacAAgh4k.jpg"
+  },
+  {
+    "id": "p040",
+    "title": "Xiaoshu Watermelon City Poster",
+    "titleEn": "Xiaoshu Watermelon City Poster",
+    "description": "A refined vertical Chinese solar-term poster showing suspended watermelon charms over a quiet misty ",
+    "content": "Goal: Create a serene vertical Chinese solar-term poster for {argument name=\"season title\" default=\"小暑\"}, with transparent, quiet, miniature-narrative aesthetics: first impression is rhythmic vertical pressure, second impression is tiny urban life, third impression is a sense of time, heat, and open space.\n\nCanvas: Tall 9:16 poster, soft high-key daylight, pale blue-white palette, lots of clean negative space, airy haze, shallow depth of field, minimal and elegant.\n\nLayout: The image is divided into three layers. Top layer: a dense curtain of many thin vertical hanging lines descending from the top edge, varied lengths, translucent blue-gray, like wind chimes, rain threads, or suspended strings. Middle/right typography layer: vertical Chinese editorial text placed in the upper-right quadrant with generous spacing. Bottom layer: a miniature city plaza scene occupying the lower third, with tiny people moving through a bright misty urban morning.\n\nText content: On the right side, set the main vertical title as {argument name=\"main Chinese title\" default=\"小暑\"} in refined teal Chinese serif/calligraphy style, large and elegant. Add small roman letters {argument name=\"romanized season name\" default=\"XIAOSHU\"} beside or between the title characters. Add a small vertical label {argument name=\"solar term label\" default=\"二十四节气\"} near the top. Add poetic vertical copy in teal, including {argument name=\"poetic copy\" default=\"城市清晨 候忽温风至 因循小暑来\"}. Keep all text crisp, vertical, restrained, and aligned like a premium cultural poster.\n\nSubject details: Include exactly 6 visible suspended fruit objects among the vertical strings: 1 large half-watermelon slice hanging by a bow near the lower left center; 1 whole round striped watermelon hanging by a bow near the lower center-right; 1 small watermelon wedge at the far left above the plaza; 1 small watermelon wedge in the mid-background near center; 1 small watermelon wedge high on the right; and 1 tiny red watermelon-like piece hanging lower right of the text area. The fruit should feel delicate and miniature, with soft highlights and realistic rind/seed details.\n\nMiniature narrative: Show exactly 10 human figures in the plaza: 1 sharp man in a white shirt walking left-to-right with a dark briefcase in the foreground-left; 1 sharp woman in a pale dress walking near center holding a drink or phone; 1 sharp cyclist riding rightward near the lower-right center; 1 person standing near a blue sign on the far left; 5 tiny distant pedestrians scattered across the hazy background; and 1 large blurred partial cyclist in the extreme bottom-left foreground. Add one blurred blue vehicle or kiosk shape cropped at the bottom-right foreground. Background architecture should be a faint, washed-out modern city skyline with glass towers and an open waterfront or plaza feeling.\n\nVisual style: Photorealistic mixed with surreal miniature installation, clean Chinese editorial poster design, pale cyan and white, teal typography, watermelon red/green accents, soft morning haze, bright reflective ground, gentle shadows, cinematic depth of field, calm summer atmosphere, no clutter.\n\nConstraints: Maintain strong negative space, keep the vertical string rhythm dominant in the upper two-thirds, keep all people small and story-like, avoid extra fruit beyond the 6 specified suspended fruit objects, avoid extra headline text, no watermark, no logo, no border.",
+    "arguments": [
+      {
+        "name": "season_title",
+        "default": "小暑",
+        "label": "season title"
+      },
+      {
+        "name": "main_chinese_title",
+        "default": "小暑",
+        "label": "main Chinese title"
+      },
+      {
+        "name": "romanized_season_name",
+        "default": "XIAOSHU",
+        "label": "romanized season name"
+      },
+      {
+        "name": "solar_term_label",
+        "default": "二十四节气",
+        "label": "solar term label"
+      },
+      {
+        "name": "poetic_copy",
+        "default": "城市清晨 候忽温风至 因循小暑来",
+        "label": "poetic copy"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "photography",
+        "cinematic",
+        "minimalist"
+      ],
+      "subjects": [
+        "cityscape",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984835319_vrs981_HMNNWn_bgAAt2NB.jpg"
+  },
+  {
+    "id": "p041",
+    "title": "Golden Hour Alpine Trail Lands",
+    "titleEn": "Golden Hour Alpine Trail Landscape",
+    "description": "A photorealistic wide-angle alpine hiking scene with mountains, lake, forest, and warm sunset lighti",
+    "content": "Create a photorealistic ultra-wide mountain landscape at golden hour: a rugged dirt hiking trail begins in the lower right foreground and curves down through an alpine slope, bordered by mossy grass, low shrubs, wild vegetation, and large rounded gray granite boulders. Tall dark evergreen pine trees stand on both sides, with a dense conifer forest filling the valley below. In the middle distance, show a calm reflective mountain lake with a smaller connected inlet, nestled between forested ridges. In the background, depict three sharp rocky mountain peaks with striated gray stone faces and small patches of lingering snow, the tallest peak slightly right of center. The sun is low near the left horizon, partly above a distant ridge, casting strong warm orange light, long shadows, lens flare rays, and glowing highlights across the trail, rocks, trees, and mountain faces. The sky has dramatic soft clouds with orange, peach, and blue tones. Use cinematic HDR lighting, high detail, realistic depth, crisp foreground texture, wide-angle composition, natural colors, no people, no buildings, no text, no watermark.",
+    "arguments": [],
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "photography",
+        "cinematic"
+      ],
+      "subjects": [
+        "landscape"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984848404_8j3qtk_HMKkAS5XsAAdpp3.jpg"
+  },
+  {
+    "id": "p042",
+    "title": "Static Soul Fashion Poster",
+    "titleEn": "Static Soul Fashion Poster",
+    "description": "A moody cinematic car-interior fashion poster with glitch typography, useful for emotional editorial",
+    "content": "Create a vertical high-fashion editorial photo poster of a young East Asian woman with {argument name=\"hair color\" default=\"long messy black hair\"} sitting inside a dark car in daylight, photographed from the front passenger area with a slightly wide lens and intimate cinematic framing. She wears a sleeveless white dress or top with a long black necktie ribbon, bare arms and knees visible, one arm extended toward the camera and one hand resting against her cheek; her expression is quiet, tired, melancholic, and direct, with soft natural makeup and slightly parted lips. The car interior is black with a visible headrest, curved roofline, window frame, seatbelt-like shadows, and bright leafy trees outside the window; sunlight filters through branches and casts irregular striped shadows across her face, arms, and clothing. Use a moody photorealistic fashion-magazine style: muted blue-gray shadows, high texture, film grain, soft haze, realistic skin, shallow contrast, editorial composition, late-afternoon natural light, static noise/glitch accents, and tiny technical UI marks scattered around the image. Add exactly 6 visible typography groups: 1) upper left small text reading “QUIET FIRE.” with a thin red glitch bar and tiny lines below reading “SILENT / BUT / BURNING”; 2) lower left main title block reading “ALIVE IN NOISE.” above a large distressed condensed title “STATIC SOUL”, with a thin white signature scribble crossing the title and small text below reading “EYES OPEN. / TRUTH CORRUPTED / BEYOND THE NOISE”; 3) mid-right small label reading “STATIC SOUL” with a red underline and text below reading “I WAS NEVER / MEANT TO / BE SILENT.”; 4) bottom center tiny caption reading “EYES OPEN //” and underneath “SEE EVERYTHING / FEEL NOTHING / KEEP BREATHING”; 5) bottom right caption reading “ALIVE IN NOISE //” and underneath “NOT LOST. / JUST UNDOING. / IN REAL TIME.”; 6) subtle scattered micro glitch dashes and scanline fragments with no additional readable words. Make the poster feel like an emotional fashion photo series about noise, insomnia, and restrained inner fire. Use {argument name=\"main title\" default=\"STATIC SOUL\"} as the large title, {argument name=\"tagline\" default=\"ALIVE IN NOISE.\"} as the small tagline, and {argument name=\"mood phrase\" default=\"QUIET FIRE.\"} as the upper-left phrase. No logos, no watermark, no extra people, no cartoon styling.",
+    "arguments": [
+      {
+        "name": "hair_color",
+        "default": "long messy black hair",
+        "label": "hair color"
+      },
+      {
+        "name": "main_title",
+        "default": "STATIC SOUL",
+        "label": "main title"
+      },
+      {
+        "name": "tagline",
+        "default": "ALIVE IN NOISE.",
+        "label": "tagline"
+      },
+      {
+        "name": "mood_phrase",
+        "default": "QUIET FIRE.",
+        "label": "mood phrase"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "social-media"
+      ],
+      "styles": [
+        "photography",
+        "cinematic"
+      ],
+      "subjects": [
+        "fashion",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984833900_yhi58f_HMKSr4pagAANoiB.jpg"
+  },
+  {
+    "id": "p043",
+    "title": "Roast Rice Branding Proposal B",
+    "titleEn": "Roast Rice Branding Proposal Board",
+    "description": "A complex, professional prompt for generating a complete commercial design proposal board for a Cant",
+    "content": "Generate a 9:16 vertical high-definition commercial design proposal board for a {argument name=\"subject\" default=\"Roast Rice\"} takeaway storefront decoration case. The result should be a complete, realistic, and actionable restaurant brand visual proposal board, featuring complete brand system feel, platform integration feel, commercial presentation feel, and portfolio quality.\n\nStore Category: {argument name=\"category\" default=\"Cantonese Roast Meats / Chinese Fast Food / Roast Rice Bowls / Cooked Food Takeaway\"}\n\nBrand Setting:\nBrand Name: {argument name=\"brand name\" default=\"Fire Wok Roast Rice\"}\nEnglish Name: FIRE WOK ROAST RICE\n\nMain Products:\n- Signature Roast Meat Dual Platter Rice\n- Char Siu and Roast Duck Rice\n- Roast Goose and Char Siu Rice\n- Soy Sauce Chicken and Roast Pork Rice\n- Triple Combination Deluxe Roast Meat Rice\n- Soup Sets\n- Hong Kong Style Cold Drinks / Braised Egg Sides\n\nMain Color Scheme: {argument name=\"color scheme\" default=\"Charcoal Jujube Red, Caramel Amber Brown\"}\n\nLayout Structure: Must be complete and professional, including a large main banner, auxiliary banner, mobile app mockup, product card matrix, and standard color blocks at the bottom. The visual style should combine high-end Cantonese roast meat aesthetics with high-conversion takeaway UI design. Ensure food photography is realistic and high-definition, focusing on textures like crispy skin and glossy glaze. Avoid generic templates, blurry textures, or low-end fast-food looks. Final result should look like a professional brand proposal for Behance or a commercial portfolio.",
+    "arguments": [
+      {
+        "name": "subject",
+        "default": "Roast Rice",
+        "label": "subject"
+      },
+      {
+        "name": "category",
+        "default": "Cantonese Roast Meats / Chinese Fast Food / Roast Rice Bowls / Cooked Food Takeaway",
+        "label": "category"
+      },
+      {
+        "name": "brand_name",
+        "default": "Fire Wok Roast Rice",
+        "label": "brand name"
+      },
+      {
+        "name": "color_scheme",
+        "default": "Charcoal Jujube Red, Caramel Amber Brown",
+        "label": "color scheme"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "photography",
+        "ink-chinese"
+      ],
+      "subjects": [
+        "product",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984824402_kfprg2_HMJghDkaoAEX3FN.jpg"
+  },
+  {
+    "id": "p044",
+    "title": "Four-Panel AI Manga Workflow C",
+    "titleEn": "Four-Panel AI Manga Workflow Comic",
+    "description": "A cute watercolor four-panel manga explainer showing a pink-haired chibi mascot testing, checking, c",
+    "content": "Goal: Create a soft watercolor-style vertical four-panel manga explainer about an AI manga workflow, featuring a cute chibi child mascot with short pink hair and a blue sweater demonstrating iterative image generation.\n\nCanvas: Vertical 3:4 comic page, warm off-white paper texture, thin hand-drawn brown panel borders, gentle pastel palette, airy margins, no harsh digital gradients.\n\nLayout: Use exactly 4 horizontal comic panels stacked from top to bottom, each separated by a thin sketchy border. The same chibi character appears in all 4 panels. Add small pink cherry-blossom motifs and tiny sparkle accents across the page.\n\nCharacter details: The mascot is a cheerful chibi child named {argument name=\"character name\" default=\"pink-haired AI manga mascot\"}, with short rounded {argument name=\"hair color\" default=\"bright pink\"} hair, large amber-brown eyes, small nose, soft round cheeks, and a loose light-blue sweater. The character should look friendly, instructional, and enthusiastic.\n\nPanel 1: The chibi stands on the right, smiling and holding up a printed manga page angled toward the viewer. On the left is one large speech bubble with handwritten Japanese text: {argument name=\"panel 1 speech\" default=\"まずは安いモデルで方向確認!\"}. The manga page should show two small grayscale/sepia comic frames featuring a young woman in an office-like setting.\n\nPanel 2: The chibi is shown larger in close-up, leaning over a desk with a magnifying glass, carefully inspecting a document labeled “YAML” on the right. A small printed manga page lies on the left side of the desk. The YAML paper has red underlines and one red circled mark. Include one speech bubble on the right with Japanese text: {argument name=\"panel 2 speech\" default=\"AIと一緒にYAMLをチェック…\"}.\n\nPanel 3: The chibi is on the right in side view, serious and focused, writing corrections on a large prompt instruction sheet with a red pen. On the left is one speech bubble with Japanese text: {argument name=\"panel 3 speech\" default=\"ズレを直して指示を具体的に!\"}. The correction sheet should have a heading meaning “prompt instructions” and multiple handwritten lines with red edits, red underlines, and a circled correction, suggesting more concrete instructions about background, expression, pose, and details.\n\nPanel 4: The chibi stands happily on the right, eyes closed in a big smile, holding up a finished manga page on the left. Add golden sparkles and pink blossoms around the successful result. The finished manga page contains exactly 3 visible stacked manga frames: top frame of a young woman at a desk, middle close-up of the woman, bottom frame with a small table or chart. Include one speech bubble on the right with Japanese text: {argument name=\"panel 4 speech\" default=\"仕上げは高精度モデルで完璧っ!\"}.\n\nText and style constraints: Use handwritten Japanese lettering inside the 4 speech bubbles and on the visible “YAML” label. Keep text legible but naturally hand-drawn. The overall mood should be cute, explanatory, optimistic, and suitable for a social media post about making AI manga. Use watercolor washes, pencil-like outlines, soft paper grain, and gentle pastel shadows. Do not add extra panels, extra speech bubbles, photorealism, logos, watermarks, or unrelated characters.",
+    "arguments": [
+      {
+        "name": "character_name",
+        "default": "pink-haired AI manga mascot",
+        "label": "character name"
+      },
+      {
+        "name": "hair_color",
+        "default": "bright pink",
+        "label": "hair color"
+      },
+      {
+        "name": "panel_1_speech",
+        "default": "まずは安いモデルで方向確認!",
+        "label": "panel 1 speech"
+      },
+      {
+        "name": "panel_2_speech",
+        "default": "AIと一緒にYAMLをチェック…",
+        "label": "panel 2 speech"
+      },
+      {
+        "name": "panel_3_speech",
+        "default": "ズレを直して指示を具体的に!",
+        "label": "panel 3 speech"
+      },
+      {
+        "name": "panel_4_speech",
+        "default": "仕上げは高精度モデルで完璧っ!",
+        "label": "panel 4 speech"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "photography",
+        "anime",
+        "illustration"
+      ],
+      "subjects": [
+        "portrait-selfie",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984844109_ipqf3n_HMJeb63b0AAmjjc.png"
+  },
+  {
+    "id": "p045",
+    "title": "Morocco Soccer Strength Kids I",
+    "titleEn": "Morocco Soccer Strength Kids Infographic",
+    "description": "A colorful Japanese children’s infographic explaining why Morocco is strong at soccer through Europe",
+    "content": "Goal: Create a cheerful Japanese educational infographic for children explaining {argument name=\"headline topic\" default=\"どうしてモロッコはサッカーで強いの？\"}. Make it look like a colorful school handout that a parent and child could read together.\n\nCanvas: Vertical portrait infographic, white background, thick rounded red/green/blue panel borders, playful manga-style illustrations, high readability, bright primary colors, clean vector-like drawing, 2D cartoon style, no photorealism.\n\nTop header: Large bold Japanese headline across the top: 「どうしてモロッコはサッカーで強いの？」 with 「モロッコ」 and 「サッカーで強い」 emphasized in red and green. Under it, a blue ribbon subtitle: 「ヨーロッパとのつながりがポイント！」. Place a waving Morocco flag on the top left and a smiling boy in a red Morocco soccer jersey holding a soccer ball on the top right.\n\nLayout: Use exactly 5 numbered main sections plus 4 smaller lettered explanation cards. The page should be dense but organized, like a kids’ encyclopedia infographic.\n\nSection 1, upper left, red numbered badge 「①」: Title 「どうしてモロッコ人はヨーロッパにいるの？」. Include three red bullet points explaining that Morocco has historic links with France and Spain, many people went to Europe for study or work when there were not enough jobs, and families settled there so children and grandchildren grew up in Europe. Show a simple map of western Europe and north Africa with labels for 「フランス」, 「スペイン」, 「オランダ」, 「ジブラルタル海峡」, and 「モロッコ」, with red arrows from Morocco toward Spain, France, and the Netherlands. Add a small caption: 「モロッコはアフリカの北西にある国」.\n\nSection 2, upper right, green numbered badge 「②」: Title 「その子どもはモロッコ人になれるの？」. Include two green bullet points explaining that if a father or mother is Moroccan, the child also has Moroccan nationality, and even if born in Spain they may represent Morocco. Show a smiling family of exactly 3 people: father, mother, and young boy. Add exactly 3 identity objects: a Moroccan passport labeled 「ROYAUME DU MAROC PASSPORT」, a Morocco flag, and a Spain flag. Include a dotted box labeled 「国籍＝どこの国の人か、というきまり」.\n\nCenter section 3, large, blue numbered badge 「③」: Title 「だから強い！」. Show exactly 3 energetic Moroccan soccer players in red jerseys and green shorts running forward in front of an oversized soccer ball. Their jersey numbers are exactly 2, 7, and 17. Add small yellow sparkle marks around them.\n\nLettered cards around section 3: Create exactly 4 blue-framed cards labeled A, B, C, and D. Card A title 「ヨーロッパで育つ」, showing exactly 2 children training on a European soccer field with cones and a coach-like atmosphere; text says strong clubs and training make them very good at soccer. Card B title 「モロッコ代表をえらべる」, showing a red Morocco jersey with number 10 and a red heart containing the green Moroccan star; text says if their roots are Moroccan, there is a path to become a Morocco representative. Card C title 「チームがまとまっている」, showing exactly 5 players in red jerseys huddling from behind, with visible numbers including 6 and 10; text says everyone cooperates in defending and attacking. Card D title 「国も育成に力を入れている」, showing a soccer school building and practice field; text says the country builds soccer schools and training grounds.\n\nSection 4, lower left, red numbered badge 「④」: Title 「どうしてスペイン代表じゃなくて、モロッコ代表？」. Make a split illustration comparing two routes: left label 「スペイン代表」 with a worried boy and gray silhouettes suggesting competition is hard; right label 「モロッコ代表」 with a happy boy pointing upward in a Morocco jersey. Include bullet text explaining that entering Spain’s national team is difficult, representing Morocco may offer a better chance to play in big tournaments, and the player may want to play for the country of their family roots.\n\nSection 5, lower right, green numbered badge 「⑤」: Title 「まとめ」. Use three rows with icons: exactly 3 small children, a handshake, and a trophy. Summary text should say Morocco has many players who grew up in Europe, those players unite as the Morocco national team, and therefore they are strong even at the World Cup. Emphasize the final line in red: 「だからワールドカップでも強い！」.\n\nBottom formula strip: A red rounded label 「ひとことでいうと」 followed by the equation in bold colors: 「ヨーロッパで育った力 ＋ モロッコ代表としての団結 ＝ 強さ！」.\n\nVisual style: Bright Japanese children’s infographic, thick outlines, cute expressive faces, simple geography map, rounded panels, bold handwritten-style Japanese fonts, red/green/blue color coding matching Morocco and soccer. Keep all text legible and avoid adding unrelated facts or extra sections.",
+    "arguments": [
+      {
+        "name": "headline_topic",
+        "default": "どうしてモロッコはサッカーで強いの？",
+        "label": "headline topic"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "infographic"
+      ],
+      "styles": [
+        "photography",
+        "anime",
+        "illustration"
+      ],
+      "subjects": [
+        "text-typography",
+        "portrait-selfie"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984841538_kigus3_HMJIMdmaUAAXuQh.jpg"
+  },
+  {
+    "id": "p046",
+    "title": "Heroic Cat RPG Cut-In Banner",
+    "titleEn": "Heroic Cat RPG Cut-In Banner",
+    "description": "Generates a cinematic ultra-wide fantasy game special attack cut-in featuring a heroic tabby cat, li",
+    "content": "Create an ultra-wide cinematic mobile game cut-in banner in a dramatic fantasy anime-realism style. Canvas is a very wide horizontal rectangle, about 21:9, framed with thick black letterbox bars above and below the action area for a movie-like special attack screen. The subject is a heroic brown tabby cat, close-up from the shoulders up, positioned mostly on the left half and facing right with intense large green eyes, detailed fur, long white whiskers, and a determined expression. The cat wears a dark olive-green adventurer cloak with folds flowing backward and one visible round bronze clasp near the lower left. The background is a dark starry cosmic battle scene filled with glowing gold shards, sparks, triangular crystal fragments, streaking light trails, and bright white lightning bolts radiating across the right half. Place one large bold Japanese attack phrase across the lower-middle foreground, centered and spanning almost the full width: {argument name=\"attack phrase\" default=\"星のかけらの力で　空へ！\"}. The typography should be thick, heavy, game-like, pale cream to warm gold gradient with subtle beveling, dark shadow, and a thin horizontal golden line passing behind or through the text, making it feel like a special move title card. Keep the cat partially behind the text so the words dominate the cut-in. Use high contrast, sharp details, dynamic diagonal energy, glittering particles, and a premium fantasy RPG visual style. No extra logos, UI buttons, watermarks, or additional text.",
+    "arguments": [
+      {
+        "name": "attack_phrase",
+        "default": "星のかけらの力で　空へ！",
+        "label": "attack phrase"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "thumbnail"
+      ],
+      "styles": [
+        "cinematic",
+        "anime",
+        "ink-chinese"
+      ],
+      "subjects": [
+        "animal",
+        "character",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782896968966_kuzt8h_HMFzGvHagAAiHWe.jpg"
+  },
+  {
+    "id": "p047",
+    "title": "Gabriel Fauré Requiem Essay Th",
+    "titleEn": "Gabriel Fauré Requiem Essay Thumbnail",
+    "description": "A solemn classical music video thumbnail featuring a photorealistic Gabriel Fauré-style portrait wit",
+    "content": "Create a 16:9 editorial YouTube thumbnail about classical music, with a dignified photorealistic studio portrait of an elderly 19th-century French composer resembling Gabriel Fauré on the left half of the frame. He has wispy white hair, a high forehead, tired serious eyes, a large white handlebar mustache, and wears a formal black frock coat with satin lapels, a white high-collar shirt, and dark cravat. Use a muted warm brown textured studio backdrop with soft vignette lighting and empty negative space on the right for typography. Add exactly two text blocks: at the upper right, a large bold all-caps Spanish headline in bright golden yellow with dark drop shadow reading {argument name=\"headline text\" default=\"«EL ARRULLO DE LA MUERTE»\"}, arranged across three stacked lines; at the lower right, a smaller bold white caption with subtle black shadow reading {argument name=\"composer and work text\" default=\"Gabriel Fauré\\nRéquiem, Op. 48\"}, arranged across two lines. The composition should feel like a serious music essay cover: solemn, refined, slightly dramatic, high contrast between the black suit and brown background, clean typography, no extra logos, no watermark, no additional text.",
+    "arguments": [
+      {
+        "name": "headline_text",
+        "default": "«EL ARRULLO DE LA MUERTE»",
+        "label": "headline text"
+      },
+      {
+        "name": "composer_and_work_text",
+        "default": "Gabriel Fauré\\nRéquiem, Op. 48",
+        "label": "composer and work text"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "thumbnail"
+      ],
+      "styles": [
+        "photography",
+        "minimalist"
+      ],
+      "subjects": [
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782896970874_szyl41_HMEVuMBXIAAilA1.jpg"
+  },
+  {
+    "id": "p048",
+    "title": "Armored Warrior with Black Pan",
+    "titleEn": "Armored Warrior with Black Panther",
+    "description": "A cinematic fantasy poster prompt featuring a silver-armored heroine standing with a black panther b",
+    "content": "Create a cinematic dark fantasy portrait of {argument name=\"character name\" default=\"Luna and me\"}: a young female warrior standing powerfully in the center of the frame with her legs apart, protecting a seated black panther directly in front of her. The warrior has {argument name=\"hair color\" default=\"long windswept golden-blonde hair\"}, a calm confident expression, and wears ornate mirror-polished silver full plate armor with engraved filigree, layered pauldrons, gauntlets, greaves, and a dark flowing cape. The panther is a large sleek black leopard with glowing amber eyes, glossy fur, and an ornate gold chain collar, sitting alert between the warrior’s boots. Behind them, enormous torn crimson silk banners sweep diagonally across the sky like dramatic battle standards, embroidered with faint gold patterns. The background is an epic ruined ceremonial plaza or battlefield with dark spires, small fires, floating embers, wet reflective stone ground, and a turbulent blue-black storm sky with breaks of bright light. Use a low-angle heroic composition, centered symmetry, ultra-detailed realistic fantasy art, high contrast lighting, blue highlights on chrome armor, red backlight from the banners, rain-slick reflections, volumetric atmosphere, sharp focus on the woman and panther, and an intense movie-poster mood. No text, no watermark, no extra animals, no extra people.",
+    "arguments": [
+      {
+        "name": "character_name",
+        "default": "Luna and me",
+        "label": "character name"
+      },
+      {
+        "name": "hair_color",
+        "default": "long windswept golden-blonde hair",
+        "label": "hair color"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "thumbnail"
+      ],
+      "styles": [
+        "photography",
+        "cinematic"
+      ],
+      "subjects": [
+        "animal",
+        "character",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782636879387_gt7hsi_HL0xWrKbsAA1NC2.jpg"
+  },
+  {
+    "id": "p049",
+    "title": "Character Reference Sheet Styl",
+    "titleEn": "Character Reference Sheet Style",
+    "description": "Transforms a provided image into a high-definition concept art character sheet featuring handwritten",
+    "content": "Draw the person in the provided image as {argument name=\"style\" default=\"high-definition concept art\"} and create a {argument name=\"medium\" default=\"pencil\"} design document (text is handwritten Japanese, lines are freehand). Render in 4:5 aspect ratio.",
+    "arguments": [
+      {
+        "name": "style",
+        "default": "high-definition concept art",
+        "label": "style"
+      },
+      {
+        "name": "medium",
+        "default": "pencil",
+        "label": "medium"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "comic"
+      ],
+      "styles": [
+        "illustration",
+        "3d-render",
+        "sketch"
+      ],
+      "subjects": [
+        "character",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984828410_s1a7xd_HMMhsHNa0AAXfXS.jpg"
+  },
+  {
+    "id": "p050",
+    "title": "Flash-Lit Apartment Portrait",
+    "titleEn": "Flash-Lit Apartment Portrait",
+    "description": "A candid early-2000s-style flash photograph of a tired woman in a satin robe at a dining table insid",
+    "content": "Create a candid, flash-lit documentary photograph in a dim apartment at night, framed horizontally in a 4:3 aspect ratio. The subject is {argument name=\"subject\" default=\"a pale adult woman with dark messy hair\"} sitting at a dining table and staring directly into the camera with a tired, blank, slightly haunted expression. She wears {argument name=\"outfit\" default=\"a pale pink satin robe with cream lace trim and a tied front\"}; her makeup is smudgy and dramatic with dark eyeliner, flushed cheeks, glossy lips, and shiny skin from the harsh camera flash. Compose her slightly right of center, cropped from mid-torso upward, leaning near the table edge. In the foreground show a round dining table covered with a light floral tablecloth, with exactly 2 visible objects: a white ceramic mug with a small floral design on the left, and a small dark mobile phone or remote near the center front. Behind her include exactly 5 main background elements: a cane-back wooden dining chair, a dark open hallway doorway, a narrow interior door, a partially visible kitchen with brown wooden cabinets and a white dishwasher, and a wall calendar on the far right. Use muted beige walls, deep shadows, underexposed background, direct on-camera flash, slight red-eye-style glare, imperfect snapshot framing, and a gritty early-2000s compact-camera realism. Avoid glamour lighting, polished fashion styling, text overlays, or extra people.",
+    "arguments": [
+      {
+        "name": "subject",
+        "default": "a pale adult woman with dark messy hair",
+        "label": "subject"
+      },
+      {
+        "name": "outfit",
+        "default": "a pale pink satin robe with cream lace trim and a tied front",
+        "label": "outfit"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "comic"
+      ],
+      "styles": [
+        "photography",
+        "ink-chinese"
+      ],
+      "subjects": [
+        "portrait-selfie",
+        "cityscape",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984848546_28dyzh_HMKZYt-aEAAgqtv.jpg"
+  },
+  {
+    "id": "p051",
+    "title": "Watercolor Manga Locked Room P",
+    "titleEn": "Watercolor Manga Locked Room Page",
+    "description": "Generates a vertical watercolor manga comic page with three anime girls, four panels, and Japanese d",
+    "content": "Goal: Create a watercolor manga page in a vertical comic layout about three anime girls trapped in a gloomy closed room, with Japanese speech text.\n\nCanvas: Portrait page, approximately 2:3 aspect ratio, off-white paper texture, hand-painted watercolor and ink line art, soft washes, visible panel borders, no digital UI, no watermark.\n\nLayout: Use exactly 4 comic panels: (1) top-left small panel, (2) top-right small panel, (3) one large central panel spanning the width, and (4) a narrow bottom reaction strip. Keep the page reading like a Japanese manga, with vertical speech balloons.\n\nCharacters: Show exactly 3 girls. Girl A is a confident purple-haired girl with long curled hair, a side braid, green eyes, cat-ear-like black silhouette behind her head, wearing a shiny gold sleeveless turtleneck; she looks angry and sweaty in the top-left panel and appears again as an intense close-up in the bottom strip. Girl B is a cheerful blonde bob-haired girl with purple eyes, wearing a red frilled coat and a dark green scarf; she raises one fist triumphantly in the top-right panel. Girl C is a quiet black-haired girl with very long straight hair and red eyes, wearing a loose green dress; she sits barefoot on the floor in the central panel, knees bent, one hand near her lips, looking thoughtful and worried.\n\nPanel details: Top-left panel has a dark bluish background and Girl A speaking with frustration. Top-right panel has a bright yellow starburst background with sparkles, Girl B smiling confidently, and a red Japanese sound effect near the top. The large middle panel shows Girl C seated in a dim, concrete or stone-walled room with a vertical metal pipe on the left, cold blue-gray shadows, and a small bright window or opening at the right casting pale light. The bottom strip shows only Girl A’s narrowed green eyes and purple hair against a red background, emphasizing suspicion and irritation.\n\nText content: Include exactly 5 vertical Japanese speech balloons and 1 red sound effect. Top-left panel has two speech balloons: {argument name=\"top left speech one\" default=\"もう一ドヤって場合じゃないよ！\"} and {argument name=\"top left speech two\" default=\"こんな不気味な所に閉じ込められて……入り口、塞がってる!!\"}. Top-right panel has one speech balloon: {argument name=\"top right speech\" default=\"わははっ！ほら、入れるって言ったっしょ！さあ、手がかりを探そう！\"}. Middle panel has one speech balloon: {argument name=\"middle speech\" default=\"脱出も大事だけど…それより犯人、まだいるかもよ？\"}. Bottom strip has one speech balloon: {argument name=\"bottom speech\" default=\"ったく……いっつも後先考えないんだから……\"}. Add the red sound effect 「ドヤ!」 in the top-right panel.\n\nVisual style: Delicate shoujo manga faces, expressive eyes, thin ink outlines, watercolor gradients, slightly uneven hand-painted panel edges, soft paper grain, dramatic color contrast between the cheerful yellow top-right panel, cold blue-gray central room, and red bottom reaction strip.\n\nConstraints: Count and show exactly 4 panels, exactly 3 recurring characters, exactly 5 speech balloons, and exactly 1 sound effect. Keep all dialogue vertical Japanese text, but do not add extra captions or additional text.",
+    "arguments": [
+      {
+        "name": "top_left_speech_one",
+        "default": "もう一ドヤって場合じゃないよ！",
+        "label": "top left speech one"
+      },
+      {
+        "name": "top_left_speech_two",
+        "default": "こんな不気味な所に閉じ込められて……入り口、塞がってる!!",
+        "label": "top left speech two"
+      },
+      {
+        "name": "top_right_speech",
+        "default": "わははっ！ほら、入れるって言ったっしょ！さあ、手がかりを探そう！",
+        "label": "top right speech"
+      },
+      {
+        "name": "middle_speech",
+        "default": "脱出も大事だけど…それより犯人、まだいるかもよ？",
+        "label": "middle speech"
+      },
+      {
+        "name": "bottom_speech",
+        "default": "ったく……いっつも後先考えないんだから……",
+        "label": "bottom speech"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "comic"
+      ],
+      "styles": [
+        "photography",
+        "anime",
+        "illustration"
+      ],
+      "subjects": [
+        "portrait-selfie",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984845741_rzn9mn_HMJ__TlXEAABWlE.jpg"
+  },
+  {
+    "id": "p052",
+    "title": "Dynamic Anime Hero Figure Rend",
+    "titleEn": "Dynamic Anime Hero Figure Render",
+    "description": "A dramatic studio product render of an anime-style action figure leaping from a black display base, ",
+    "content": "Create a high-end studio product render of a dynamic anime-style collectible figure of {argument name=\"character name\" default=\"a charismatic young male action hero\"} posed mid-leap on a thin transparent support rod above a matte black circular display base. The figure has tousled dark brown wavy hair, sharp expressive eyes, a confident grin, and an athletic build. He wears a textured burgundy-red open jacket flaring dramatically behind him, a dark navy button-up shirt, a loose golden-yellow necktie whipping to the side, matching dark navy trousers with realistic folds, a black belt, black dress shoes, and small dark wrist accessories. Pose him with one arm stretched high and wide toward the upper left with fingers spread, the other arm bent into a clenched fist on the right, one knee raised forward with the sole of the shoe prominent in the foreground, and the other leg bent back, creating an energetic heroic jump. Use a low-angle three-quarter view so the figure feels large and dramatic, centered on the base against a pure black seamless background. Lighting should be premium collectible photography: soft but crisp highlights on the face, jacket texture, shoes, and fabric folds, subtle rim light, realistic resin/plastic material finish, shallow studio contrast, and no visible environment. Include exactly 3 support/display elements: 1 round black base, 1 vertical clear support rod, and 1 small clamp connection at the back/leg. Add a small subtle white sparkle logo in the bottom-right corner. Ultra-detailed sculpting, realistic anime figure proportions, polished commercial product shot, 4:5 vertical composition, no text, no packaging, no extra characters.",
+    "arguments": [
+      {
+        "name": "character_name",
+        "default": "a charismatic young male action hero",
+        "label": "character name"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "photography",
+        "anime",
+        "3d-render"
+      ],
+      "subjects": [
+        "product",
+        "character"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984840168_ytiwm3_HMLIia5asAA-PHW.jpg"
+  },
+  {
+    "id": "p053",
+    "title": "Minimal Floating Product Shot",
+    "titleEn": "Minimal Floating Product Shot",
+    "description": "A clean, hyper-realistic prompt for commercial advertising featuring an object floating in a minimal",
+    "content": "Premium product shot of {argument name=\"object\" default=\"object\"}, floating in a minimal {argument name=\"environment color\" default=\"colour \"} environment, soft shadows, studio lighting, reflections on surface, hyper-realistic textures, commercial advertising style, ultra-clean composition",
+    "arguments": [
+      {
+        "name": "object",
+        "default": "object",
+        "label": "object"
+      },
+      {
+        "name": "environment_color",
+        "default": "colour ",
+        "label": "environment color"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "minimalist"
+      ],
+      "subjects": [
+        "product"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984813465_isxl04_HMJyLO9aYAEApaZ.jpg"
+  },
+  {
+    "id": "p054",
+    "title": "Cristiano Ronaldo Obsession Po",
+    "titleEn": "Cristiano Ronaldo Obsession Poster",
+    "description": "A high-end collector-edition poster prompt focusing on the psychology of perfection through minimali",
+    "content": "Create an award-winning collector-edition {argument name=\"subject\" default=\"Cristiano Ronaldo\"} poster exploring the invisible concept of {argument name=\"concept\" default=\"obsession\"} through the language of elite graphic design. The composition should never feel completely finished. Instead, it should resemble the final proof moments before perfection. Prime {argument name=\"team era\" default=\"Real Madrid\"} Cristiano Ronaldo sits quietly in the foreground wearing an immaculately tailored all-white football kit with subtle premium textures. His posture communicates total concentration rather than aggression. His Madrid-era hairstyle is perfectly styled, every facial feature rendered with extraordinary medium-format realism. Around him exists the evidence of endless refinement. Multiple generations of editorial grids overlap with microscopic precision. Earlier layout versions remain faintly visible beneath newer structures. Typography appears repeatedly adjusted by fractions of a millimeter. Alignment guides, registration systems, printer annotations, transparent tracing overlays, proof corrections, construction geometry, and publishing references coexist without clutter. The poster should communicate that greatness comes from thousands of invisible improvements. Use premium cotton paper, blind embossing, spot UV varnish, subtle foil stamping, offset-print realism, luxury editorial spacing, refined hierarchy, and museum-grade production quality. Colour palette: bone white, graphite black, restrained Ferrari red, brushed titanium. The final artwork should resemble a D&AD Black Pencil-winning editorial poster documenting the psychology of perfection.",
+    "arguments": [
+      {
+        "name": "subject",
+        "default": "Cristiano Ronaldo",
+        "label": "subject"
+      },
+      {
+        "name": "concept",
+        "default": "obsession",
+        "label": "concept"
+      },
+      {
+        "name": "team_era",
+        "default": "Real Madrid",
+        "label": "team era"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "3d-render",
+        "sketch"
+      ],
+      "subjects": [
+        "product",
+        "text-typography"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984822231_rg8bad_HMJxspgbgAASLv9.jpg"
+  },
+  {
+    "id": "p055",
+    "title": "Professional Product Photograp",
+    "titleEn": "Professional Product Photography for GPT Image 2",
+    "description": "A structured prompt for generating high-quality product photos, specifically optimized for GPT Image",
+    "content": "{argument name=\"subject\" default=\"Matte black ceramic cup\"}, {argument name=\"composition\" default=\"3/4 top-down view\"}, soft left-side lighting with rim light, {argument name=\"atmosphere\" default=\"minimalist white background with cool tones\"}, professional product photography style",
+    "arguments": [
+      {
+        "name": "subject",
+        "default": "Matte black ceramic cup",
+        "label": "subject"
+      },
+      {
+        "name": "composition",
+        "default": "3/4 top-down view",
+        "label": "composition"
+      },
+      {
+        "name": "atmosphere",
+        "default": "minimalist white background with cool tones",
+        "label": "atmosphere"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "photography",
+        "minimalist"
+      ],
+      "subjects": [
+        "product",
+        "character"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782896949269_m6zmdl_HMCmlRuX0AAzrgg.jpg"
+  },
+  {
+    "id": "p056",
+    "title": "Neon Energy Drink Product Shot",
+    "titleEn": "Neon Energy Drink Product Shot",
+    "description": "High-contrast product photography prompt for a neon energy drink bursting through citrus slices and ",
+    "content": "Ultra-cinematic product photography of a {argument name=\"color\" default=\"neon-green\"} energy drink can labeled \"{argument name=\"brand name\" default=\"VOLT RUSH\"}\", tilted at a sharp diagonal, bursting through glowing {argument name=\"fruit\" default=\"citrus slices\"} and electric sparks. Frozen lime juice splashes and ice shards suspended mid-air, micro droplets clearly visible. High-contrast studio lighting with green neon rim lights, deep dark background, glossy aluminum surface, shallow depth of field, photorealistic, 8K, premium advertising style.",
+    "arguments": [
+      {
+        "name": "color",
+        "default": "neon-green",
+        "label": "color"
+      },
+      {
+        "name": "brand_name",
+        "default": "VOLT RUSH",
+        "label": "brand name"
+      },
+      {
+        "name": "fruit",
+        "default": "citrus slices",
+        "label": "fruit"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "photography",
+        "cinematic",
+        "cyberpunk"
+      ],
+      "subjects": [
+        "product",
+        "food-drink",
+        "character"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782810214423_9d24t6_HMBOxj-aUAAOPXO.jpg"
+  },
+  {
+    "id": "p057",
+    "title": "Anime Soccer Snack Bag Ad",
+    "titleEn": "Anime Soccer Snack Bag Ad",
+    "description": "A vibrant fictional Japanese soccer snack product ad featuring an anime supporter girl, holographic ",
+    "content": "Create a polished anime-style product advertisement image for a fictional Japanese soccer snack brand. Show a glossy blue-and-white potato chip bag standing upright on a wooden tabletop, with a stadium-like blue background blurred behind it, flying gold and blue confetti, and a celebratory sports-fan atmosphere. The package has crimped top and bottom edges, metallic royal-blue borders, gold accents, and a faceted icy-blue geometric pattern. On the front of the bag, feature a cheerful anime idol soccer supporter girl named {argument name=\"character name\" default=\"Nozomu\"}: long wavy light-brown hair with white flower hair ornaments, large sparkling brown eyes, smiling open mouth, waving one hand, holding a black-and-white soccer ball in the other, wearing a white cropped soccer jersey with blue stripes, blue skirt, white belt, and a blue-and-white striped scarf flowing behind her. Include visible Japanese package text: large main logo 「のぞむ」, subtitle 「サッカースナック」, small English ribbon text “Blue Cheer Chips”, badge text 「第1弾」, and two blue ribbon callouts 「おまけカード1枚入り」 and 「キラカード当たりあり」. The lower left of the bag should show ridged potato chips through an illustrated product window. In the foreground, place exactly 3 loose ridged potato chips and small crumbs on the tabletop, plus exactly 3 collectible trading cards leaning in a fan arrangement in front of the bag: the front card is holographic with gold border and rainbow sparkles, labeled “SSR” with three stars at top left and “NOZOMU / のぞむ” at the bottom, showing the same girl holding a soccer ball close to her chest in a blue cheer outfit; behind it are 2 partially visible shiny cards with purple and gold edges, one showing an “R” rarity mark. Use dramatic commercial lighting, crisp reflections, glittering foil highlights, shallow depth of field, high detail, vibrant royal blue, white, and gold color palette, cute premium gacha-card aesthetic. No watermark, no real brand names, no extra cards or extra main characters.",
+    "arguments": [
+      {
+        "name": "character_name",
+        "default": "Nozomu",
+        "label": "character name"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "ecommerce"
+      ],
+      "styles": [
+        "anime",
+        "illustration",
+        "ink-chinese"
+      ],
+      "subjects": [
+        "food-drink",
+        "character",
+        "portrait-selfie"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782810268706_prddku_HL-6OV_bwAITrs9.jpg"
+  },
+  {
+    "id": "p058",
+    "title": "Royal Anime Mages at Sunrise",
+    "titleEn": "Royal Anime Mages at Sunrise",
+    "description": "A vivid fantasy anime key visual of two ornate royal spellcasters casting green and red magic before",
+    "content": "Create a vertical 3:4 high-detail anime fantasy key visual featuring two royal mages in a dramatic magical city at sunrise. In the foreground, place {argument name=\"female character\" default=\"a young violet-haired princess mage\"} facing forward-right with an intense expression, luminous purple eyes, long flowing deep purple hair, and an ornate gold filigree tiara set with purple and green jewels. Dress her in a luxurious white, black, and violet robe with heavy gold embroidery, layered necklaces, dangling earrings, gemstone ornaments, and sparkling trim. She grips a long black-and-gold magic staff diagonally across the lower half of the image; the staff has a large faceted emerald orb and ornate golden crescent details, emitting bright neon-green circular spell rings, spiraling ribbons of energy, and glittering particles. Behind her on the left, show {argument name=\"male character\" default=\"a black-haired prince sorcerer\"} in three-quarter profile looking over his shoulder with sharp eyes, tousled black hair, and a high-collared crimson cloak covered in gold floral embroidery and glowing red sparks. His raised hand casts dark red-black magical tendrils that curl across the upper left sky like ink and fire. Background: a vast fantasy kingdom with dense rooftops and a tall radiant white-gold castle on the right, mountains in the distance, and a brilliant blue sky with warm sunrise clouds and lens-flare sunlight. Use an ultra-polished Japanese light novel cover style, cinematic composition, vivid saturated colors, intricate jewelry and fabric detail, dynamic wind-swept hair and robes, sparkling magical particles everywhere, dramatic rim lighting, high contrast, sharp focus, and epic romantic fantasy atmosphere. Keep exactly two main characters, one ornate staff, one castle, green magic around the staff, and red-black magic around the male sorcerer. No text, no logo, no watermark.",
+    "arguments": [
+      {
+        "name": "female_character",
+        "default": "a young violet-haired princess mage",
+        "label": "female character"
+      },
+      {
+        "name": "male_character",
+        "default": "a black-haired prince sorcerer",
+        "label": "male character"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "game"
+      ],
+      "styles": [
+        "photography",
+        "cinematic",
+        "anime"
+      ],
+      "subjects": [
+        "character"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984847347_u6jwtl_HMJyBD2bIAAVOmH.jpg"
+  },
+  {
+    "id": "p059",
+    "title": "Gray Studio Character Referenc",
+    "titleEn": "Gray Studio Character Reference Sheet",
+    "description": "Generates a realistic four-panel studio character sheet with portraits, turnaround views, and simpli",
+    "content": "Goal: Create a clean studio character reference sheet for {argument name=\"character name\" default=\"a young East Asian woman\"}, designed for consistent AI image generation across shot distances and angles.\n\nCanvas: Landscape 4:3 image, 1024×768 style, divided by thick white grid lines into four equal rectangular panels. Use a neutral medium-gray seamless photography background in every panel, soft even studio lighting, realistic photo quality, no text, no logos, no watermark.\n\nLayout: Use exactly 4 panels. Top-left panel: a close-up front-facing head-and-shoulders portrait with the face clearly visible, centered, calm neutral expression. Top-right panel: a three-view full-body character turnaround on the gray background, showing exactly 3 standing figures side by side: front view with the face intentionally replaced by a smooth gray oval/blank mask, right side profile with the face blanked, and back view with hair and outfit visible. Bottom-left panel: a close-up left-facing side-profile portrait with the face clearly visible, head and shoulders composition. Bottom-right panel: a single full-body front view standing pose, centered far away with the head cropped off or omitted above the neck, emphasizing outfit and body proportions.\n\nSubject details: The character is a slim petite young woman with fair skin, shoulder-length dark brown softly layered hair, wispy straight bangs, slightly curled-out ends, natural makeup, large brown eyes in the visible portraits, and a composed neutral expression. Outfit: {argument name=\"outfit\" default=\"a pale cream short-sleeve ribbed polo knit top tucked into a matching high-waisted pleated mini skirt\"}, white mid-calf socks, and chunky white lace-up shoes. Keep the same hairstyle, body shape, clothing, socks, and shoes consistent across all panels and all views.\n\nVisual style: Minimal fashion model character sheet, realistic studio photography, soft shadows on the gray floor/backdrop, muted cream-and-gray palette, accurate human proportions, no stylization, no manga or illustration look.\n\nConstraints: Exactly 6 depictions of the character are visible across the sheet: 1 front close-up portrait, 3 full-body turnaround views, 1 side-profile close-up portrait, and 1 headless full-body front view. Keep the face visible only in the two close-up portrait panels; in the top-right turnaround, simplify or hide the face with a gray oval; in the bottom-right full-body panel, omit or crop the head. Do not add extra poses, labels, props, accessories, or background objects.",
+    "arguments": [
+      {
+        "name": "character_name",
+        "default": "a young East Asian woman",
+        "label": "character name"
+      },
+      {
+        "name": "outfit",
+        "default": "a pale cream short-sleeve ribbed polo knit top tucked into a matching high-waisted pleated mini skirt",
+        "label": "outfit"
+      }
+    ],
+    "categories": {
+      "useCases": [
+        "game"
+      ],
+      "styles": [
+        "photography",
+        "anime",
+        "illustration"
+      ],
+      "subjects": [
+        "character"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984844599_uwamxv_HMIACpYbUAAZnDb.jpg"
+  },
+  {
+    "id": "p060",
+    "title": "Legendary Footballer Figurines",
+    "titleEn": "Legendary Footballer Figurines Studio",
+    "description": "A complex, 16K realism prompt featuring a football legend painting a collectible figurine of himself",
+    "content": "Create an ultra-photorealistic, cinematic 4:5 masterpiece using the uploaded reference image as the exact facial and identity reference. Preserve the person's face, hairstyle, skin tone, physique, expression, and overall likeness with absolute accuracy. The scene takes place inside a luxurious, museum-quality collector's studio where the football legend is meticulously hand-painting a premium 1/7 scale commercial collectible figurine of himself using a fine sable brush. The figurine must perfectly replicate the uploaded reference, featuring an incredibly accurate facial sculpt, realistic proportions, authentic tailored suit, lifelike skin texture, detailed fabric stitching, polished leather shoes, and museum-grade paint quality. It stands on a thick crystal-clear transparent acrylic display base with a subtle levitating effect above a glossy black glass desk, softly illuminated from below. The workspace is filled with premium sculpting tools, paint bottles, digital calipers, precision brushes, resin prototypes, and a large ultra-thin OLED monitor displaying a rotating 3D blueprint of the figurine. Behind him, floor-to-ceiling luxury display shelves showcase beautifully lit collectibles celebrating his real football career, including accurate club and national team jerseys, officially won trophies, medals, golden boots, signed footballs, bust sculptures, career-era figurines, stadium miniatures, framed memorabilia, and limited-edition collectibles—only featuring genuine achievements with no fictional awards. Every shelf contains hidden Easter eggs that reward viewers who zoom in. The environment features warm museum lighting, cinematic volumetric rays, soft rim light, floating dust particles, realistic reflections, rich contrast, and an elegant luxury atmosphere. Every fingerprint, skin pore, hair strand, fabric thread, acrylic edge, metallic surface, paintbrush fiber, marble reflection, and dust particle must be rendered with breathtaking 16K commercial-quality realism. Use a cinematic 50mm composition with the figurine dominating the foreground while the real footballer carefully works on it in the background, creating the illusion of a premium luxury collectible advertisement so realistic and visually stunning that viewers instinctively zoom in, convinced they are looking at a real photograph rather than CGI.",
+    "arguments": [],
+    "categories": {
+      "useCases": [
+        "game"
+      ],
+      "styles": [
+        "photography",
+        "cinematic",
+        "illustration"
+      ],
+      "subjects": [
+        "character",
+        "portrait-selfie"
+      ]
+    },
+    "featured": false,
+    "needReferenceImages": false,
+    "exampleImage": "https://cms-assets.youmind.com/media/1782984814724_j65j73_HMHB7FzbkAAzvjQ.jpg"
   }
 ]
