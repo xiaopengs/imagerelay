@@ -1,88 +1,86 @@
 <template>
-  <div class="min-h-screen bg-dark">
-    <AppHeader />
-    <main class="max-w-3xl mx-auto px-6 py-12">
-      <h1 class="text-3xl font-bold text-white mb-8">个人设置</h1>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="text-2xl font-bold text-gray-800 mb-8">个人设置</h1>
 
-      <!-- Tabs -->
-      <div class="flex gap-2 mb-8">
-        <button
-          v-for="tab in tabs"
-          :key="tab.id"
-          @click="activeTab = tab.id"
-          class="px-5 py-2 rounded-lg text-sm transition-colors"
-          :class="activeTab === tab.id ? 'bg-primary text-white' : 'bg-card text-text-dim hover:text-white'"
-        >
-          {{ tab.label }}
-        </button>
+    <!-- Tabs -->
+    <div class="flex gap-1 bg-gray-100 rounded-lg p-1 mb-8 w-fit">
+      <button
+        v-for="tab in tabs"
+        :key="tab.id"
+        @click="activeTab = tab.id"
+        class="px-4 py-1.5 text-sm font-medium rounded-md transition-all"
+        :class="activeTab === tab.id ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+
+    <!-- 个人资料 -->
+    <div v-if="activeTab === 'profile'" class="card p-6 space-y-5">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">邮箱</label>
+        <input :value="userInfo?.email" disabled class="input-field opacity-60" />
       </div>
-
-      <!-- 个人资料 -->
-      <div v-if="activeTab === 'profile'" class="card p-6 space-y-5">
-        <div>
-          <label class="block text-sm text-text-dim mb-2">邮箱</label>
-          <input :value="userInfo?.email" disabled class="w-full bg-card-light border border-white/10 rounded-lg px-4 py-2.5 text-text-dim" />
-        </div>
-        <div>
-          <label class="block text-sm text-text-dim mb-2">显示名称</label>
-          <input v-model="displayName" class="w-full bg-card-light border border-white/10 rounded-lg px-4 py-2.5 text-text focus:border-primary focus:outline-none" />
-        </div>
-        <button @click="saveProfile" class="btn-primary px-6">保存</button>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1.5">显示名称</label>
+        <input v-model="displayName" class="input-field" />
       </div>
+      <button @click="saveProfile" class="btn-primary px-6">保存</button>
+    </div>
 
-      <!-- API Keys -->
-      <div v-if="activeTab === 'apikeys'" class="space-y-4">
-        <div class="card p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-white">API Keys</h3>
-            <button @click="createToken" class="btn-primary text-sm px-4 py-1.5">新建 Token</button>
-          </div>
-          <div v-if="tokens.length === 0" class="text-sm text-text-dim py-4 text-center">暂无 Token，点击新建生成</div>
-          <div v-else class="space-y-2">
-            <div v-for="tk in tokens" :key="tk.id" class="flex items-center justify-between bg-card-light rounded-lg px-4 py-3">
-              <div>
-                <p class="text-sm font-mono text-white">{{ maskToken(tk.token) }}</p>
-                <p class="text-xs text-text-dim mt-0.5">创建于 {{ formatTime(tk.created_at) }}</p>
-              </div>
-              <div class="flex gap-2">
-                <button @click="copyToken(tk.token)" class="text-xs text-primary hover:underline">复制</button>
-                <button @click="deleteToken(tk.id)" class="text-xs text-red-400 hover:underline">删除</button>
-              </div>
+    <!-- API Keys -->
+    <div v-if="activeTab === 'apikeys'" class="space-y-4">
+      <div class="card p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold text-gray-800">API Keys</h3>
+          <button @click="createToken" class="btn-primary text-sm !py-1.5 !px-4">新建 Token</button>
+        </div>
+        <div v-if="tokens.length === 0" class="text-sm text-gray-400 py-4 text-center">暂无 Token，点击新建生成</div>
+        <div v-else class="space-y-2">
+          <div v-for="tk in tokens" :key="tk.id" class="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
+            <div>
+              <p class="text-sm font-mono text-gray-700">{{ maskToken(tk.token) }}</p>
+              <p class="text-xs text-gray-400 mt-0.5">创建于 {{ formatTime(tk.created_at) }}</p>
+            </div>
+            <div class="flex gap-3">
+              <button @click="copyToken(tk.token)" class="text-xs text-primary-600 hover:underline">复制</button>
+              <button @click="deleteToken(tk.id)" class="text-xs text-red-500 hover:underline">删除</button>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- 充值 -->
-      <div v-if="activeTab === 'topup'" class="card p-6 space-y-5">
-        <div>
-          <h3 class="font-bold text-white mb-4">充值码充值</h3>
-          <p class="text-sm text-text-dim mb-4">转账后联系客服获取充值码，输入后积分将自动到账。</p>
-          <div class="flex gap-3">
-            <input
-              v-model="topupCode"
-              placeholder="XXXX-XXXX-XXXX-XXXX"
-              class="flex-1 bg-card-light border border-white/10 rounded-lg px-4 py-2.5 text-text font-mono placeholder-text-dim focus:border-primary focus:outline-none"
-            />
-            <button @click="handleTopup" :disabled="topupLoading" class="btn-primary px-6 disabled:opacity-50">
-              {{ topupLoading ? '充值中...' : '充值' }}
-            </button>
-          </div>
-          <p v-if="topupMsg" class="text-sm mt-3" :class="topupSuccess ? 'text-green-400' : 'text-red-400'">{{ topupMsg }}</p>
+    <!-- 充值 -->
+    <div v-if="activeTab === 'topup'" class="card p-6 space-y-5">
+      <div>
+        <h3 class="font-semibold text-gray-800 mb-2">充值码充值</h3>
+        <p class="text-sm text-gray-500 mb-4">输入充值码后积分将自动到账。</p>
+        <div class="flex gap-3">
+          <input
+            v-model="topupCode"
+            placeholder="XXXX-XXXX-XXXX-XXXX"
+            class="flex-1 input-field font-mono"
+          />
+          <button @click="handleTopup" :disabled="topupLoading" class="btn-primary px-6">
+            {{ topupLoading ? '充值中...' : '充值' }}
+          </button>
         </div>
-        <div class="border-t border-white/5 pt-4">
-          <p class="text-sm text-text-dim">当前余额：<span class="text-white font-bold">{{ balance.toLocaleString() }}</span> 积分</p>
-        </div>
+        <Transition name="fade">
+          <p v-if="topupMsg" class="text-sm mt-3" :class="topupSuccess ? 'text-green-600' : 'text-red-600'">{{ topupMsg }}</p>
+        </Transition>
       </div>
-    </main>
-    <AppFooter />
+      <div class="border-t border-gray-100 pt-4">
+        <p class="text-sm text-gray-500">当前余额：<span class="text-gray-800 font-bold">{{ formatBalance(balance) }}</span></p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import AppHeader from '@/components/AppHeader.vue'
-import AppFooter from '@/components/AppFooter.vue'
+import { authApi } from '@/api/auth'
+import { userApi } from '@/api/user'
 
 const activeTab = ref('profile')
 const tabs = [
@@ -100,24 +98,24 @@ const topupLoading = ref(false)
 const topupMsg = ref('')
 const topupSuccess = ref(false)
 
+function formatBalance(q: number) {
+  return (q / 500000).toFixed(1) + ' 积分'
+}
+
 async function loadUser() {
-  const token = localStorage.getItem('token') || ''
-  const res = await fetch('/api/v1/users/me', { headers: { Authorization: `Bearer ${token}` } })
-  if (res.ok) {
-    const data = await res.json()
-    userInfo.value = data
-    displayName.value = data.display_name || ''
-    balance.value = data.remain_quota ?? 0
-  }
+  try {
+    const res = await authApi.getSelf()
+    userInfo.value = res.data
+    displayName.value = res.data.display_name || res.data.username || ''
+    balance.value = res.data.quota ?? 0
+  } catch { /* ignore */ }
 }
 
 async function loadTokens() {
-  const token = localStorage.getItem('token') || ''
-  const res = await fetch('/api/v1/tokens', { headers: { Authorization: `Bearer ${token}` } })
-  if (res.ok) {
-    const data = await res.json()
-    tokens.value = data.data || []
-  }
+  try {
+    const res = await userApi.getTokens()
+    tokens.value = res.data?.data || res.data || []
+  } catch { /* ignore */ }
 }
 
 async function saveProfile() {
@@ -127,15 +125,10 @@ async function saveProfile() {
 }
 
 async function createToken() {
-  const token = localStorage.getItem('token') || ''
-  const res = await fetch('/api/v1/tokens', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: '{}'
-  })
-  if (res.ok) {
+  try {
+    await userApi.createToken()
     await loadTokens()
-  }
+  } catch { /* ignore */ }
 }
 
 function maskToken(t: string) {
@@ -151,12 +144,10 @@ async function copyToken(t: string) {
 }
 
 async function deleteToken(id: number) {
-  const token = localStorage.getItem('token') || ''
-  await fetch(`/api/v1/tokens/${id}`, {
-    method: 'DELETE',
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  await loadTokens()
+  try {
+    await userApi.deleteToken(id)
+    await loadTokens()
+  } catch { /* ignore */ }
 }
 
 async function handleTopup() {
@@ -164,22 +155,19 @@ async function handleTopup() {
   topupLoading.value = true
   topupMsg.value = ''
   try {
-    const token = localStorage.getItem('token') || ''
-    const res = await fetch('/api/v1/users/top_up', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: topupCode.value.trim() })
-    })
-    const data = await res.json()
-    if (data.success) {
+    const res = await userApi.topUp(topupCode.value.trim())
+    if (res.data?.success || res.status === 200) {
       topupMsg.value = '充值成功！'
       topupSuccess.value = true
       topupCode.value = ''
       await loadUser()
     } else {
-      topupMsg.value = data.message || '充值码无效'
+      topupMsg.value = '充值码无效'
       topupSuccess.value = false
     }
+  } catch (e: any) {
+    topupMsg.value = e?.response?.data?.message || '充值失败'
+    topupSuccess.value = false
   } finally {
     topupLoading.value = false
   }
@@ -196,3 +184,8 @@ onMounted(() => {
   loadTokens()
 })
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+</style>

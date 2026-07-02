@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const api = axios.create({ baseURL: '/api/v1' })
+// 管理接口 — baseURL 为 /api
+const api = axios.create({ baseURL: '/api' })
 
 function authHeaders() {
   const token = localStorage.getItem('token') || ''
@@ -8,9 +9,24 @@ function authHeaders() {
 }
 
 export const userApi = {
-  getMe: () => api.get('/users/me', { headers: authHeaders() }),
-  topUp: (code: string) => api.post('/users/top_up', { token: code }, { headers: authHeaders() }),
-  createToken: () => api.post('/tokens', {}, { headers: authHeaders() }),
-  getTokens: () => api.get('/tokens', { headers: authHeaders() }),
-  deleteToken: (id: number) => api.delete(`/tokens/${id}`, { headers: authHeaders() })
+  // 兑换码充值
+  topUp: (key: string) =>
+    api.post('/user/topup', { key }, { headers: authHeaders() }),
+
+  // API Token 管理
+  createToken: () =>
+    api.post('/token/', {}, { headers: authHeaders() }),
+
+  getTokens: () =>
+    api.get('/token/', { headers: authHeaders() }),
+
+  deleteToken: (id: number) =>
+    api.delete(`/token/${id}`, { headers: authHeaders() }),
+
+  // 使用日志（可按 type 过滤，type=5 为图片生成）
+  getLogs: (page = 1, type?: number) => {
+    const params = new URLSearchParams({ page: String(page), p_size: '20' })
+    if (type !== undefined) params.set('type', String(type))
+    return api.get(`/log/self?${params}`, { headers: authHeaders() })
+  },
 }

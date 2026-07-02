@@ -1,194 +1,323 @@
-# 🐾 ImageRelay
+# ImageRelay
 
-<div align="center">
+**GPT Image 2 AI 生图 SaaS 平台**
 
-**面向全球用户的 AI 生图 SaaS 平台**
-
-*GPT Image 2 · Gemini Imagen · One API 中转网关*
+*GPT Image 2 / DALL-E 3 / Imagen 3 — 多模型 AI 图片创作平台*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ed.svg?logo=docker)](https://www.docker.com/)
 [![Vue.js 3](https://img.shields.io/badge/Vue.js-3-42b883?logo=vuedotjs)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)](https://www.typescriptlang.org/)
-
-</div>
-
----
-
-## 🎯 项目简介
-
-ImageRelay 是一个 AI 生图 SaaS 平台，聚合接入 GPT Image 2（OpenAI）和 Gemini Imagen（Google）两大模型，通过 One API 中转网关统一对外提供服务，支持文生图、图生图、API 接入、充值码计费。
-
-**核心能力：** 文生图 / 图生图 / API 接入 / 充值码计费 / 额度管理
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ed.svg?logo=docker)](https://www.docker.com/)
 
 ---
 
-## 📁 项目结构
+## 项目简介
+
+ImageRelay 是一个基于 [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) 作为后端底座的 AI 生图 SaaS 平台。前端使用 Vue 3 + TypeScript + TailwindCSS 构建，后端通过 new-api 统一管理 GPT Image 2、DALL-E 3、Imagen 3 等多种图片模型，对外提供 OpenAI 兼容 API。
+
+**核心能力：** 文生图 / 图生图 / 提示词画廊（11,600+ 条） / 支付宝支付 / 多模型切换 / API 接入
+
+---
+
+## 项目结构
 
 ```
 imagerelay/
-├── frontend/                    # Vue.js 3 SPA（Vite + TypeScript + TailwindCSS）
+├── frontend/                        # Vue 3 SPA
 │   ├── src/
-│   │   ├── api/                 # API 封装（auth / images / user）
-│   │   ├── components/           # 公共组件（AppHeader / PromptInput / ImagePreview...）
-│   │   ├── views/                # 页面（10个）：登录/注册/文生图/图生图/控制台...
-│   │   ├── stores/               # Pinia 状态管理（auth + credits）
-│   │   └── router/               # Vue Router + 路由守卫
-│   └── dist/                     # 生产构建产物
-├── infra/                        # 基础设施配置
-│   ├── docker-compose.yml        # Docker Compose 编排（One API + Nginx）
-│   ├── nginx.conf                # Nginx 反向代理配置
-│   └── README.md                 # 部署文档
-├── docs/
-│   └── index.html                # 静态部署指南页（浏览器直接打开）
-├── SPEC.md                       # 产品规格书（唯一真实来源）
-└── README.md                     # 项目总览（本文件）
+│   │   ├── api/                     # API 封装（auth / images / user）
+│   │   ├── assets/styles/           # 全局样式 + Tailwind 组件层
+│   │   ├── components/              # 公共组件（AppHeader / AppFooter / ImagePreview）
+│   │   ├── views/                   # 页面视图（11 个）
+│   │   ├── stores/                  # Pinia 状态管理（auth，双 Token 认证）
+│   │   └── router/                  # Vue Router + 路由守卫
+│   ├── tailwind.config.js           # 浅蓝科技主题配置
+│   └── vite.config.ts               # Vite 配置 + 开发代理
+├── infra/                           # 基础设施
+│   ├── docker-compose.yml           # Docker Compose（new-api + MySQL + Redis + Nginx）
+│   └── nginx.conf                   # Nginx 反向代理
+├── docs/                            # 设计文档
+│   ├── DESIGN_PLAN.md               # 原始设计方案
+│   ├── REVIEW_REPORTS.md            # 三轮审核报告
+│   └── design-preview.html          # UI 预览（浏览器打开）
+├── DESIGN.md                        # 实用设计文档 v2.0（开发权威参考）
+└── README.md                        # 本文件
 ```
 
 ---
 
-## 🚀 快速部署
-
-### 环境要求
-
-| 要求 | 规格 |
-|------|------|
-| 服务器 | 2核2G+，推荐新加坡/日本节点 |
-| 域名 | 已解析到服务器 IP |
-| Docker | ≥ 20.10 |
-| Docker Compose | ≥ 2.0 |
-| SSL 证书 | Let's Encrypt 或商业证书 |
-
-### 7 步完成部署
-
-```bash
-# 1. 克隆项目
-git clone https://github.com/xiaopengs/imagerelay.git && cd imagerelay
-
-# 2. 构建前端
-cd frontend && npm install && npm run build && cd ..
-
-# 3. 复制构建产物
-mkdir -p infra/frontend-dist && cp -r frontend/dist/* infra/frontend-dist/
-
-# 4. 申请 SSL 证书（如已有，跳过）
-sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d your-domain.com
-mkdir -p infra/ssl
-sudo cp /etc/letsencrypt/live/your-domain.com/fullchain.pem infra/ssl/cert.pem
-sudo cp /etc/letsencrypt/live/your-domain.com/privkey.pem infra/ssl/key.pem
-
-# 5. 修改 nginx.conf 中的域名（your-domain.com → 真实域名）
-
-# 6. 启动服务
-cd infra && docker-compose up -d
-
-# 7. 配置 One API 管理后台
-# 访问 http://your-ip:3000，登录 root/123456，立即修改密码
-# 渠道管理 → 添加 OpenAI Key + 模型 gpt-image-2, dall-e-3
-```
-
-**部署完成：**
-- 前端：`https://your-domain.com`
-- 管理后台：`https://your-domain.com/api/`
-
-详细步骤见 [docs/index.html](docs/index.html) 或 [infra/README.md](infra/README.md)。
-
----
-
-## 💻 本地开发
-
-```bash
-git clone https://github.com/xiaopengs/imagerelay.git && cd imagerelay
-cd frontend && npm install
-
-# 启动 One API（Docker）
-docker run --name one-api-dev -d -p 3000:3000 -e TZ=Asia/Shanghai justsong/one-api
-
-# 启动前端开发服务器
-npm run dev   # → http://localhost:5173
-```
-
-前端通过 Vite 代理连接 One API（`/api/*` → `localhost:3000`）。
-
----
-
-## 🔌 API 文档
-
-Base URL：`https://your-domain.com`
-
-### 认证
-
-```
-Authorization: Bearer <your-api-token>
-```
-
-Token 在 One API 管理后台 → 令牌管理 → 创建令牌获取。
-
-### 接口
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| `POST` | `/v1/images/generations` | 生成图片（文生图/图生图）|
-| `GET`  | `/v1/models` | 获取可用模型列表 |
-| `GET`  | `/api/v1/users/me` | 获取用户信息（含余额）|
-| `POST` | `/api/v1/users/top_up` | 充值码充值 |
-| `POST` | `/api/v1/tokens` | 创建 API Token |
-| `GET`  | `/api/v1/tokens` | 获取用户所有 Token |
-| `DELETE` | `/api/v1/tokens/:id` | 删除 Token |
-
-### 示例
-
-```bash
-curl https://your-domain.com/v1/images/generations \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"dall-e-3","prompt":"a futuristic city at night","n":1,"size":"1024x1024"}'
-```
-
----
-
-## 🧩 技术栈
+## 技术栈
 
 | 层级 | 技术 |
 |------|------|
-| 前端框架 | Vue.js 3 + Vite + TypeScript |
-| 样式 | TailwindCSS（#7C6AF5 紫蓝主色系）|
-| 状态管理 | Pinia（auth + credits）|
+| 前端框架 | Vue 3 + Vite 5 + TypeScript |
+| 样式 | TailwindCSS 3.4（#3B82F6 浅蓝科技主题）|
+| 状态管理 | Pinia（auth store，双 Token 认证）|
 | HTTP 客户端 | Axios |
-| 后端网关 | One API（MIT，开源）|
-| Web 服务器 | Nginx（反向代理 + 静态托管）|
+| 后端网关 | [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) — Go + Gin + GORM |
+| 数据库 | MySQL 8.0（生产）/ SQLite（开发）|
+| 缓存 | Redis 7 |
+| Web 服务器 | Nginx（反向代理 + SPA 静态托管）|
 | 容器化 | Docker + Docker Compose |
-| 数据库 | SQLite（开发）/ MySQL（生产）|
-| SSL | Let's Encrypt（Certbot）|
 
 ---
 
-## 🛡️ 安全建议
+## 架构说明
 
-- 首次部署后立即修改 One API 默认密码（root/123456）
-- HTTPS 强制（nginx.conf 已配置 HTTP→HTTPS 重定向）
-- One API 管理后台仅通过 Nginx 访问，不对外暴露 3000 端口
-- 建议配置 CORS 白名单（管理后台 → 系统设置 → 允许来源）
-- 高价值用户建议设置 IP 白名单（令牌管理）
+### 后端底座：new-api vs One API
+
+本项目从 One API 迁移到 new-api (QuantumNous)。关键差异：
+
+| 项目 | One API | new-api (QuantumNous) |
+|------|---------|----------------------|
+| 语言 | Go | Go + Gin + GORM |
+| 管理接口路径 | `/api/v1/users/*` | `/api/user/*` |
+| Relay 接口路径 | `/api/v1/images/*` | `/v1/images/*`（无 /api 前缀）|
+| Token 接口 | `/api/v1/tokens` | `/api/token/`（单数）|
+| 内置支付 | 无 | 易支付（epay）|
+| 管理接口认证 | Bearer Token | Bearer Token + `New-Api-User` Header |
+
+### 认证双轨
+
+前端同时维护两个凭证：
+
+1. **Session Token** — 登录获取，用于管理接口（`/api/*`），如获取用户信息、创建 Token、充值码充值
+2. **API Key (sk-xxx)** — 通过 Token 接口创建，用于 Relay 生图接口（`/v1/*`）
+
+首次登录后自动创建 API Key，存储在 `localStorage`。
+
+### API 路径映射
+
+| 功能 | 方法 | 路径 | 认证方式 |
+|------|------|------|----------|
+| 登录 | POST | `/api/user/login` | 无 |
+| 注册 | POST | `/api/user/register` | 无 |
+| 用户信息 | GET | `/api/user/self` | Session Token |
+| 生成图片 | POST | `/v1/images/generations` | API Key |
+| 模型列表 | GET | `/v1/models` | API Key |
+| 创建 Token | POST | `/api/token/` | Session Token |
+| Token 列表 | GET | `/api/token/` | Session Token |
+| 删除 Token | DELETE | `/api/token/:id` | Session Token |
+| 充值码充值 | POST | `/api/user/topup` | Session Token |
+| 使用日志 | GET | `/api/log/` | Session Token |
 
 ---
 
-## 🐛 故障排查
+## 部署指南
+
+### 环境要求
+
+| 项目 | 最低要求 |
+|------|----------|
+| 服务器 | 2 核 2G+，推荐海外节点（访问 OpenAI）|
+| 系统 | Ubuntu 20.04+ / Debian 11+ |
+| Docker | >= 20.10 |
+| Docker Compose | >= 2.0 |
+| 域名 | 已解析到服务器 IP |
+| SSL 证书 | Let's Encrypt 或其他 |
+
+### 第一步：克隆项目
+
+```bash
+git clone https://github.com/xiaopengs/imagerelay.git
+cd imagerelay
+```
+
+### 第二步：构建前端
+
+```bash
+cd frontend
+npm install
+npm run build
+```
+
+构建产物在 `frontend/dist/` 目录。
+
+### 第三步：复制前端产物到 infra
+
+```bash
+mkdir -p infra/frontend-dist
+cp -r frontend/dist/* infra/frontend-dist/
+```
+
+### 第四步：准备 SSL 证书
+
+使用 Let's Encrypt（免费）：
+
+```bash
+# 安装 certbot
+sudo apt install certbot python3-certbot-nginx -y
+
+# 申请证书（先停 80 端口或用 standalone 模式）
+sudo certbot certonly --standalone -d your-domain.com
+
+# 复制证书到 infra/ssl/
+mkdir -p infra/ssl
+sudo cp /etc/letsencrypt/live/your-domain.com/fullchain.pem infra/ssl/cert.pem
+sudo cp /etc/letsencrypt/live/your-domain.com/privkey.pem infra/ssl/key.pem
+sudo chmod 644 infra/ssl/cert.pem infra/ssl/key.pem
+```
+
+### 第五步：修改 Nginx 配置
+
+编辑 `infra/nginx.conf`，将 `server_name` 改为你的域名：
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com;   # ← 改成你的域名
+    ...
+}
+```
+
+### 第六步：配置环境变量
+
+在 `infra/` 目录下创建 `.env` 文件：
+
+```bash
+# infra/.env
+MYSQL_ROOT_PASSWORD=your-secure-password
+SESSION_SECRET=random-string-here
+```
+
+### 第七步：启动 Docker Compose
+
+```bash
+cd infra
+docker compose up -d
+```
+
+验证服务状态：
+
+```bash
+docker compose ps
+# 确认所有容器 status 为 Up
+```
+
+### 第八步：配置 new-api 管理后台
+
+1. 访问 `http://your-server-ip:3000`
+2. 使用默认账号登录：`root` / `123456`
+3. **立即修改默认密码**
+4. 进入 **渠道管理** → **添加新的渠道**：
+   - 类型选择 OpenAI 或对应的模型提供商
+   - 填入你的 API Key（如 OpenAI API Key）
+   - 添加模型：`gpt-image-1`, `dall-e-3`, `imagen-3`
+5. 进入 **令牌管理** → 创建测试令牌，验证生图功能
+
+### 第九步：验证
+
+```bash
+# 测试前端页面
+curl -I https://your-domain.com
+
+# 测试生图 API（用管理后台创建的 Token）
+curl https://your-domain.com/v1/images/generations \
+  -H "Authorization: Bearer sk-your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"gpt-image-1","prompt":"a cat sitting on a rainbow","n":1,"size":"1024x1024"}'
+```
+
+部署完成后的访问地址：
+
+- 前端：`https://your-domain.com`
+- new-api 管理后台：`https://your-domain.com/api/`（通过 Nginx 代理）或直接 `http://server-ip:3000`
+
+---
+
+## 本地开发
+
+### 启动后端（Docker）
+
+```bash
+# 方式一：new-api（推荐）
+docker run --name new-api-dev -d -p 3000:3000 \
+  -e TZ=Asia/Shanghai \
+  -v $(pwd)/infra/new-api-data:/data \
+  calciumion/new-api:latest
+
+# 方式二：One API（兼容）
+docker run --name one-api-dev -d -p 3000:3000 \
+  -e TZ=Asia/Shanghai \
+  justsong/one-api:latest
+```
+
+### 启动前端开发服务器
+
+```bash
+cd frontend
+npm install
+npm run dev   # → http://localhost:5173
+```
+
+前端通过 Vite 开发代理连接后端：
+
+| 前端请求路径 | 代理目标 |
+|-------------|---------|
+| `/api/pay/*` | `http://localhost:3001`（支付微服务，Phase 4）|
+| `/api/*` | `http://localhost:3000`（new-api 管理接口）|
+| `/v1/*` | `http://localhost:3000`（new-api Relay 接口）|
+
+### 前端开发要点
+
+- 设计系统定义在 `src/assets/styles/global.css`，所有组件使用 `card` / `btn-primary` / `input-field` / `chip` 等预定义类
+- `App.vue` 统一提供 Header + Footer，**所有 View 组件禁止**自行引入 `AppHeader` / `AppFooter`
+- 认证使用 `stores/auth.ts` 中的 `useAuthStore()`，提供 `login` / `register` / `logout` / `fetchUser` / `ensureApiKey`
+- 生图调用使用 `api/images.ts` 中的 `imagesApi.generate()`，自动携带 API Key
+
+---
+
+## Nginx 路由规则
+
+```
+/               → Nginx 静态文件（前端 SPA）
+/api/user/*     → new-api:3000（管理接口：登录/注册/用户信息/充值）
+/api/token/*    → new-api:3000（Token 管理）
+/api/log/*      → new-api:3000（使用日志）
+/v1/*           → new-api:3000（Relay 接口：生图/模型列表）
+/api/pay/*      → payment:3001（支付微服务，Phase 4 实现）
+```
+
+---
+
+## 支付（规划中）
+
+Phase 4 将接入支付宝支付。优先评估 new-api 内置的易支付（epay）网关，如不满足需求再搭建独立 Node.js 支付微服务。
+
+套餐规划：
+
+| 套餐 | 价格 | 积分 | 单价 |
+|------|------|------|------|
+| 体验包 | 19.9 | 50 | 0.40/张 |
+| 标准包 | 49.9 | 150 | 0.33/张 |
+| 专业包 | 99.9 | 400 | 0.25/张 |
+| 企业包 | 299.9 | 1500 | 0.20/张 |
+
+---
+
+## 故障排查
 
 | 症状 | 原因 | 解决 |
 |------|------|------|
-| 502 | One API 未启动 | `docker-compose ps` → `docker-compose restart` |
-| 生成失败 | API Key 无效或渠道禁用 | 管理后台 → 渠道管理 → 检查 Key 和余额 |
-| 上传报错 | Nginx 文件大小限制 | nginx.conf 中 `client_max_body_size 20M` |
-| CORS 错误 | One API 未配置允许来源 | 管理后台 → 系统设置 → 允许来源填写你的域名 |
+| 前端白屏 | dist 未正确复制到 frontend-dist | 重新执行第三步 |
+| 502 Bad Gateway | new-api 容器未启动 | `docker compose ps` → `docker compose restart` |
+| 登录失败 404 | API 路径错误 | 确认 nginx 代理 `/api/` 和 `/v1/` 均指向 new-api |
+| 生图超时 | API Key 无效或模型未配置 | 管理后台 → 渠道管理 → 检查 Key 和模型 |
+| CORS 错误 | new-api 未配置允许来源 | 管理后台 → 系统设置 → 运营设置 → CORS |
+| 401 Unauthorized | Token/Key 过期 | 退出重新登录，或管理后台重建 Token |
 
 ---
 
-## 📄 许可证
+## 设计文档
 
-MIT License · © 2026 ImageRelay · 由 **🐾 黑爪爪** 设计开发
+- [DESIGN.md](DESIGN.md) — 实用设计文档 v2.0（开发权威参考）
+- [docs/DESIGN_PLAN.md](docs/DESIGN_PLAN.md) — 原始设计方案
+- [docs/REVIEW_REPORTS.md](docs/REVIEW_REPORTS.md) — 三轮审核报告
+- [docs/design-preview.html](docs/design-preview.html) — UI 视觉预览
 
 ---
 
-*详细部署文档：* [docs/index.html](docs/index.html) · [infra/README.md](infra/README.md)
+## License
+
+MIT License - 2026 ImageRelay

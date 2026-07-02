@@ -1,15 +1,40 @@
 version: '3.8'
 services:
-  one-api:
-    image: justsong/one-api:latest
-    container_name: imagerelay-one-api
+  new-api:
+    image: calciumion/new-api:latest
+    container_name: imagerelay-new-api
     restart: always
     ports:
       - "3000:3000"
     environment:
       - TZ=Asia/Shanghai
+      - SQL_DSN=root:${MYSQL_ROOT_PASSWORD:-password}@tcp(mysql:3306)/newapi?charset=utf8mb4
+      - REDIS_CONN_STRING=redis://redis:6379
+      - SESSION_SECRET=${SESSION_SECRET:-change-me-in-production}
+    depends_on:
+      - mysql
+      - redis
     volumes:
-      - ./one-api-data:/data
+      - ./new-api-data:/data
+
+  mysql:
+    image: mysql:8.0
+    container_name: imagerelay-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
+      MYSQL_DATABASE: newapi
+      TZ: Asia/Shanghai
+    volumes:
+      - mysql-data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  redis:
+    image: redis:7-alpine
+    container_name: imagerelay-redis
+    restart: always
+    volumes:
+      - redis-data:/data
 
   nginx:
     image: nginx:alpine
@@ -23,4 +48,8 @@ services:
       - ./frontend-dist:/usr/share/nginx/html:ro
       - ./ssl:/etc/nginx/ssl:ro
     depends_on:
-      - one-api
+      - new-api
+
+volumes:
+  mysql-data:
+  redis-data:

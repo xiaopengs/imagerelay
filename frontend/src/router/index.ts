@@ -4,16 +4,18 @@ import HomeView from '@/views/HomeView.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    // 公开页
     { path: '/', name: 'home', component: HomeView },
     { path: '/login', name: 'login', component: () => import('@/views/LoginView.vue') },
     { path: '/register', name: 'register', component: () => import('@/views/RegisterView.vue') },
-    { path: '/console', name: 'console', component: () => import('@/views/ConsoleView.vue'), meta: { requiresAuth: true } },
-    { path: '/console/text2image', name: 'text2image', component: () => import('@/views/Text2ImageView.vue'), meta: { requiresAuth: true } },
-    { path: '/console/image2image', name: 'image2image', component: () => import('@/views/Image2ImageView.vue'), meta: { requiresAuth: true } },
-    { path: '/console/history', name: 'history', component: () => import('@/views/HistoryView.vue'), meta: { requiresAuth: true } },
-    { path: '/console/settings', name: 'settings', component: () => import('@/views/SettingsView.vue'), meta: { requiresAuth: true } },
     { path: '/pricing', name: 'pricing', component: () => import('@/views/PricingView.vue') },
-    { path: '/docs', name: 'docs', component: () => import('@/views/DocsView.vue') }
+    { path: '/gallery', name: 'gallery', component: () => import('@/views/GalleryView.vue') },
+
+    // 需登录
+    { path: '/console', name: 'console', component: () => import('@/views/ConsoleView.vue'), meta: { requiresAuth: true } },
+    { path: '/console/create', name: 'create', component: () => import('@/views/CreateView.vue'), meta: { requiresAuth: true } },
+    { path: '/console/billing', name: 'billing', component: () => import('@/views/BillingView.vue'), meta: { requiresAuth: true } },
+    { path: '/console/settings', name: 'settings', component: () => import('@/views/SettingsView.vue'), meta: { requiresAuth: true } },
   ]
 })
 
