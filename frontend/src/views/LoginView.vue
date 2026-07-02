@@ -56,6 +56,11 @@
             </div>
           </div>
 
+          <!-- 登录过期提示 -->
+          <div v-if="route.query.expired === '1'" class="mb-5 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2.5 text-sm text-amber-700">
+            登录已过期，请重新登录
+          </div>
+
           <!-- 错误提示 -->
           <Transition name="fade">
             <div v-if="error" class="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
@@ -104,7 +109,8 @@ async function handleLogin() {
   error.value = ''
   try {
     await auth.login(form.value.email, form.value.password)
-    const redirect = (route.query.redirect as string) || '/console'
+    const raw = (route.query.redirect as string) || '/console'
+    const redirect = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/console'
     window.location.href = redirect
   } catch (e: any) {
     error.value = e?.response?.data?.message || e?.response?.data?.error || '登录失败，请检查邮箱和密码'

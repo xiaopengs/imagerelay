@@ -13,6 +13,10 @@ export function useToast() {
   function addToast(type: Toast['type'], message: string, duration = 4000) {
     const id = nextId++
     toasts.value.push({ id, type, message })
+    // Limit to 5 concurrent toasts, evict oldest
+    if (toasts.value.length > 5) {
+      toasts.value = toasts.value.slice(-5)
+    }
     setTimeout(() => {
       toasts.value = toasts.value.filter(t => t.id !== id)
     }, duration)

@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
   images: Array<{ url: string }>
@@ -102,6 +102,20 @@ function openLightbox(index: number) {
   lightboxOpen.value = true
 }
 
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && lightboxOpen.value) {
+    lightboxOpen.value = false
+  }
+}
+
+onMounted(() => document.addEventListener('keydown', handleKeydown))
+onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
+
+// Close lightbox if images array changes (e.g., new batch replaces old images)
+watch(() => props.images, () => {
+  if (lightboxOpen.value) lightboxOpen.value = false
+})
+
 async function download(url: string) {
   try {
     const res = await fetch(url)
@@ -110,7 +124,7 @@ async function download(url: string) {
     a.href = URL.createObjectURL(blob)
     a.download = `imagerelay-${Date.now()}.png`
     a.click()
-    URL.revokeObjectURL(a.href)
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000)
   } catch {
     window.open(url, '_blank')
   }

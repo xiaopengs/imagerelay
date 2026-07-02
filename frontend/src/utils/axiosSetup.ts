@@ -22,8 +22,7 @@ export function setupAxiosInterceptors() {
         const currentPath = window.location.pathname
         // Don't redirect if already on login/register page
         if (!['/login', '/register'].includes(currentPath)) {
-          window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`
-          toast.error('登录已过期，请重新登录')
+          window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}&expired=1`
         }
       } else if (error?.code === 'ECONNABORTED' || message?.includes('timeout')) {
         toast.error('请求超时，请检查网络后重试')
