@@ -1,5 +1,17 @@
--e node_modules/
+node_modules/
 dist/
 .env
 *.log
 .DS_Store
+
+# new-api vendored 源码构建产物与运行数据
+backend/new-api/new-api
+backend/new-api/data/
+backend/new-api/*.db
+backend/new-api/web/default/dist/
+backend/new-api/web/classic/dist/
+
+# IDE / 工具目录
+.trae/
+.idea/
+.vscode/
