@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-b from-primary-50 to-white py-20 lg:py-28">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <span class="section-tag mb-4">Powered by GPT Image 2</span>
+        <span class="section-tag mb-4">由 GPT Image 2 驱动</span>
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-800 mt-4 leading-tight">
           AI 图片创作平台
         </h1>

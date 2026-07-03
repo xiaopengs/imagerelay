@@ -1,7 +1,11 @@
 version: '3.8'
 services:
   new-api:
-    image: calciumion/new-api:latest
+    # 从 vendored 源码构建（backend/new-api/），支持本地定制化开发
+    build:
+      context: ../backend/new-api
+      dockerfile: Dockerfile
+    # image: calciumion/new-api:latest  # 回退方案：无需定制时改用官方镜像
     container_name: imagerelay-new-api
     restart: always
     ports:

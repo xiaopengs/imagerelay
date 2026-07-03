@@ -28,14 +28,14 @@
       <button @click="saveProfile" class="btn-primary px-6">保存</button>
     </div>
 
-    <!-- API Keys -->
+    <!-- API 密钥 -->
     <div v-if="activeTab === 'apikeys'" class="space-y-4">
       <div class="card p-6">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="font-semibold text-gray-800">API Keys</h3>
-          <button @click="createToken" class="btn-primary text-sm !py-1.5 !px-4">新建 Token</button>
+          <h3 class="font-semibold text-gray-800">API 密钥</h3>
+          <button @click="createToken" class="btn-primary text-sm !py-1.5 !px-4">新建令牌</button>
         </div>
-        <div v-if="tokens.length === 0" class="text-sm text-gray-400 py-4 text-center">暂无 Token，点击新建生成</div>
+        <div v-if="tokens.length === 0" class="text-sm text-gray-400 py-4 text-center">暂无令牌，点击新建生成</div>
         <div v-else class="space-y-2">
           <div v-for="tk in tokens" :key="tk.id" class="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
             <div>
@@ -85,7 +85,7 @@ import { userApi } from '@/api/user'
 const activeTab = ref('profile')
 const tabs = [
   { id: 'profile', label: '个人信息' },
-  { id: 'apikeys', label: 'API Keys' },
+  { id: 'apikeys', label: 'API 密钥' },
   { id: 'topup', label: '充值' }
 ]
 
