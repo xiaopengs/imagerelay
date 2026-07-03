@@ -1,0 +1,14 @@
+# 根目录 Dockerfile 只构建前端，排除后端与其他不必要文件加速构建
+backend/
+infra/
+doc/
+docs/
+.git/
+.trae/
+.idea/
+.vscode/
+frontend/node_modules/
+frontend/dist/
+*.md
+*.log
+.DS_Store
