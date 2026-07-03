@@ -22,7 +22,7 @@
             <input
               v-model="form.email"
               type="email"
-              placeholder="your@email.com"
+              placeholder="请输入邮箱"
               required
               class="input-field"
             />

@@ -24,12 +24,28 @@ ImageRelay 是一个基于 [new-api (QuantumNous)](https://github.com/QuantumNou
 
 ```
 imagerelay/
+├── backend/                         # new-api 后端源码（vendored，可定制）
+│   └── new-api/                     # QuantumNous/new-api Go 源码
+│       ├── main.go                  # Go 入口
+│       ├── Dockerfile               # 多阶段构建（bun 前端 + golang 后端）
+│       ├── controller/              # API 控制器
+│       ├── model/                   # GORM 数据模型
+│       ├── relay/                   # 上游模型适配（openai/gemini/claude 等）
+│       └── router/                  # Gin 路由
+├── doc/                             # Code Wiki 文档（结构化）
+│   ├── README.md                    # Wiki 导航
+│   ├── 01-architecture.md           # 整体架构
+│   ├── 02-frontend.md               # 前端详解
+│   ├── 03-modules.md                # 模块详解
+│   ├── 04-key-functions.md          # 关键类与函数
+│   ├── 05-backend.md                # 后端 new-api 说明
+│   └── 06-infra-and-running.md      # 基础设施与运行方式
 ├── frontend/                        # Vue 3 SPA
 │   ├── src/
-│   │   ├── api/                     # API 封装（auth / images / user）
+│   │   ├── api/                     # API 封装（auth / images / user / payment / gallery）
 │   │   ├── assets/styles/           # 全局样式 + Tailwind 组件层
-│   │   ├── components/              # 公共组件（AppHeader / AppFooter / ImagePreview）
-│   │   ├── views/                   # 页面视图（11 个）
+│   │   ├── components/              # 公共组件（AppHeader / AppFooter / ImagePreview 等）
+│   │   ├── views/                   # 页面视图（9 个）
 │   │   ├── stores/                  # Pinia 状态管理（auth，双 Token 认证）
 │   │   └── router/                  # Vue Router + 路由守卫
 │   ├── tailwind.config.js           # 浅蓝科技主题配置
@@ -37,7 +53,7 @@ imagerelay/
 ├── infra/                           # 基础设施
 │   ├── docker-compose.yml           # Docker Compose（new-api + MySQL + Redis + Nginx）
 │   └── nginx.conf                   # Nginx 反向代理
-├── docs/                            # 设计文档
+├── docs/                            # 历史设计文档
 │   ├── DESIGN_PLAN.md               # 原始设计方案
 │   ├── REVIEW_REPORTS.md            # 三轮审核报告
 │   └── design-preview.html          # UI 预览（浏览器打开）
@@ -55,7 +71,7 @@ imagerelay/
 | 样式 | TailwindCSS 3.4（#3B82F6 浅蓝科技主题）|
 | 状态管理 | Pinia（auth store，双 Token 认证）|
 | HTTP 客户端 | Axios |
-| 后端网关 | [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) — Go + Gin + GORM |
+| 后端网关 | [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) — Go + Gin + GORM，源码 vendored 在 `backend/new-api/`，可定制化开发 |
 | 数据库 | MySQL 8.0（生产）/ SQLite（开发）|
 | 缓存 | Redis 7 |
 | Web 服务器 | Nginx（反向代理 + SPA 静态托管）|
@@ -181,12 +197,15 @@ MYSQL_ROOT_PASSWORD=your-secure-password
 SESSION_SECRET=random-string-here
 ```
 
-### 第七步：启动 Docker Compose
+### 第七步：启动 Docker Compose（从源码构建后端）
 
 ```bash
 cd infra
-docker compose up -d
+docker compose up -d --build   # --build 从 backend/new-api 源码构建 new-api 镜像
 ```
+
+> 首次构建约 5-10 分钟（多阶段构建：bun 前端 + golang 编译）。后续启动秒级。
+> 若无需定制后端，可改用官方镜像：编辑 `docker-compose.yml` 注释 `build:` 段，取消注释 `image: calciumion/new-api:latest`。
 
 验证服务状态：
 
@@ -228,20 +247,33 @@ curl https://your-domain.com/v1/images/generations \
 
 ## 本地开发
 
-### 启动后端（Docker）
+### 启动后端（Docker，从源码构建）
 
 ```bash
-# 方式一：new-api（推荐）
-docker run --name new-api-dev -d -p 3000:3000 \
-  -e TZ=Asia/Shanghai \
-  -v $(pwd)/infra/new-api-data:/data \
-  calciumion/new-api:latest
+# 从 vendored 源码构建并启动 new-api（含 MySQL + Redis）
+cd infra
+docker compose up -d --build new-api mysql redis
 
-# 方式二：One API（兼容）
-docker run --name one-api-dev -d -p 3000:3000 \
-  -e TZ=Asia/Shanghai \
-  justsong/one-api:latest
+# 验证
+docker compose ps
+curl http://localhost:3000/api/status
 ```
+
+> 首次构建约 5-10 分钟（多阶段：bun 前端 + golang 编译）。后续启动秒级。
+
+### 定制后端开发
+
+后端源码 vendored 在 `backend/new-api/`，可随时修改：
+
+```bash
+# 1. 编辑 backend/new-api/ 下的 Go 源码
+# 2. 重新构建并启动 new-api 容器
+cd infra
+docker compose up -d --build new-api
+docker compose logs -f new-api   # 查看日志
+```
+
+常见定制场景见 [doc/05-backend.md](doc/05-backend.md) 的"定制化开发指引"章节。
 
 ### 启动前端开发服务器
 
@@ -309,9 +341,22 @@ Phase 4 将接入支付宝支付。优先评估 new-api 内置的易支付（epa
 
 ---
 
-## 设计文档
+## 文档
+
+### Code Wiki（结构化代码文档）
+
+- [doc/README.md](doc/README.md) — Wiki 导航首页
+- [doc/01-architecture.md](doc/01-architecture.md) — 项目整体架构
+- [doc/02-frontend.md](doc/02-frontend.md) — 前端详解
+- [doc/03-modules.md](doc/03-modules.md) — 模块详解
+- [doc/04-key-functions.md](doc/04-key-functions.md) — 关键类与函数说明
+- [doc/05-backend.md](doc/05-backend.md) — 后端 new-api 说明
+- [doc/06-infra-and-running.md](doc/06-infra-and-running.md) — 基础设施与运行方式
+
+### 设计文档
 
 - [DESIGN.md](DESIGN.md) — 实用设计文档 v2.0（开发权威参考）
+- [backend/README.md](backend/README.md) — vendored new-api 源码说明
 - [docs/DESIGN_PLAN.md](docs/DESIGN_PLAN.md) — 原始设计方案
 - [docs/REVIEW_REPORTS.md](docs/REVIEW_REPORTS.md) — 三轮审核报告
 - [docs/design-preview.html](docs/design-preview.html) — UI 视觉预览

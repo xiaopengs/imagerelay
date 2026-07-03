@@ -7,7 +7,7 @@
     >
       <img
         :src="img.url"
-        :alt="`Generated image ${i + 1}`"
+        :alt="`生成的图片 ${i + 1}`"
         class="w-full aspect-square object-cover cursor-pointer"
         loading="lazy"
         @click="openLightbox(i)"

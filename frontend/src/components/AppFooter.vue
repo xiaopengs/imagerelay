@@ -47,8 +47,8 @@
       </div>
 
       <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-xs">&copy; {{ new Date().getFullYear() }} ImageRelay. All rights reserved.</p>
-        <p class="text-xs">Powered by GPT Image 2 &middot; DALL-E 3 &middot; Imagen 3</p>
+        <p class="text-xs">&copy; {{ new Date().getFullYear() }} ImageRelay. 保留所有权利。</p>
+        <p class="text-xs">由 GPT Image 2 &middot; DALL-E 3 &middot; Imagen 3 提供动力</p>
       </div>
     </div>
   </footer>
