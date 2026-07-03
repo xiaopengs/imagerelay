@@ -245,6 +245,115 @@ curl https://your-domain.com/v1/images/generations \
 
 ---
 
+## Zeabur 部署（PaaS 一键部署）
+
+适用于 Zeabur、Railway 等 PaaS 平台。**与上面 VPS 部署互斥，二选一即可。** 仓库根目录已提供 [Dockerfile](Dockerfile) + [zeabur-nginx.conf](zeabur-nginx.conf) + [zeabur-entrypoint.sh](zeabur-entrypoint.sh)，无需额外配置文件。
+
+### 服务拓扑（4 个服务）
+
+| 服务 | 作用 | 来源 | 公网暴露 |
+|------|------|------|----------|
+| **MySQL 8.0** | 数据库 | Zeabur Marketplace | ❌ 仅内部 |
+| **Redis 7** | 缓存 | Zeabur Marketplace | ❌ 仅内部 |
+| **new-api** | 后端网关（Go） | Git → `backend/new-api/Dockerfile` | ⚠️ 可选 |
+| **前端全栈** | Vue SPA + Nginx 反代 | Git → 根目录 `Dockerfile` | ✅ 必须 |
+
+### 配置说明
+
+#### 服务1：MySQL（Zeabur Marketplace）
+
+1. Add Service → Marketplace → MySQL 8.0
+2. 创建后，在 **Variables** 标签获取连接信息：
+   - `MYSQL_HOST`（如 `zeabur-mysql-xxx.zeabur.internal`）
+   - `MYSQL_PORT`（如 `3306`）
+   - `MYSQL_USERNAME` = `root`
+   - `MYSQL_PASSWORD`（自动生成）
+   - `MYSQL_DATABASE` = `newapi`（需手动创建数据库）
+
+#### 服务2：Redis（Zeabur Marketplace）
+
+1. Add Service → Marketplace → Redis 7
+2. 获取 `REDIS_HOST` 和 `REDIS_PORT`（无密码或自动生成密码）
+
+#### 服务3：new-api 后端（Git 构建）
+
+1. Add Service → Git → 选择 `imagerelay` 仓库
+2. **Build Configuration**：
+   - **Root Directory / Build Context**：`backend/new-api/`（重要！指向 vendored 源码目录）
+   - Zeabur 自动识别该目录下的 [Dockerfile](backend/new-api/Dockerfile)
+3. **服务名必须设为 `new-api`**（前端默认通过 `http://new-api:3000` 访问）
+4. **Variables** 标签配置环境变量：
+
+   ```
+   SQL_DSN=root:<MYSQL_PASSWORD>@tcp(<MYSQL_HOST>:<MYSQL_PORT>)/newapi?charset=utf8mb4
+   REDIS_CONN_STRING=redis://<REDIS_HOST>:<REDIS_PORT>
+   SESSION_SECRET=<openssl rand -hex 32 生成的随机字符串>
+   TZ=Asia/Shanghai
+   ```
+
+   > `SQL_DSN` 中的 `<MYSQL_PASSWORD>` 等用服务1的实际值替换。
+
+5. **Networking**：
+   - **暴露端口**：`3000`
+   - **公网域名**：可不绑定（仅内部通信），也可绑定如 `api.imagerelay.zeabur.app` 方便直接访问管理后台
+6. 等待构建完成（首次约 5-10 分钟，多阶段：bun 前端 + golang 编译）
+
+#### 服务4：前端全栈（Git 构建）
+
+1. Add Service → Git → 选择同一仓库
+2. **Build Configuration**：
+   - **Root Directory / Build Context**：`/`（根目录，默认）
+   - Zeabur 自动识别根目录 [Dockerfile](Dockerfile)（多阶段：node:20 构建前端 + nginx:alpine 托管）
+3. **Variables** 标签：
+   - 如果服务3命名为 `new-api`：**无需配置**（默认值 `http://new-api:3000` 已对齐）
+   - 如果服务3命名为其他名字：添加 `NEW_API_URL=http://<实际服务名>:3000`
+4. **Networking**：
+   - **暴露端口**：`80`
+   - **公网域名**：绑定你的域名，如 `imagerelay.zeabur.app` 或自定义域名
+
+### 对外访问地址（公网）
+
+部署完成后，**仅前端服务需要绑定公网域名**，所有 API 调用通过前端 Nginx 反代到内部 new-api。
+
+| 用途 | 访问地址 | 说明 |
+|------|----------|------|
+| **前端用户界面** | `https://<前端域名>/` | Vue 3 SPA，用户注册/登录/生图 |
+| **OpenAI 兼容 API** | `https://<前端域名>/v1/*` | 外部接入用，如 `https://imagerelay.zeabur.app/v1/images/generations` |
+| **new-api 管理后台** | `https://<前端域名>/api/` | 通过前端 Nginx 反代访问（推荐）|
+| new-api 直连（可选） | `https://<new-api独立域名>/` | 仅当服务3也绑定了公网域名时可用 |
+
+> 💡 推荐做法：只给前端服务绑定公网域名，new-api/MySQL/Redis 全部保持内部访问。这样所有流量都经过前端 Nginx，便于统一鉴权和限流。
+
+### 内部服务互访地址（仅 Zeabur 项目内可见）
+
+```
+前端 ──> http://new-api:3000         （Nginx 反代 /api/* 和 /v1/*）
+new-api ──> mysql:3306                （GORM 连接）
+new-api ──> redis:6379                （缓存）
+```
+
+Zeabur 同项目内服务可用 `http://<服务名>:<端口>` 互访，无需公网域名。
+
+### 部署后初始化
+
+1. 访问 `https://<前端域名>/api/` → new-api 管理后台
+2. 登录 `root` / `123456` → **立即修改密码**
+3. **渠道管理** → 添加 OpenAI 渠道 → 填入 API Key + 模型 `gpt-image-1, dall-e-3`
+4. **系统设置** → CORS 允许来源：`https://<前端域名>`
+5. 访问 `https://<前端域名>/` → 注册账号测试生图
+
+### Zeabur 部署故障排查
+
+| 症状 | 原因 | 解决 |
+|------|------|------|
+| 前端 502 | new-api 服务未启动或服务名不对 | 确认服务3命名为 `new-api`，或在前端设置 `NEW_API_URL` |
+| 前端能显示但登录失败 | `SQL_DSN` 配置错误 | 检查 MySQL 连接信息，确认数据库 `newapi` 已创建 |
+| 生图报错 | 渠道未配置 | 管理后台 → 渠道管理 → 添加 OpenAI 渠道和模型 |
+| 构建失败 | `vue-tsc` 类型检查 | 根目录 Dockerfile 已用 `npx vite build` 跳过，无需处理 |
+| new-api 构建超时 | Go 编译耗时长 | 首次 5-10 分钟属正常，Zeabur 会自动重试 |
+
+---
+
 ## 本地开发
 
 ### 启动后端（Docker，从源码构建）
