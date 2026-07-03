@@ -1,1 +1,0 @@
-import{_ as t,o as s,e as o,b as r}from"./index-D0JagxJj.js";const c={},n={class:"p-8"};function a(i,e){return s(),o("div",n,[...e[0]||(e[0]=[r("h1",{class:"text-2xl font-bold text-primary"},"PricingView",-1)])])}const l=t(c,[["render",a]]);export{l as default};
