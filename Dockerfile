@@ -23,8 +23,5 @@ COPY zeabur-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # 清理 nginx 默认配置避免冲突
 RUN rm -f /etc/nginx/conf.d/default.conf
-# EXPOSE 80（默认）。Zeabur 可通过 PORT 环境变量改监听端口（如 8080）
 EXPOSE 80
-# Zeabur 默认期望服务监听 8080，这里设 ENV 让 nginx 适配
-ENV PORT=80
 ENTRYPOINT ["/entrypoint.sh"]
