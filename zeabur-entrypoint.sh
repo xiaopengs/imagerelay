@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# 监听端口：Zeabur 等部分 PaaS 默认期望 8080，可通过 PORT 环境变量覆盖
+# 默认 80（兼容传统 Docker / docker-compose）
+export NGINX_PORT="${PORT:-80}"
+
 # new-api 后端地址
 # 默认 http://new-api:3000（docker-compose / Zeabur 同项目服务名互访兼容）
 # Zeabur 部署时：若 new-api 服务名非 new-api，请在控制台设置 NEW_API_URL 环境变量
@@ -23,13 +27,14 @@ if [ -z "$RESOLVER" ]; then
 fi
 export RESOLVER
 
+echo "[entrypoint] NGINX_PORT=$NGINX_PORT"
 echo "[entrypoint] NEW_API_URL=$NEW_API_URL"
 echo "[entrypoint] BACKEND_SCHEME=$BACKEND_SCHEME"
 echo "[entrypoint] BACKEND_HOST=$BACKEND_HOST"
 echo "[entrypoint] RESOLVER=$RESOLVER"
 
 # 替换所有 ${VAR}，保留 nginx 内置变量（$host $remote_addr $backend 等）
-envsubst '${NEW_API_URL} ${RESOLVER} ${BACKEND_SCHEME} ${BACKEND_HOST}' \
+envsubst '${NGINX_PORT} ${NEW_API_URL} ${RESOLVER} ${BACKEND_SCHEME} ${BACKEND_HOST}' \
   < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
 rm /etc/nginx/conf.d/default.template
 
