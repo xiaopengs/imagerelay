@@ -4,7 +4,10 @@ set -e
 # new-api 后端地址
 # 默认 http://new-api:3000（docker-compose / Zeabur 同项目服务名互访兼容）
 # Zeabur 部署时：若 new-api 服务名非 new-api，请在控制台设置 NEW_API_URL 环境变量
-export NEW_API_URL="${NEW_API_URL:-http://new-api:3000}"
+# 关键：去掉末尾斜杠，避免 proxy_pass $backend 时产生双斜杠（如 //api/status）
+NEW_API_URL="${NEW_API_URL:-http://new-api:3000}"
+NEW_API_URL=$(echo "$NEW_API_URL" | sed 's|/$||')
+export NEW_API_URL
 
 # 从 NEW_API_URL 提取 scheme/host/port，用于 nginx 的 SNI 和 Host header
 # 例：https://newapindoe.zeabur.app/ → BACKEND_SCHEME=https, BACKEND_HOST=newapindoe.zeabur.app
