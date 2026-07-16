@@ -25,7 +25,7 @@
         <label class="block text-sm font-medium text-gray-700 mb-1.5">显示名称</label>
         <input v-model="displayName" class="input-field" />
       </div>
-      <button @click="saveProfile" class="btn-primary px-6">保存</button>
+      <button @click="saveProfile" :disabled="saving" class="btn-primary px-6">{{ saving ? '保存中...' : '保存' }}</button>
     </div>
 
     <!-- API 密钥 -->
@@ -78,9 +78,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 import { authApi } from '@/api/auth'
+import { formatBalance } from '@/utils/format'
 import { userApi } from '@/api/user'
+import { useToast } from '@/utils/toast'
+
+const auth = useAuthStore()
+const toast = useToast()
 
 const activeTab = ref('profile')
 const tabs = [
@@ -89,26 +95,22 @@ const tabs = [
   { id: 'topup', label: '充值' }
 ]
 
-const userInfo = ref<{ email: string; display_name?: string } | null>(null)
 const displayName = ref('')
-const balance = ref(0)
+const saving = ref(false)
 const tokens = ref<Array<{ id: number; token: string; created_at: string }>>([])
 const topupCode = ref('')
 const topupLoading = ref(false)
 const topupMsg = ref('')
 const topupSuccess = ref(false)
 
-function formatBalance(q: number) {
-  return (q / 500000).toFixed(1) + ' 积分'
-}
+const userInfo = computed(() => auth.user)
+const balance = computed(() => auth.balance ?? 0)
 
 async function loadUser() {
-  try {
-    const res = await authApi.getSelf()
-    userInfo.value = res.data
-    displayName.value = res.data.display_name || res.data.username || ''
-    balance.value = res.data.quota ?? 0
-  } catch { /* ignore */ }
+  await auth.fetchUser()
+  if (auth.user) {
+    displayName.value = auth.user.display_name || auth.user.username || ''
+  }
 }
 
 async function loadTokens() {
@@ -119,16 +121,38 @@ async function loadTokens() {
 }
 
 async function saveProfile() {
-  topupMsg.value = '保存成功'
-  topupSuccess.value = true
-  setTimeout(() => { topupMsg.value = '' }, 3000)
+  if (!displayName.value.trim()) {
+    toast.error('显示名称不能为空')
+    return
+  }
+  saving.value = true
+  try {
+    await authApi.getSelf() // Verify auth still valid
+    // new-api uses PUT /api/user/self to update profile
+    const api = (await import('axios')).default.create({ baseURL: '/api' })
+    const token = localStorage.getItem('token') || ''
+    await api.put('/user/self', {
+      display_name: displayName.value.trim(),
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    toast.success('保存成功')
+    await auth.fetchUser()
+  } catch (e: any) {
+    toast.error(e?.response?.data?.message || '保存失败')
+  } finally {
+    saving.value = false
+  }
 }
 
 async function createToken() {
   try {
     await userApi.createToken()
     await loadTokens()
-  } catch { /* ignore */ }
+    toast.success('令牌创建成功')
+  } catch (e: any) {
+    toast.error(e?.response?.data?.message || '创建失败')
+  }
 }
 
 function maskToken(t: string) {
@@ -137,21 +161,29 @@ function maskToken(t: string) {
 }
 
 async function copyToken(t: string) {
-  await navigator.clipboard.writeText(t)
-  topupMsg.value = '已复制到剪贴板'
-  topupSuccess.value = true
-  setTimeout(() => { topupMsg.value = '' }, 2000)
+  try {
+    await navigator.clipboard.writeText(t)
+    toast.success('已复制到剪贴板')
+  } catch {
+    toast.error('复制失败')
+  }
 }
 
 async function deleteToken(id: number) {
   try {
     await userApi.deleteToken(id)
     await loadTokens()
-  } catch { /* ignore */ }
+    toast.success('令牌已删除')
+  } catch (e: any) {
+    toast.error(e?.response?.data?.message || '删除失败')
+  }
 }
 
 async function handleTopup() {
-  if (!topupCode.value.trim()) return
+  if (!topupCode.value.trim()) {
+    toast.error('请输入充值码')
+    return
+  }
   topupLoading.value = true
   topupMsg.value = ''
   try {

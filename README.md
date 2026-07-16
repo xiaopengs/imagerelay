@@ -2,7 +2,7 @@
 
 **GPT Image 2 AI 生图 SaaS 平台**
 
-*GPT Image 2 / DALL-E 3 / Imagen 3 — 多模型 AI 图片创作平台*
+*GPT Image 2 / DALL-E 3 / Imagen 3 / MiniMax — 多模型 AI 图片创作平台*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Vue.js 3](https://img.shields.io/badge/Vue.js-3-42b883?logo=vuedotjs)](https://vuejs.org/)
@@ -14,9 +14,9 @@
 
 ## 项目简介
 
-ImageRelay 是一个基于 [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) 作为后端底座的 AI 生图 SaaS 平台。前端使用 Vue 3 + TypeScript + TailwindCSS 构建，后端通过 new-api 统一管理 GPT Image 2、DALL-E 3、Imagen 3 等多种图片模型，对外提供 OpenAI 兼容 API。
+ImageRelay 是一个基于 [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) 作为后端底座的 AI 生图 SaaS 平台。前端使用 Vue 3 + TypeScript + TailwindCSS 构建，后端通过 new-api 统一管理 GPT Image 2、DALL-E 3、Imagen 3、MiniMax 等多种图片模型，对外提供 OpenAI 兼容 API。
 
-**核心能力：** 文生图 / 图生图 / 提示词画廊（11,600+ 条） / 支付宝支付 / 多模型切换 / API 接入
+**核心能力：** 文生图 / 图生图 / MiniMax 原生生图 / 提示词画廊（11,600+ 条） / 支付宝支付 / 多模型切换 / API 接入
 
 ---
 
@@ -42,12 +42,14 @@ imagerelay/
 │   └── 06-infra-and-running.md      # 基础设施与运行方式
 ├── frontend/                        # Vue 3 SPA
 │   ├── src/
-│   │   ├── api/                     # API 封装（auth / images / user / payment / gallery）
+│   │   ├── api/                     # API 封装（auth / images / minimax / openrouter / user / payment / gallery）
 │   │   ├── assets/styles/           # 全局样式 + Tailwind 组件层
 │   │   ├── components/              # 公共组件（AppHeader / AppFooter / ImagePreview 等）
 │   │   ├── views/                   # 页面视图（9 个）
 │   │   ├── stores/                  # Pinia 状态管理（auth，双 Token 认证）
+│   │   ├── utils/                  # 工具函数（format / toast / promptHelpers）+ 单元测试
 │   │   └── router/                  # Vue Router + 路由守卫
+│   ├── vitest.config.ts            # Vitest 测试配置
 │   ├── tailwind.config.js           # 浅蓝科技主题配置
 │   └── vite.config.ts               # Vite 配置 + 开发代理
 ├── infra/                           # 基础设施
@@ -222,7 +224,8 @@ docker compose ps
 4. 进入 **渠道管理** → **添加新的渠道**：
    - 类型选择 OpenAI 或对应的模型提供商
    - 填入你的 API Key（如 OpenAI API Key）
-   - 添加模型：`gpt-image-1`, `dall-e-3`, `imagen-3`
+   - 添加模型：`gpt-image-1`, `dall-e-3`, `imagen-3`, `image-01`, `MiniMax-M3`
+   - 如需 MiniMax 生图，类型选择 MiniMax，填入 MiniMax API Key
 5. 进入 **令牌管理** → 创建测试令牌，验证生图功能
 
 ### 第九步：验证
@@ -231,11 +234,17 @@ docker compose ps
 # 测试前端页面
 curl -I https://your-domain.com
 
-# 测试生图 API（用管理后台创建的 Token）
+# 测试生图 API — OpenAI 模型（用管理后台创建的 Token）
 curl https://your-domain.com/v1/images/generations \
   -H "Authorization: Bearer sk-your-api-key" \
   -H "Content-Type: application/json" \
   -d '{"model":"gpt-image-1","prompt":"a cat sitting on a rainbow","n":1,"size":"1024x1024"}'
+
+# 测试生图 API — MiniMax image-01 模型
+curl https://your-domain.com/v1/images/generations \
+  -H "Authorization: Bearer sk-your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"image-01","prompt":"a cat sitting on a rainbow","n":1,"size":"1024x1024"}'
 ```
 
 部署完成后的访问地址：
@@ -338,7 +347,7 @@ Zeabur 同项目内服务可用 `http://<服务名>:<端口>` 互访，无需公
 
 1. 访问 `https://<前端域名>/api/` → new-api 管理后台
 2. 登录 `root` / `123456` → **立即修改密码**
-3. **渠道管理** → 添加 OpenAI 渠道 → 填入 API Key + 模型 `gpt-image-1, dall-e-3`
+3. **渠道管理** → 添加渠道（见下方 [模型配置教程](#模型配置教程)）
 4. **系统设置** → CORS 允许来源：`https://<前端域名>`
 5. 访问 `https://<前端域名>/` → 注册账号测试生图
 
@@ -406,6 +415,8 @@ npm run dev   # → http://localhost:5173
 - `App.vue` 统一提供 Header + Footer，**所有 View 组件禁止**自行引入 `AppHeader` / `AppFooter`
 - 认证使用 `stores/auth.ts` 中的 `useAuthStore()`，提供 `login` / `register` / `logout` / `fetchUser` / `ensureApiKey`
 - 生图调用使用 `api/images.ts` 中的 `imagesApi.generate()`，自动携带 API Key
+- MiniMax 生图使用 `api/minimax.ts` 中的 `generateImageViaMiniMax()`，直接调用 MiniMax 原生 API
+- 运行测试：`cd frontend && npx vitest run`（77 个测试用例，含 MiniMax 集成测试）
 
 ---
 
@@ -437,6 +448,93 @@ Phase 4 将接入支付宝支付。优先评估 new-api 内置的易支付（epa
 
 ---
 
+## 模型配置教程
+
+ImageRelay 支持多种生图模型，通过 new-api 管理后台的 **渠道管理** 统一配置。每种模型对应一个"渠道"，填入对应提供商的 API Key 即可。
+
+### 支持的模型
+
+| 模型 ID | 名称 | 提供商 | 生图能力 | API 兼容格式 |
+|---------|------|--------|---------|-------------|
+| `gpt-image-1` | GPT Image 2 | OpenAI | ✅ 文生图 / 图生图 | OpenAI Images API |
+| `dall-e-3` | DALL-E 3 | OpenAI | ✅ 文生图 | OpenAI Images API |
+| `imagen-3` | Imagen 3 | Google | ✅ 文生图 | OpenAI Images API（new-api 中转）|
+| `image-01` | MiniMax 图生图 | MiniMax | ✅ 文生图 | OpenAI Images API（new-api 自动转换）|
+| `MiniMax-M3` | MiniMax M3 | MiniMax | ❌ 仅文本 | Anthropic Messages API |
+
+### 配置 OpenAI 模型（GPT Image 2 / DALL-E 3）
+
+1. 管理后台 → **渠道管理** → **添加新的渠道**
+2. 类型选择 **OpenAI**
+3. 填入你的 OpenAI API Key（`sk-...`）
+4. 模型填写：`gpt-image-1, dall-e-3`
+5. 代理设置（可选）：如需通过代理访问，填写 Base URL
+6. 点击 **测试** 验证连通性，然后保存
+
+> **注意：** `gpt-image-1` 是 GPT Image 2 的 API 模型名，不是 `gpt-image-2`。
+
+### 配置 Google Imagen 3
+
+1. 管理后台 → **渠道管理** → **添加新的渠道**
+2. 类型选择 **Google AI Studio** 或 **Vertex AI**
+3. 填入 Google API Key 或 Service Account 凭证
+4. 模型填写：`imagen-3`
+5. 保存并测试
+
+### 配置 MiniMax 模型（image-01 / MiniMax-M3）
+
+MiniMax 提供两个模型：
+
+- **image-01** — 图片生成模型，通过 `/v1/images/generations` 调用，new-api 自动将 OpenAI 格式转换为 MiniMax 原生 `/v1/image_generation` 接口
+- **MiniMax-M3** — 文本模型（Anthropic 兼容），仅支持文本对话，**不能生图**
+
+#### 方式一：通过 new-api 中转（推荐）
+
+1. 管理后台 → **渠道管理** → **添加新的渠道**
+2. 类型选择 **MiniMax**
+3. 填入 MiniMax API Key（`sk-cp-...` 格式，从 [MiniMax 开放平台](https://platform.minimaxi.com/) 获取）
+4. 模型填写：`image-01, MiniMax-M3`
+5. Base URL 填写：`https://api.minimaxi.com`
+6. 保存并测试
+
+> 通过 new-api 中转时，前端使用标准的 `imagesApi.generate()` 即可，模型选 `image-01`，new-api 自动处理格式转换（OpenAI 尺寸 → MiniMax 宽高比等）。
+
+#### 方式二：前端直接调用 MiniMax 原生 API
+
+ImageRelay 前端内置了 MiniMax 原生 API 客户端（`api/minimax.ts`），当用户选择 `image-01` 模型时，前端会：
+
+1. 检测模型为 MiniMax 类型
+2. 直接调用 MiniMax `/v1/image_generation` 接口
+3. 自动将 OpenAI 尺寸格式（如 `1024x1024`）转换为 MiniMax 宽高比（如 `1:1`）
+
+支持的宽高比映射：
+
+| OpenAI 尺寸 | MiniMax 宽高比 |
+|-------------|---------------|
+| `1024x1024` | `1:1` |
+| `1792x1024` | `16:9` |
+| `1024x1792` | `9:16` |
+| `1536x1024` | `3:2` |
+| `1024x1536` | `2:3` |
+| `1152x864` | `4:3` |
+| `864x1152` | `3:4` |
+| `1344x576` | `21:9` |
+
+> **注意：** 直接调用模式需要用户的 MiniMax API Key 存储在前端。推荐使用方式一（new-api 中转），Key 安全地存储在服务端。
+
+### 配置 OpenRouter（可选）
+
+OpenRouter 聚合了多家模型提供商，可作为备用渠道：
+
+1. 管理后台 → **渠道管理** → **添加新的渠道**
+2. 类型选择 **OpenRouter**
+3. 填入 OpenRouter API Key（从 [openrouter.ai](https://openrouter.ai/) 获取）
+4. 模型填写支持的图片生成模型 ID（如 `openai/dall-e-3` 等）
+5. Base URL 填写：`https://openrouter.ai/api/v1`
+6. 保存并测试
+
+---
+
 ## 故障排查
 
 | 症状 | 原因 | 解决 |
@@ -447,6 +545,8 @@ Phase 4 将接入支付宝支付。优先评估 new-api 内置的易支付（epa
 | 生图超时 | API Key 无效或模型未配置 | 管理后台 → 渠道管理 → 检查 Key 和模型 |
 | CORS 错误 | new-api 未配置允许来源 | 管理后台 → 系统设置 → 运营设置 → CORS |
 | 401 Unauthorized | Token/Key 过期 | 退出重新登录，或管理后台重建 Token |
+| MiniMax 生图失败 | 渠道类型或 Key 不对 | 确认渠道类型选 MiniMax，Key 以 `sk-cp-` 开头 |
+| image-01 返回文本 | MiniMax-M3 不支持生图 | 选择 `image-01` 模型而非 `MiniMax-M3` |
 
 ---
 
@@ -461,6 +561,21 @@ Phase 4 将接入支付宝支付。优先评估 new-api 内置的易支付（epa
 - [doc/04-key-functions.md](doc/04-key-functions.md) — 关键类与函数说明
 - [doc/05-backend.md](doc/05-backend.md) — 后端 new-api 说明
 - [doc/06-infra-and-running.md](doc/06-infra-and-running.md) — 基础设施与运行方式
+
+### 测试
+
+- 前端测试框架：Vitest + happy-dom
+- 运行测试：`cd frontend && npx vitest run`
+- 测试覆盖 77 个用例，包括：
+  - `api/auth.test.ts` — 认证 API 单元测试
+  - `api/gallery.test.ts` — 画廊 API 单元测试
+  - `api/images.test.ts` — 图片 API 单元测试
+  - `api/minimax.test.ts` — MiniMax 集成测试（Anthropic 兼容 + 原生图片 API）
+  - `api/openrouter.test.ts` — OpenRouter 集成测试
+  - `router/index.test.ts` — 路由配置测试
+  - `utils/format.test.ts` — 格式化工具测试
+  - `utils/promptHelpers.test.ts` — 提示词辅助测试
+  - `utils/toast.test.ts` — Toast 通知测试
 
 ### 设计文档
 

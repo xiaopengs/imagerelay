@@ -203,6 +203,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { imagesApi } from '@/api/images'
+import { generateImageViaMiniMax, sizeToAspectRatio } from '@/api/minimax'
+import { formatBalance } from '@/utils/format'
 import ImagePreview from '@/components/ImagePreview.vue'
 
 const route = useRoute()
@@ -237,6 +239,8 @@ const models = [
   { id: 'gpt-image-1', label: 'GPT Image 2' },
   { id: 'dall-e-3', label: 'DALL-E 3' },
   { id: 'imagen-3', label: 'Imagen 3' },
+  { id: 'image-01', label: 'MiniMax 图生图' },
+  { id: 'MiniMax-M3', label: 'MiniMax M3 (文本)' },
 ]
 
 const styles = ['写实', '动漫', '插画', '油画', '水彩', '极简', '摄影']
@@ -261,9 +265,6 @@ const counts = [1, 2, 4]
 
 const balanceNum = computed(() => (auth.balance ?? 0) / 500000)
 
-function formatBalance(q: number) {
-  return (q / 500000).toFixed(1) + ' 积分'
-}
 
 // --- Query param support (from gallery) ---
 onMounted(() => {
@@ -337,21 +338,40 @@ async function handleGenerate() {
   const finalPrompt = prompt.value + (styleSuffix[selectedStyle.value] || '')
 
   try {
-    const res = await imagesApi.generate({
-      model: selectedModel.value,
-      prompt: finalPrompt,
-      n: selectedCount.value,
-      size: selectedSize.value,
-      ...(mode.value === 'image2image' && referenceImage.value && { input_image: referenceImage.value }),
-    })
+    let newImages: Array<{ url: string }> = []
 
-    // new-api 返回格式: { data: [{ url: '...' }] } 或 { data: [{ b64_json: '...' }] }
-    const results = res.data?.data || []
-    const newImages = results.map((item: any) => {
-      if (item.url) return { url: item.url }
-      if (item.b64_json) return { url: `data:image/png;base64,${item.b64_json}` }
-      return null
-    }).filter(Boolean)
+    if (selectedModel.value === 'image-01' || selectedModel.value === 'MiniMax-M3') {
+      // Use MiniMax native image generation API (image-01 model)
+      const mmResult = await generateImageViaMiniMax(auth.apiKey || '', {
+        model: 'image-01',
+        prompt: finalPrompt,
+        aspectRatio: sizeToAspectRatio(selectedSize.value),
+        responseFormat: 'base64',
+      })
+      if (!mmResult.success) {
+        throw { response: { data: { error: { message: mmResult.error || 'MiniMax 图片生成失败' } } } }
+      }
+      if (mmResult.imageData) {
+        newImages = [{ url: mmResult.imageData }]
+      }
+    } else {
+      // Use standard OpenAI-compatible images API (via new-api relay)
+      const res = await imagesApi.generate({
+        model: selectedModel.value,
+        prompt: finalPrompt,
+        n: selectedCount.value,
+        size: selectedSize.value,
+        ...(mode.value === 'image2image' && referenceImage.value && { input_image: referenceImage.value }),
+      })
+
+      // new-api 返回格式: { data: [{ url: '...' }] } 或 { data: [{ b64_json: '...' }] }
+      const results = res.data?.data || []
+      newImages = results.map((item: any) => {
+        if (item.url) return { url: item.url }
+        if (item.b64_json) return { url: `data:image/png;base64,${item.b64_json}` }
+        return null
+      }).filter(Boolean)
+    }
 
     images.value = [...newImages, ...images.value]
 

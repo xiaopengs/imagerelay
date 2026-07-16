@@ -4,10 +4,12 @@ import { useToast } from '@/utils/toast'
 /**
  * Setup global Axios interceptors for error handling.
  * Call this once in main.ts after app creation.
+ *
+ * The toast instance is obtained lazily inside the interceptor callback
+ * so it works regardless of when setupAxiosInterceptors() is called
+ * relative to Pinia initialization.
  */
 export function setupAxiosInterceptors() {
-  const toast = useToast()
-
   axios.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -25,10 +27,10 @@ export function setupAxiosInterceptors() {
           window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}&expired=1`
         }
       } else if (error?.code === 'ECONNABORTED' || message?.includes('timeout')) {
-        toast.error('请求超时，请检查网络后重试')
+        useToast().error('请求超时，请检查网络后重试')
       } else if (!error?.response) {
         // Network error (no response at all)
-        toast.error('网络连接失败，请检查网络')
+        useToast().error('网络连接失败，请检查网络')
       }
       // Don't show toast for 400/422 etc — let the calling component handle those
 

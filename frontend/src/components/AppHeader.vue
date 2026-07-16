@@ -106,6 +106,7 @@
 import { ref, computed, h } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { formatBalance } from '@/utils/format'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -117,9 +118,6 @@ const avatarLetter = computed(() => {
   return name.charAt(0).toUpperCase() || 'U'
 })
 
-function formatBalance(q: number) {
-  return (q / 500000).toFixed(1) + ' 积分'
-}
 
 function handleLogout() {
   showMenu.value = false

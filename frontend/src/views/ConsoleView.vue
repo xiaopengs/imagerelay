@@ -123,6 +123,7 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { formatBalance } from '@/utils/format'
 import { userApi } from '@/api/user'
 
 const auth = useAuthStore()
@@ -138,9 +139,6 @@ interface LogItem {
 
 const recentLogs = ref<LogItem[]>([])
 
-function formatBalance(q: number) {
-  return (q / 500000).toFixed(1) + ' 积分'
-}
 
 function formatTime(iso: string) {
   if (!iso) return ''
