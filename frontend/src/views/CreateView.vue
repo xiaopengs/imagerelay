@@ -204,6 +204,7 @@ import { useRoute, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { imagesApi } from '@/api/images'
 import { generateImageViaMiniMax, sizeToAspectRatio } from '@/api/minimax'
+import { isSeedreamModel, SEEDREAM_MODELS, SEEDREAM_SIZES } from '@/api/volcengine'
 import { formatBalance } from '@/utils/format'
 import ImagePreview from '@/components/ImagePreview.vue'
 
@@ -239,6 +240,9 @@ const models = [
   { id: 'gpt-image-1', label: 'GPT Image 2' },
   { id: 'dall-e-3', label: 'DALL-E 3' },
   { id: 'imagen-3', label: 'Imagen 3' },
+  { id: 'doubao-seedream-5-0-pro-260628', label: '豆包 Seedream 5.0 Pro' },
+  { id: 'doubao-seedream-5-0-lite-260128', label: '豆包 Seedream 5.0 Lite' },
+  { id: 'doubao-seedream-4-5-251128', label: '豆包 Seedream 4.5' },
   { id: 'image-01', label: 'MiniMax 图生图' },
   { id: 'MiniMax-M3', label: 'MiniMax M3 (文本)' },
 ]
@@ -354,6 +358,23 @@ async function handleGenerate() {
       if (mmResult.imageData) {
         newImages = [{ url: mmResult.imageData }]
       }
+    } else if (isSeedreamModel(selectedModel.value)) {
+      // Use standard OpenAI-compatible images API for Seedream (via new-api relay)
+      // Seedream models use the same /v1/images/generations endpoint
+      const res = await imagesApi.generate({
+        model: selectedModel.value,
+        prompt: finalPrompt,
+        n: selectedCount.value,
+        size: selectedSize.value,
+        response_format: 'url',
+        ...(mode.value === 'image2image' && referenceImage.value && { input_image: referenceImage.value }),
+      })
+      const results = res.data?.data || []
+      newImages = results.map((item: any) => {
+        if (item.url) return { url: item.url }
+        if (item.b64_json) return { url: `data:image/png;base64,${item.b64_json}` }
+        return null
+      }).filter(Boolean)
     } else {
       // Use standard OpenAI-compatible images API (via new-api relay)
       const res = await imagesApi.generate({

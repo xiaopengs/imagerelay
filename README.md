@@ -2,7 +2,7 @@
 
 **GPT Image 2 AI 生图 SaaS 平台**
 
-*GPT Image 2 / DALL-E 3 / Imagen 3 / MiniMax — 多模型 AI 图片创作平台*
+*GPT Image 2 / DALL-E 3 / Imagen 3 / MiniMax / 豆包 Seedream — 多模型 AI 图片创作平台*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Vue.js 3](https://img.shields.io/badge/Vue.js-3-42b883?logo=vuedotjs)](https://vuejs.org/)
@@ -14,7 +14,7 @@
 
 ## 项目简介
 
-ImageRelay 是一个基于 [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) 作为后端底座的 AI 生图 SaaS 平台。前端使用 Vue 3 + TypeScript + TailwindCSS 构建，后端通过 new-api 统一管理 GPT Image 2、DALL-E 3、Imagen 3、MiniMax 等多种图片模型，对外提供 OpenAI 兼容 API。
+ImageRelay 是一个基于 [new-api (QuantumNous)](https://github.com/QuantumNous/new-api) 作为后端底座的 AI 生图 SaaS 平台。前端使用 Vue 3 + TypeScript + TailwindCSS 构建，后端通过 new-api 统一管理 GPT Image 2、DALL-E 3、Imagen 3、MiniMax、豆包 Seedream 等多种图片模型，对外提供 OpenAI 兼容 API。
 
 **核心能力：** 文生图 / 图生图 / MiniMax 原生生图 / 提示词画廊（11,600+ 条） / 支付宝支付 / 多模型切换 / API 接入
 
@@ -224,8 +224,9 @@ docker compose ps
 4. 进入 **渠道管理** → **添加新的渠道**：
    - 类型选择 OpenAI 或对应的模型提供商
    - 填入你的 API Key（如 OpenAI API Key）
-   - 添加模型：`gpt-image-1`, `dall-e-3`, `imagen-3`, `image-01`, `MiniMax-M3`
+   - 添加模型：`gpt-image-1`, `dall-e-3`, `imagen-3`, `image-01`, `MiniMax-M3`, `doubao-seedream-5-0-pro-260628`
    - 如需 MiniMax 生图，类型选择 MiniMax，填入 MiniMax API Key
+   - 如需豆包 Seedream 生图，类型选择 VolcEngine，填入火山引擎 API Key
 5. 进入 **令牌管理** → 创建测试令牌，验证生图功能
 
 ### 第九步：验证
@@ -416,6 +417,7 @@ npm run dev   # → http://localhost:5173
 - 认证使用 `stores/auth.ts` 中的 `useAuthStore()`，提供 `login` / `register` / `logout` / `fetchUser` / `ensureApiKey`
 - 生图调用使用 `api/images.ts` 中的 `imagesApi.generate()`，自动携带 API Key
 - MiniMax 生图使用 `api/minimax.ts` 中的 `generateImageViaMiniMax()`，直接调用 MiniMax 原生 API
+- 豆包 Seedream 使用 `api/volcengine.ts` 中的模型分类和 API 客户端，通过 new-api 中转
 - 运行测试：`cd frontend && npx vitest run`（77 个测试用例，含 MiniMax 集成测试）
 
 ---
@@ -461,6 +463,11 @@ ImageRelay 支持多种生图模型，通过 new-api 管理后台的 **渠道管
 | `imagen-3` | Imagen 3 | Google | ✅ 文生图 | OpenAI Images API（new-api 中转）|
 | `image-01` | MiniMax 图生图 | MiniMax | ✅ 文生图 | OpenAI Images API（new-api 自动转换）|
 | `MiniMax-M3` | MiniMax M3 | MiniMax | ❌ 仅文本 | Anthropic Messages API |
+| `doubao-seedream-5-0-pro-260628` | 豆包 Seedream 5.0 Pro | VolcEngine | ✅ 文生图 / 图生图 | OpenAI Images API（new-api 中转）|
+| `doubao-seedream-5-0-260128` | 豆包 Seedream 5.0 | VolcEngine | ✅ 文生图 | OpenAI Images API（new-api 中转）|
+| `doubao-seedream-5-0-lite-260128` | 豆包 Seedream 5.0 Lite | VolcEngine | ✅ 文生图 | OpenAI Images API（new-api 中转）|
+| `doubao-seedream-4-5-251128` | 豆包 Seedream 4.5 | VolcEngine | ✅ 文生图 | OpenAI Images API（new-api 中转）|
+| `doubao-seedream-4-0-250828` | 豆包 Seedream 4.0 | VolcEngine | ✅ 文生图 | OpenAI Images API（new-api 中转）|
 
 ### 配置 OpenAI 模型（GPT Image 2 / DALL-E 3）
 
@@ -522,6 +529,44 @@ ImageRelay 前端内置了 MiniMax 原生 API 客户端（`api/minimax.ts`），
 
 > **注意：** 直接调用模式需要用户的 MiniMax API Key 存储在前端。推荐使用方式一（new-api 中转），Key 安全地存储在服务端。
 
+### 配置豆包 Seedream 5.0（VolcEngine）
+
+豆包 Seedream 是字节跳动推出的 AI 图片生成模型系列，通过火山引擎 Ark 平台提供 API。支持文生图、图生图、多图融合、组图生成等高级功能。
+
+**Seedream 5.0 系列：**
+
+| 模型 ID | 说明 |
+|---------|------|
+| `doubao-seedream-5-0-pro-260628` | 5.0 Pro — 最高画质，支持交互编辑 |
+| `doubao-seedream-5-0-260128` | 5.0 标准版 |
+| `doubao-seedream-5-0-lite-260128` | 5.0 Lite — 速度快，性价比高 |
+| `doubao-seedream-4-5-251128` | 4.5 版本 |
+| `doubao-seedream-4-0-250828` | 4.0 版本 |
+
+#### 配置步骤
+
+1. 管理后台 → **渠道管理** → **添加新的渠道**
+2. 类型选择 **VolcEngine**
+3. 填入 VolcEngine API Key（从 [火山引擎控制台](https://console.volcengine.com/ark) 获取）
+4. 模型填写：`doubao-seedream-5-0-pro-260628, doubao-seedream-5-0-lite-260128, doubao-seedream-4-5-251128`
+5. Base URL 默认：`https://ark.cn-beijing.volces.com`（通常自动填充）
+6. 保存并测试
+
+#### Seedream 特有参数
+
+Seedream 模型在标准 OpenAI Images API 基础上，支持以下额外参数（通过 `extra_body` 传递）：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `image` | string 或 string[] | 参考图片 URL，支持单图/多图输入 |
+| `output_format` | string | 输出格式：`png`、`jpeg`、`webp` |
+| `watermark` | boolean | 是否添加水印（默认 false）|
+| `size` | string | 支持 `1024x1024`、`2K`、`1K` 等特殊尺寸 |
+| `sequential_image_generation` | string | 组图生成：`auto` 或 `disabled` |
+| `sequential_image_generation_prompt` | string | 组图生成提示词 |
+
+> **图生图说明：** 选择 Seedream 模型后，在"图生图"模式下上传参考图片，前端会自动将图片作为 `image` 参数传递。
+
 ### 配置 OpenRouter（可选）
 
 OpenRouter 聚合了多家模型提供商，可作为备用渠道：
@@ -547,6 +592,8 @@ OpenRouter 聚合了多家模型提供商，可作为备用渠道：
 | 401 Unauthorized | Token/Key 过期 | 退出重新登录，或管理后台重建 Token |
 | MiniMax 生图失败 | 渠道类型或 Key 不对 | 确认渠道类型选 MiniMax，Key 以 `sk-cp-` 开头 |
 | image-01 返回文本 | MiniMax-M3 不支持生图 | 选择 `image-01` 模型而非 `MiniMax-M3` |
+| Seedream 生图 401 | VolcEngine Key 无效 | 确认渠道类型选 VolcEngine，Key 来自火山引擎控制台 |
+| Seedream 返回空图 | 模型 ID 不完整 | 使用完整模型 ID 如 `doubao-seedream-5-0-pro-260628` |
 
 ---
 
@@ -572,6 +619,7 @@ OpenRouter 聚合了多家模型提供商，可作为备用渠道：
   - `api/images.test.ts` — 图片 API 单元测试
   - `api/minimax.test.ts` — MiniMax 集成测试（Anthropic 兼容 + 原生图片 API）
   - `api/openrouter.test.ts` — OpenRouter 集成测试
+  - `api/volcengine.test.ts` — VolcEngine/Seedream 模型分类与 API 测试
   - `router/index.test.ts` — 路由配置测试
   - `utils/format.test.ts` — 格式化工具测试
   - `utils/promptHelpers.test.ts` — 提示词辅助测试
