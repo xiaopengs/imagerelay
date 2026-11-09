@@ -1,58 +1,74 @@
-version: '3.8'
-services:
-  new-api:
-    # 从 vendored 源码构建（backend/new-api/），支持本地定制化开发
-    build:
-      context: ../backend/new-api
-      dockerfile: Dockerfile
-    # image: calciumion/new-api:latest  # 回退方案：无需定制时改用官方镜像
-    container_name: imagerelay-new-api
-    restart: always
-    ports:
-      - "3000:3000"
-    environment:
-      - TZ=Asia/Shanghai
-      - SQL_DSN=root:${MYSQL_ROOT_PASSWORD:-password}@tcp(mysql:3306)/newapi?charset=utf8mb4
-      - REDIS_CONN_STRING=redis://redis:6379
-      - SESSION_SECRET=${SESSION_SECRET:-change-me-in-production}
-    depends_on:
-      - mysql
-      - redis
-    volumes:
-      - ./new-api-data:/data
+name: imagerelay
 
+services:
   mysql:
     image: mysql:8.0
     container_name: imagerelay-mysql
-    restart: always
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-imagerelay-change-me}
       MYSQL_DATABASE: newapi
       TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     volumes:
       - mysql-data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
 
   redis:
     image: redis:7-alpine
     container_name: imagerelay-redis
-    restart: always
+    restart: unless-stopped
     volumes:
       - redis-data:/data
 
-  nginx:
-    image: nginx:alpine
-    container_name: imagerelay-nginx
-    restart: always
+  # new-api 后端：从 vendored 源码构建（backend/new-api）
+  # 不需要定制时，可注释 build 段并改用 image: calciumion/new-api:latest
+  new-api:
+    build:
+      context: ../backend/new-api
+      dockerfile: Dockerfile
+    container_name: imagerelay-new-api
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - SQL_DSN=root:${MYSQL_ROOT_PASSWORD:-imagerelay-change-me}@tcp(mysql:3306)/newapi?charset=utf8mb4
+      - REDIS_CONN_STRING=redis://redis:6379
+      - SESSION_SECRET=${SESSION_SECRET:-change-me-in-production}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./new-api-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/status >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  # 前端全栈：多阶段构建 Vue SPA + Nginx 托管 + 反代 /api/* /v1/* 到 new-api
+  # 构建上下文为仓库根目录，复用根目录 Dockerfile（与 Zeabur 同一份镜像定义）
+  frontend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: imagerelay-frontend
+    restart: unless-stopped
+    environment:
+      - NEW_API_URL=http://new-api:3000
     ports:
       - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./frontend-dist:/usr/share/nginx/html:ro
-      - ./ssl:/etc/nginx/ssl:ro
     depends_on:
-      - new-api
+      new-api:
+        condition: service_healthy
 
 volumes:
   mysql-data:

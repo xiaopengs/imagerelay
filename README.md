@@ -132,8 +132,8 @@ imagerelay/
 | 系统 | Ubuntu 20.04+ / Debian 11+ |
 | Docker | >= 20.10 |
 | Docker Compose | >= 2.0 |
-| 域名 | 已解析到服务器 IP |
-| SSL 证书 | Let's Encrypt 或其他 |
+| 域名 | 可选，有域名再启用 HTTPS |
+| SSL 证书 | 可选（默认 HTTP，HTTPS 见文末）|
 
 ### 第一步：克隆项目
 
@@ -142,84 +142,41 @@ git clone https://github.com/xiaopengs/imagerelay.git
 cd imagerelay
 ```
 
-### 第二步：构建前端
+### 第二步：配置环境变量
 
-```bash
-cd frontend
-npm install
-npm run build
-```
-
-构建产物在 `frontend/dist/` 目录。
-
-### 第三步：复制前端产物到 infra
-
-```bash
-mkdir -p infra/frontend-dist
-cp -r frontend/dist/* infra/frontend-dist/
-```
-
-### 第四步：准备 SSL 证书
-
-使用 Let's Encrypt（免费）：
-
-```bash
-# 安装 certbot
-sudo apt install certbot python3-certbot-nginx -y
-
-# 申请证书（先停 80 端口或用 standalone 模式）
-sudo certbot certonly --standalone -d your-domain.com
-
-# 复制证书到 infra/ssl/
-mkdir -p infra/ssl
-sudo cp /etc/letsencrypt/live/your-domain.com/fullchain.pem infra/ssl/cert.pem
-sudo cp /etc/letsencrypt/live/your-domain.com/privkey.pem infra/ssl/key.pem
-sudo chmod 644 infra/ssl/cert.pem infra/ssl/key.pem
-```
-
-### 第五步：修改 Nginx 配置
-
-编辑 `infra/nginx.conf`，将 `server_name` 改为你的域名：
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name your-domain.com;   # ← 改成你的域名
-    ...
-}
-```
-
-### 第六步：配置环境变量
-
-在 `infra/` 目录下创建 `.env` 文件：
+在 `infra/` 目录下创建 `.env` 文件（生产环境务必修改）：
 
 ```bash
 # infra/.env
 MYSQL_ROOT_PASSWORD=your-secure-password
-SESSION_SECRET=random-string-here
+SESSION_SECRET=<openssl rand -hex 32 生成的随机字符串>
 ```
 
-### 第七步：启动 Docker Compose（从源码构建后端）
+### 第三步：一键启动（前端 + 后端 + MySQL + Redis）
 
 ```bash
 cd infra
-docker compose up -d --build   # --build 从 backend/new-api 源码构建 new-api 镜像
+docker compose up -d --build
 ```
 
-> 首次构建约 5-10 分钟（多阶段构建：bun 前端 + golang 编译）。后续启动秒级。
-> 若无需定制后端，可改用官方镜像：编辑 `docker-compose.yml` 注释 `build:` 段，取消注释 `image: calciumion/new-api:latest`。
+> 无需手动构建前端：根目录 `Dockerfile` 会在容器内用 Node 构建 Vue SPA，再由 Nginx 托管并反代 `/api/*`、`/v1/*` 到 `new-api`。
+> 首次构建约 5-10 分钟（new-api 多阶段编译），后续启动秒级。
+> 宿主机 80 端口必须空闲（`ss -lntp | grep :80` 检查）。
+> 若无需定制后端，可注释 `new-api` 的 `build:` 段并改用 `image: calciumion/new-api:latest`。
 
 验证服务状态：
 
 ```bash
 docker compose ps
-# 确认所有容器 status 为 Up
+# 4 个容器均应为 running / healthy
+curl -I http://127.0.0.1/            # 200，返回前端页面
+curl http://127.0.0.1/api/status     # JSON
 ```
 
-### 第八步：配置 new-api 管理后台
+### 第四步：配置 new-api 管理后台
 
-1. 访问 `http://your-server-ip:3000`
-2. 使用默认账号登录：`root` / `123456`
+1. 浏览器访问 `http://<服务器IP>/`（前端页面）
+2. new-api 管理后台：`http://<服务器IP>/api/`，默认账号 `root` / `123456`
 3. **立即修改默认密码**
 4. 进入 **渠道管理** → **添加新的渠道**：
    - 类型选择 OpenAI 或对应的模型提供商
@@ -229,29 +186,43 @@ docker compose ps
    - 如需豆包 Seedream 生图，类型选择 VolcEngine，填入火山引擎 API Key
 5. 进入 **令牌管理** → 创建测试令牌，验证生图功能
 
-### 第九步：验证
+### 第五步：验证
 
 ```bash
-# 测试前端页面
-curl -I https://your-domain.com
+# 前端页面
+curl -I http://<服务器IP>/
 
-# 测试生图 API — OpenAI 模型（用管理后台创建的 Token）
-curl https://your-domain.com/v1/images/generations \
+# 生图 API（用管理后台创建的 Token）
+curl http://<服务器IP>/v1/images/generations \
   -H "Authorization: Bearer sk-your-api-key" \
   -H "Content-Type: application/json" \
   -d '{"model":"gpt-image-1","prompt":"a cat sitting on a rainbow","n":1,"size":"1024x1024"}'
-
-# 测试生图 API — MiniMax image-01 模型
-curl https://your-domain.com/v1/images/generations \
-  -H "Authorization: Bearer sk-your-api-key" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"image-01","prompt":"a cat sitting on a rainbow","n":1,"size":"1024x1024"}'
 ```
+
+### 可选：启用 HTTPS
+
+默认只监听 80 端口。需要 HTTPS 时，推荐在最外层加一层 Caddy（自动申请并续期 Let's Encrypt 证书）：
+
+```bash
+# /opt/caddy/Caddyfile
+your-domain.com {
+    reverse_proxy 127.0.0.1:80
+}
+```
+
+```bash
+docker run -d --name caddy --network host \
+  -v /opt/caddy/Caddyfile:/etc/caddy/Caddyfile \
+  -v caddy-data:/data -v caddy-config:/config \
+  caddy:2-alpine
+```
+
+也可继续使用 `infra/nginx.conf` 手动配置 SSL 证书（证书放入 `infra/ssl/` 后自行挂载）。
 
 部署完成后的访问地址：
 
-- 前端：`https://your-domain.com`
-- new-api 管理后台：`https://your-domain.com/api/`（通过 Nginx 代理）或直接 `http://server-ip:3000`
+- 前端：`http://your-domain.com`（启用 HTTPS 后为 `https://`）
+- new-api 管理后台：`http://your-domain.com/api/`
 
 ---
 
