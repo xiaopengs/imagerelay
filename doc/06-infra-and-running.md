@@ -12,10 +12,12 @@
 
 | 容器 | 镜像/构建 | 端口 | 依赖 | 数据卷 |
 |------|-----------|------|------|--------|
-| `new-api` | 从 `backend/new-api/` 源码构建 | 3000 | mysql, redis | `./new-api-data:/data` |
+| `frontend` | 仓库根目录 `Dockerfile`（Node 构建 + Nginx） | `80:80` | new-api（healthy） | — |
+| `new-api` | 从 `backend/new-api/` 源码构建 | 仅内部 3000 | mysql（healthy）, redis | `./new-api-data:/data` |
 | `mysql` | `mysql:8.0` | 3306（内部） | — | `mysql-data:/var/lib/mysql` |
 | `redis` | `redis:7-alpine` | 6379（内部） | — | `redis-data:/data` |
-| `nginx` | `nginx:alpine` | 80, 443 | new-api | `nginx.conf`, `frontend-dist`, `ssl` |
+
+> 前端镜像即根目录 `Dockerfile`：多阶段构建 Vue SPA，运行时由 Nginx 托管静态文件并反代 `/api/*`、`/v1/*` 到 `http://new-api:3000`（`NEW_API_URL` 环境变量注入），无需手动 `npm run build` 或复制 `dist`。
 
 ### 关键配置
 
@@ -54,7 +56,9 @@ SESSION_SECRET=random-string-here
 
 ## 二、Nginx 配置
 
-文件：`infra/nginx.conf`
+文件：
+- `zeabur-nginx.conf` + `zeabur-entrypoint.sh`：**实际生效**的 Nginx 配置（根目录 `Dockerfile` 使用，VPS 与 Zeabur 共用），启动时由 `entrypoint.sh` 注入 `NEW_API_URL` / `RESOLVER`。
+- `infra/nginx.conf`：可选的手动 HTTPS 配置参考，默认 Compose 不加载。
 
 ### 路由规则
 
@@ -173,85 +177,40 @@ git clone https://github.com/xiaopengs/imagerelay.git
 cd imagerelay
 ```
 
-### 第二步：构建前端
-
-```bash
-cd frontend
-npm install
-npm run build
-```
-
-构建产物在 `frontend/dist/`。
-
-### 第三步：复制前端产物到 infra
-
-```bash
-mkdir -p infra/frontend-dist
-cp -r frontend/dist/* infra/frontend-dist/
-```
-
-### 第四步：准备 SSL 证书
-
-```bash
-sudo apt install certbot python3-certbot-nginx -y
-sudo certbot certonly --standalone -d your-domain.com
-
-mkdir -p infra/ssl
-sudo cp /etc/letsencrypt/live/your-domain.com/fullchain.pem infra/ssl/cert.pem
-sudo cp /etc/letsencrypt/live/your-domain.com/privkey.pem infra/ssl/key.pem
-sudo chmod 644 infra/ssl/cert.pem infra/ssl/key.pem
-```
-
-### 第五步：修改 Nginx 配置
-
-编辑 `infra/nginx.conf`，将 `server_name _;` 改为你的域名：
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name your-domain.com;
-    ...
-}
-```
-
-### 第六步：配置环境变量
-
-```bash
-# infra/.env
-MYSQL_ROOT_PASSWORD=your-secure-password
-SESSION_SECRET=random-string-here
-```
-
-### 第七步：启动 Docker Compose（从源码构建后端）
+### 第二步：配置环境变量
 
 ```bash
 cd infra
-docker compose up -d --build   # --build 从 backend/new-api 源码构建
+cp .env.example .env
+# 修改 MYSQL_ROOT_PASSWORD / SESSION_SECRET
 ```
 
-验证：
+### 第三步：启动
 
 ```bash
-docker compose ps   # 所有容器 Up
-curl -I https://your-domain.com
+docker compose up -d --build
+docker compose ps
+curl -I http://127.0.0.1/
+curl http://127.0.0.1/api/status
 ```
 
-### 第八步：配置 new-api 管理后台
+### 第四步：配置 new-api 管理后台
 
-1. 访问 `https://your-domain.com/api/` 或 `http://server-ip:3000`
-2. 登录 `root` / `123456` → **立即改密码**
-3. 添加渠道（OpenAI / Google）+ 配置 API Key + 添加模型
+1. 前端：`http://<服务器IP>/`
+2. 管理后台：`http://<服务器IP>/api/`，登录 `root` / `123456` → **立即改密码**
+3. 添加渠道（OpenAI / Google 等）+ 配置 API Key + 添加模型
 4. 创建令牌验证生图
-5. 系统设置 → CORS 允许 `https://your-domain.com`
 
-### 第九步：验证生图
+### 第五步：验证生图
 
 ```bash
-curl https://your-domain.com/v1/images/generations \
+curl http://<服务器IP>/v1/images/generations \
   -H "Authorization: Bearer sk-your-api-key" \
   -H "Content-Type: application/json" \
   -d '{"model":"gpt-image-1","prompt":"a cat on rainbow","n":1,"size":"1024x1024"}'
 ```
+
+> HTTPS：默认仅监听 80 端口，可在最外层用 Caddy 自动签发证书并反代 `127.0.0.1:80`。
 
 ---
 
@@ -287,8 +246,9 @@ docker compose logs -f new-api
 
 | 症状 | 可能原因 | 解决方案 |
 |------|----------|----------|
-| 前端白屏 | `dist` 未正确复制到 `frontend-dist` | 重新执行部署第三步 |
-| 502 Bad Gateway | new-api 容器未启动 | `docker compose ps` → `docker compose restart new-api` |
+| 前端白屏 | frontend 容器构建/启动失败 | `docker compose logs -f frontend` 查看 Nginx/构建日志 |
+| 502 Bad Gateway | new-api 容器未就绪或崩溃 | `docker compose ps` → `docker compose logs -f new-api` |
+| 访问 / 返回 404 | 宿主机 80 端口被其他服务占用/未映射 | `ss -lntp | grep :80`，`docker compose ps` 确认端口映射 |
 | 登录失败 404 | API 路径错误 | 确认 nginx 代理 `/api/` 和 `/v1/` 指向 new-api |
 | 生图超时 | API Key 无效或模型未配置 | 管理后台 → 渠道管理 → 检查 Key 和模型 |
 | CORS 错误 | new-api 未配置允许来源 | 管理后台 → 系统设置 → CORS |
@@ -350,10 +310,10 @@ docker compose restart new-api
 | 文件 | 用途 |
 |------|------|
 | `infra/docker-compose.yml` | 容器编排（4 容器） |
-| `infra/nginx.conf` | Nginx 反向代理配置 |
+| `zeabur-nginx.conf` + `zeabur-entrypoint.sh` | 前端镜像内实际生效的 Nginx 配置（VPS/Zeabur 共用）|
+| `infra/nginx.conf` | 可选的手动 HTTPS 配置参考 |
 | `infra/.env` | 环境变量（被 gitignore） |
-| `infra/ssl/` | SSL 证书目录 |
-| `infra/frontend-dist/` | 前端构建产物（部署时复制） |
+| `infra/.env.example` | 环境变量模板 |
 | `infra/new-api-data/` | new-api 运行数据 |
 | `backend/new-api/Dockerfile` | new-api 多阶段构建文件 |
 | `frontend/vite.config.ts` | Vite 配置 + 开发代理 |
