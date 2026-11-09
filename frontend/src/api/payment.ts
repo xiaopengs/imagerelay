@@ -3,8 +3,8 @@ import axios from 'axios'
 const api = axios.create({ baseURL: '/api' })
 
 function authHeaders() {
-  const token = localStorage.getItem('token') || ''
-  return { Authorization: `Bearer ${token}` }
+  const userId = localStorage.getItem('userId') || ''
+  return { 'New-Api-User': userId }
 }
 
 export interface TopUpRecord {

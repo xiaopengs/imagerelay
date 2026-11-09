@@ -14,6 +14,7 @@ export interface GenerateParams {
   n?: number
   size?: string
   input_image?: string
+  response_format?: string
 }
 
 export const imagesApi = {
@@ -26,6 +27,9 @@ export const imagesApi = {
     }
     if (params.input_image) {
       body.input_image = params.input_image
+    }
+    if (params.response_format) {
+      body.response_format = params.response_format
     }
     return api.post('/images/generations', body, {
       headers: apiKeyHeaders(),

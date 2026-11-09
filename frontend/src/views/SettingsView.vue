@@ -39,11 +39,11 @@
         <div v-else class="space-y-2">
           <div v-for="tk in tokens" :key="tk.id" class="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
             <div>
-              <p class="text-sm font-mono text-gray-700">{{ maskToken(tk.token) }}</p>
-              <p class="text-xs text-gray-400 mt-0.5">创建于 {{ formatTime(tk.created_at) }}</p>
+              <p class="text-sm font-mono text-gray-700">{{ tk.key }}</p>
+              <p class="text-xs text-gray-400 mt-0.5">创建于 {{ formatTime(tk.created_time) }}</p>
             </div>
             <div class="flex gap-3">
-              <button @click="copyToken(tk.token)" class="text-xs text-primary-600 hover:underline">复制</button>
+              <button @click="copyToken(tk.id)" class="text-xs text-primary-600 hover:underline">复制</button>
               <button @click="deleteToken(tk.id)" class="text-xs text-red-500 hover:underline">删除</button>
             </div>
           </div>
@@ -80,7 +80,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import { authApi } from '@/api/auth'
 import { formatBalance } from '@/utils/format'
 import { userApi } from '@/api/user'
 import { useToast } from '@/utils/toast'
@@ -97,7 +96,7 @@ const tabs = [
 
 const displayName = ref('')
 const saving = ref(false)
-const tokens = ref<Array<{ id: number; token: string; created_at: string }>>([])
+const tokens = ref<Array<{ id: number; key: string; name?: string; created_time?: number }>>([])
 const topupCode = ref('')
 const topupLoading = ref(false)
 const topupMsg = ref('')
@@ -116,7 +115,7 @@ async function loadUser() {
 async function loadTokens() {
   try {
     const res = await userApi.getTokens()
-    tokens.value = res.data?.data || res.data || []
+    tokens.value = res.data?.data?.items ?? []
   } catch { /* ignore */ }
 }
 
@@ -127,15 +126,7 @@ async function saveProfile() {
   }
   saving.value = true
   try {
-    await authApi.getSelf() // Verify auth still valid
-    // new-api uses PUT /api/user/self to update profile
-    const api = (await import('axios')).default.create({ baseURL: '/api' })
-    const token = localStorage.getItem('token') || ''
-    await api.put('/user/self', {
-      display_name: displayName.value.trim(),
-    }, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    await userApi.updateSelf({ display_name: displayName.value.trim() })
     toast.success('保存成功')
     await auth.fetchUser()
   } catch (e: any) {
@@ -155,14 +146,13 @@ async function createToken() {
   }
 }
 
-function maskToken(t: string) {
-  if (!t || t.length < 16) return t
-  return t.slice(0, 8) + '...' + t.slice(-4)
-}
-
-async function copyToken(t: string) {
+async function copyToken(id: number) {
   try {
-    await navigator.clipboard.writeText(t)
+    // 列表返回的是打码 key，复制时取完整 key
+    const res = await userApi.getTokenKey(id)
+    const key = res.data?.data?.key
+    if (!key) throw new Error('no key')
+    await navigator.clipboard.writeText(key)
     toast.success('已复制到剪贴板')
   } catch {
     toast.error('复制失败')
@@ -205,9 +195,9 @@ async function handleTopup() {
   }
 }
 
-function formatTime(iso: string) {
-  if (!iso) return ''
-  const d = new Date(iso)
+function formatTime(t: string | number | undefined) {
+  if (!t) return ''
+  const d = new Date(typeof t === 'number' ? t * 1000 : t)
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
 }
 

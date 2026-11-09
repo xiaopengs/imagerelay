@@ -4,18 +4,30 @@ import axios from 'axios'
 const api = axios.create({ baseURL: '/api' })
 
 function authHeaders() {
-  const token = localStorage.getItem('token') || ''
-  return { Authorization: `Bearer ${token}` }
+  const userId = localStorage.getItem('userId') || ''
+  return { 'New-Api-User': userId }
 }
 
 export const userApi = {
+  // 个人信息
+  updateSelf: (payload: { display_name: string }) =>
+    api.put('/user/self', payload, { headers: authHeaders() }),
+
   // 兑换码充值
   topUp: (key: string) =>
     api.post('/user/topup', { key }, { headers: authHeaders() }),
 
   // API Token 管理
+  // new-api 创建令牌后返回的是打码 key，完整 key 需再调 /token/:id/key 获取
   createToken: () =>
-    api.post('/token/', {}, { headers: authHeaders() }),
+    api.post(
+      '/token/',
+      { name: 'imagerelay', remain_quota: -1, expired_time: -1, unlimited_quota: true },
+      { headers: authHeaders() },
+    ),
+
+  getTokenKey: (id: number) =>
+    api.post(`/token/${id}/key`, {}, { headers: authHeaders() }),
 
   getTokens: () =>
     api.get('/token/', { headers: authHeaders() }),

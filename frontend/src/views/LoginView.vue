@@ -113,7 +113,7 @@ async function handleLogin() {
     const redirect = raw.startsWith('/') && !raw.startsWith('//') ? raw : '/console'
     window.location.href = redirect
   } catch (e: any) {
-    error.value = e?.response?.data?.message || e?.response?.data?.error || '登录失败，请检查邮箱和密码'
+    error.value = e?.response?.data?.message || e?.message || '登录失败，请检查邮箱和密码'
   } finally {
     loading.value = false
   }

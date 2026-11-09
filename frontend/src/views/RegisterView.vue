@@ -124,7 +124,7 @@ async function handleRegister() {
     await auth.register(form.value.email, form.value.password)
     router.push('/console')
   } catch (e: any) {
-    error.value = e?.response?.data?.message || e?.response?.data?.error || '注册失败，请稍后重试'
+    error.value = e?.response?.data?.message || e?.message || '注册失败，请稍后重试'
   } finally {
     loading.value = false
   }

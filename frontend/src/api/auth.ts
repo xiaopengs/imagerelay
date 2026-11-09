@@ -4,8 +4,9 @@ import axios from 'axios'
 const api = axios.create({ baseURL: '/api' })
 
 function authHeaders() {
-  const token = localStorage.getItem('token') || ''
-  return { Authorization: `Bearer ${token}` }
+  // new-api 的用户态接口需要 `New-Api-User` 头（值为用户 id）+ 登录 Cookie
+  const userId = localStorage.getItem('userId') || ''
+  return { 'New-Api-User': userId }
 }
 
 export const authApi = {

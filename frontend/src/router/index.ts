@@ -20,8 +20,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, _from, next) => {
-  const token = localStorage.getItem('token')
-  if (to.meta.requiresAuth && !token) {
+  // 登录态：new-api 会话，用 userId 判断
+  const userId = localStorage.getItem('userId')
+  if (to.meta.requiresAuth && !userId) {
     next({ path: '/login', query: { redirect: to.fullPath } })
   } else {
     next()
